@@ -1,0 +1,442 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta http-equiv="Expires" CONTENT="0">
+  <meta http-equiv="Cache-Control" CONTENT="no-cache">
+  <meta http-equiv="Pragma" CONTENT="no-cache">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="shortcut icon" href="/ico/logo1.ico">
+  <script type="text/javascript" src='./jquery.js'></script>
+  <script type="text/javascript" src='./html2canvas.min.js'></script>
+  <script type="text/javascript" src='./canvas2image.js'></script>
+  <script type="text/javascript" src='./jspdf.debug.js'></script>
+  <script type="text/javascript" src='/ico/examineFakerData.js'></script>
+  <script type="text/javascript" src='/ico/config.js'></script>
+
+  <style type="text/css">
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+  <style media=print type="text/css">
+    .noprint {
+      visibility: hidden
+    }
+
+    .beside1 {
+      width: 80%;
+    }
+
+    .imgdescription {
+      width: 120px;
+      height: 120px;
+    }
+    .imgdescription img{
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+    }
+
+    .basic1>em {
+      width: 60% !important;
+    }
+
+    .special1>em {
+      width: 57% !important;
+    }
+
+    .piaoju_content2 .left .basic1:nth-child(odd) {
+      width: 50% !important;
+    }
+
+    .piaoju_content2 .left .basic1:nth-child(even) {
+      width: 44% !important;
+    }
+
+    .slideValue2 {
+      width: 70%;
+      text-align: left !important;
+    }
+
+    .beside1 {
+      width: 80% !important;
+      text-align: left !important;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="./photoswipe.css" />
+  <link rel="stylesheet" href="/ico/stylePc1.css">
+  <link rel="stylesheet" href="/ico/stylePc.css">
+  <script>
+    //   console.log(urls)
+    var detailId = GetQueryString("detailId");
+    function GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]); return null;
+    }
+  </script>
+
+  <script type="text/javascript" src='/ico/vue.js'></script>
+  <script type="text/javascript" src='/ico/axios.min.js'></script>
+  <script src="./photoswipe.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./photoswipe-ui-default.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./initPhotoSwipe.js"></script>
+  <script src="./fakerexamine.js"></script>
+</head>
+
+<body>
+
+  <div id="app" class="article" v-cloak>
+
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="pswp__bg"></div>
+      <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+          <div class="pswp__top-bar">
+            <div class="pswp__counter"></div>
+            <div class="pswp__preloader">
+              <div class="pswp__preloader__icn">
+                <div class="pswp__preloader__cut">
+                  <div class="pswp__preloader__donut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            <div class="pswp__share-tooltip"></div>
+          </div>
+          <div class="pswp__caption">
+            <div class="pswp__caption__center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title">{{showTitle}}</div>
+    <div class="piaoju_content2 border_change clearfl">
+      <div class="left clearfl">
+        <div v-if="orderType==1" class="basic1"><span>所在乡镇：</span><em>{{basicTown}}</em></div>
+        <div v-if="orderType==1" class="basic1"><span>乡镇负责人：</span><em>{{basicTownManager}}</em></div>
+        <div v-if="orderType==1" class="basic1 special1"><span>乡镇负责人手机：</span><em>{{basicTownManagerPhone}}</em></div>
+        <div v-if="orderType==1" class="basic1"><span>运营人：</span><em>{{basicOperator}}</em></div>
+        <div v-if="orderType==1" class="basic1"><span>运营人手机：</span><em>{{basicOperatorPhone}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>经营单位：</span><em>{{basicUnit}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>联系人：</span><em>{{basicOperator}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>联系人手机：</span><em>{{basicOperatorPhone}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>是否通航：</span><em>{{navigableWaterStatus}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>备案时间：</span><em>{{terminalTime1}}</em></div>
+        <div class="basic1"><span>检查单位：</span><em>{{basicMsaName}}</em></div>
+        <div class="basic1"><span>检查人：</span><em>{{basicUserName}}</em></div>
+        <div class="basic1"><span>检查时间：</span><em>{{basicPostTime}}</em></div>
+        <div class="basic1"><span>隐患：</span><em class="rightdl">
+            <dl><span class="bulegenerral">一般{{basicGeneralGrade}}</span><span class="bulebig">重大{{basicBigGrade}}</span></dl>
+          </em></div>
+        <div class="basic1"><span>是否解决：</span><em></em><span v-bind:class="[showSearchIt ? 'haveSE' : 'unhaveSE']">{{basicFixStatus}}</span></div>
+        <div class="basic1"><span>备注：</span><em>{{basicRemark}}</em></div>
+      </div>
+    </div>
+    <div class="divedgray"></div>
+    <div class="bottom1">
+      <table border="0" class="pricematch">
+        <tr class="top11">
+          <th class="clearfl">
+            <div class="tablecell a1" style="padding-top:5px !important;">序号</div>
+            <div class="tablecell a2title" style="padding-top:5px !important;">检查项目</div>
+            <div class="tablecell a3title">结果</div>
+          </th>
+        </tr>
+        <tbody v-for="(item1, index1) in orderSortList">
+          <tr>
+            <th class="clearfl textc">
+              <div class="a4">{{item1.sortName}}</div>
+            </th>
+          </tr>
+          <tr v-for="(item2, index2) in item1.orderItemList">
+            <td class="clearfl">
+              <div class="tablecell a1">{{index2+1}}</div>
+              <div class="tablecell a2">{{item2.itemName}}</div>
+              <div class="tablecell a3">
+                <img class="anwserTrue" src="/ico/checktTrue.png" v-if="item2.checkValue==1" />
+                <img class="anwserfalse" src="/ico/checktFalsee.png" v-if="item2.checkValue==2" />
+                <div class="anwserUnuse" v-if="item2.checkValue==0">不适用
+                </div>
+              </div>
+              <div class="clss"></div>
+              <div v-if="item2.checkValue==2" v-bind:class="[item2.checkValue==2 && item2.recheckList.length==0? 'paddingIt' : '','description clearfl']">
+                <span class="topText1">问题描述</span>
+                <div class="slideValue clearfl"><span class="slideValue1">隐患等级</span>
+                  <span class="slideValue2 general" v-if="item2.grade==1">一般</span>
+                  <span class="slideValue2 bigger" v-if="item2.grade==2">重大</span>
+                  <span class="slideValue2 withoutgeneral" v-if="item2.grade==0">无隐患</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">检查时间</span>
+                  <span class="slideValue2">{{tempToMinute(item2.createTime)}}</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">现场问题</span>
+                  <span class="slideValue2">{{item2.description}}</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">处理措施</span>
+                  <span class="slideValue2">{{item2.dealMeasure}}</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">处理结果</span>
+                  <span class="slideValue2">{{item2.dealResult}}</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">期限天数</span>
+                  <span class="slideValue2">{{!item2.deadLine?"—":item2.deadLine+"天"}}</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">位置</span>
+                  <span class="slideValue2">{{!item2.location?"—":item2.location}}</span>
+                </div>
+                <div class="slideValue clearfl slideValueS">
+                  <span class="slideValue1">现场图片</span>
+                  <span class="slideValue2 beside1 my-gallery">
+                    <!-- <img v-for="(item3, index3) in item2.picList" :src="item3.url" class="imgdescription" /> -->
+                    <figure :id="'figure_'+index2+index3" itemprop="associatedMedia"  v-for="(item3,index3) in item2.picList" itemscope="" class="imgdescription">
+                      <a :href="item3.url" itemprop="contentUrl" data-size="">
+                        <img :src="item3.url" itemprop="thumbnail"></a>
+                    </figure>
+                    <span v-if="item2.picList.length==0">—</span>
+                  </span>
+                </div>
+              </div>
+              <div v-for="(item4, index4) in item2.recheckList" v-if="item2.checkValue==2" v-bind:class="[item2.checkValue==2 && item2.recheckList.length>0? 'paddingIt' : '','description clearfl']">
+                <span class="topText1">复查问题</span>
+                <div class="slideValue clearfl"><span class="slideValue1">复查时间</span>
+                  <span class="slideValue2">{{tempToMinute(item4.createTime)}}</span>
+                </div>
+                <div class="slideValue clearfl"><span class="slideValue1">现场问题</span>
+                  <span class="slideValue2">{{item4.description}}</span>
+                </div>
+                <div class="slideValue clearfl slideValueS">
+                  <span class="slideValue1">现场图片</span>
+                  <span class="slideValue2 beside1 my-gallery">
+                    <!-- <img v-for="(item3, index3) in item4.picList" :src="item3.url" class="imgdescription" /> -->
+                    <figure :id="'figure_'+item4.id+index3" itemprop="associatedMedia" v-for="(item3, index3) in item4.picList" itemscope="" class="imgdescription">
+                        <a :href="item3.url" itemprop="contentUrl" data-size="">
+                          <img :src="item3.url" itemprop="thumbnail"></a>
+                      </figure>
+                    <span v-if="item4.picList.length==0">—</span>
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+    <div class="printWriter">经营人（签名）：___________</div>
+    <div class="clearBoth"></div>
+    <div class="mask" v-bind:class="[!showP ? 'mask_bgSh' : '','mask']" id="top7" style="display: none;">
+      <img id="closeloadingModal" src="/ico/waitForloading.png" alt="" />
+    </div>
+    <div onclick="printW()" v-bind:class="[showP ? 'mask_bgSh' : '','print noprint']">打印检查单</div>
+
+  </div>
+
+  <img src="" alt="" id="imgSrc" style="display:none" />
+  <script>
+
+    var printSrc = "";
+
+    Vue.prototype.$http = axios
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          showTitle: "",
+          contentList: [],
+          basicTown: "",
+          basicTownManager: "",
+          basicTownManagerPhone: "",
+          basicOperator: "",
+          basicOperatorPhone: "",
+          basicMsaName: "",
+
+          basicUserName: "",
+          basicFixStatus: 0,
+          basicGeneralGrade: 0,
+          basicBigGrade: 0,
+          basicRemark: "",
+          showSearchIt: true,
+          orderType: 1,
+
+          basicUnit: "",
+          navigableWaterStatus: "非通航水域",
+          terminalTime1: "—",
+          orderSortList: [],
+          basicPostTime: "",
+          showP: false,
+          imgSrc: "",
+        }
+      },
+      methods: {
+        postData() {
+          var self = this;
+          var p1 = fakerexamineData.data.response;
+          var code = fakerexamineData.code;
+          if (code == "500") {
+            alert(fakerexamineData.message)
+            return
+          }
+          console.log(p1)
+          var p2 = p1.order;
+          console.log(p2);
+          self.showTitle = p2.title;
+          self.orderType = p2.type;
+          if (p2.type == 1) {
+            self.basicTown = p2.town;
+            self.basicTownManager = !p2.townManager ? "—" : p2.townManager;
+            self.basicTownManagerPhone = !p2.townManagerPhone ? "—" : p2.townManagerPhone;
+            self.basicOperator = !p2.operator ? "—" : p2.operator;
+            self.basicOperatorPhone = !p2.operatorPhone ? "—" : p2.operatorPhone;
+          } else if (p2.type == 2) {
+            self.basicUnit = p2.unit;
+            self.basicOperator = !p2.operator ? "—" : p2.operator;
+            self.basicOperatorPhone = !p2.operatorPhone ? "—" : p2.operatorPhone;
+            self.navigableWaterStatus = !p2.navigableWaterStatus ? "非通航水域" : "通航水域";
+            self.terminalTime1 = !p2.recordTime ? "—" : self.tempToHour(p2.recordTime);
+          }
+          self.basicMsaName = p2.msaName;
+          self.basicUserName = p2.userName;
+          self.basicFixStatus = p2.fixStatus == "0" ? "已解决" : "未解决";
+          self.basicGeneralGrade = p2.generalGrade;
+          self.basicBigGrade = p2.bigGrade;
+          self.basicRemark = !p2.remark ? "—" : p2.remark;
+          self.showSearchIt = p2.fixStatus == "0" ? true : false;
+          self.basicPostTime = self.tempToMinute(p2.postTime)
+          // self.orderSortList=p2.orderSortList;
+          self.showP = true;
+          var orderSortList = p2.orderSortList;
+          console.log(orderSortList)
+          var returnList = [];
+          for (var i = 0; i < orderSortList.length; i++) {
+            var ong = {};
+            for (var ii in orderSortList[i]) {
+              if (ii == "orderItemList") {
+                ong["orderItemList"] = []
+              } else {
+                ong[ii] = orderSortList[i][ii]
+              }
+            }
+            returnList.push(ong)
+          }
+          for (var i = 0; i < orderSortList.length; i++) {
+            var orderItemList = orderSortList[i].orderItemList
+            for (var j = 0; j < orderItemList.length; j++) {
+              if (orderItemList[j].checkValue == 0) { }
+              else {
+                returnList[i].orderItemList.push(orderItemList[j])
+              }
+            }
+          }
+          var returnList1 = [];
+          for (var k = 0; k < returnList.length; k++) {
+            if (returnList[k].orderItemList.length == 0) {
+            } else {
+              returnList1.push(returnList[k])
+            }
+          }
+          console.log(returnList)
+          console.log(returnList1)
+          self.orderSortList = returnList1;
+          for (var i = 0; i < returnList1.length; i++) {
+            for (var j = 0; j < returnList1[i].orderItemList.length; j++) {
+              if(returnList1[i].orderItemList[j].checkValue==2 && returnList1[i].orderItemList[j].picList.length>0){
+                for (var k = 0; k < returnList1[i].orderItemList[j].picList.length; k++) {
+                  auto_data_size(returnList1[i].orderItemList[j].picList[k].url, j+""+k, returnList1[i].orderItemList[j].picList.length);
+                }
+              }
+            }
+          }
+          for (var i = 0; i < returnList1.length; i++) {
+            for (var j = 0; j < returnList1[i].orderItemList.length; j++) {
+              if(returnList1[i].orderItemList[j].recheckList.length>0){
+                for (var k = 0; k < returnList1[i].orderItemList[j].recheckList.length; k++) {
+                  for (var s = 0; s < returnList1[i].orderItemList[j].recheckList[k].picList.length; s++) {
+                    auto_data_size(returnList1[i].orderItemList[j].recheckList[k].picList[s].url, returnList1[i].orderItemList[j].recheckList[k].id+""+s, returnList1[i].orderItemList[j].recheckList[k].picList.length);
+                  }
+                }
+              }
+            }
+          }
+         
+        },
+        tempToHour(s) {
+          var time = new Date(s);
+          var y = time.getFullYear();
+          var m = time.getMonth() + 1;
+          var d = time.getDate();
+          var s = time.getHours();
+          var k = time.getMinutes();
+          var u = time.getSeconds()
+          if (m < 10) {
+            m = "0" + m
+          }
+          if (d < 10) {
+            d = "0" + d
+          }
+          if (s < 10) {
+            s = "0" + s
+          }
+          if (k < 10) {
+            k = "0" + k
+          }
+          if (u < 10) {
+            u = "0" + u
+          }
+          //console.log(y + "-" + m + "-" + d+" "+s+":"+k+":"+u) 
+          return y + "-" + m + "-" + d
+        },
+        tempToMinute(s) {
+          var time = new Date(s);
+          var y = time.getFullYear();
+          var m = time.getMonth() + 1;
+          var d = time.getDate();
+          var s = time.getHours();
+          var k = time.getMinutes();
+          var u = time.getSeconds()
+          if (m < 10) {
+            m = "0" + m
+          }
+          if (d < 10) {
+            d = "0" + d
+          }
+          if (s < 10) {
+            s = "0" + s
+          }
+          if (k < 10) {
+            k = "0" + k
+          }
+          if (u < 10) {
+            u = "0" + u
+          }
+          //console.log(y + "-" + m + "-" + d+" "+s+":"+k+":"+u) 
+          return y + "-" + m + "-" + d + " " + s + ":" + k
+        }
+      },
+      mounted() {
+        this.postData()
+      }
+    })
+    function printW() {
+      var prnhtml = window.document.body.innerHTML;
+      window.document.body.innerHTML = prnhtml;
+      window.print();
+      window.document.body.innerHTML = prnhtml;
+    }
+  </script>
+
+</body>
+
+</html>

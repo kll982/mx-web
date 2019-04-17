@@ -1,0 +1,171 @@
+*{margin:0;padding:0;}
+html{font-size:20px;}
+h1,h2,h4,h4,h5,h6{text-align:left;}
+.setdepart{
+  width:540px;
+  margin:20px auto;
+}
+.setdepart::after{
+	clear:both;
+	content:"";
+	display:block;
+}
+.container{
+  width:500px;
+  margin:20px auto;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 20px 20px;
+  box-shadow: 0 0 24px #aeb6cc;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #d1d1d1;
+  box-sizing: content-box;
+}
+
+.proArt{
+  margin: 10px auto;
+}
+.articleTitle{ margin:10px auto;}
+.articleTitleInput{
+  width:500px;
+  line-height: 40px;
+
+  font-size: 12.5px;
+  color: #ff6600;
+  letter-spacing: 1px;
+  position: relative;
+  color: #000;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 0.16rem;
+
+}
+.articleSortIndex{
+  width:200px;
+  line-height: 40px;
+  height:40px;
+  font-size: 30px;
+  text-indent: 5px;
+  margin-top:10px;
+}
+.imgedit{
+	position: relative;
+	z-index:21;
+}
+.suudj{
+	position: absolute;
+	left:0px;
+  top:0px;
+  right:0;
+  bottom: 0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+	-moz-opacity: 0;
+	filter:alpha(opacity=0);
+	-webkit-opacity: 0;
+	-o-opacity:0;
+	-khtml-opacity:0;
+	opacity: 0;
+	cursor: pointer;
+	z-index:11;
+}
+.wordContainer{
+  width:100%;
+  height:auto;
+  position: relative;
+  
+}
+.wordContainer::after{
+  clear: both;
+  content:"";
+  display: table;
+
+}
+.button:first-child{
+	margin-left:0;
+}
+.button{
+	float:left;
+	margin-left:24px;
+}
+.imgContainer{
+  width:100%;
+  height:auto;
+  position: relative;
+  text-align: center;
+}
+.imgCenter{
+  max-width:100%;
+  min-width: 70%;
+  display: inline-block;
+  height:auto;
+}
+.box{
+  width:100%;
+  border:1px solid rgb(0, 255, 255);
+  resize:none;
+  background-color: #fff;
+  padding: 0 10px;
+}
+.box1{
+  text-indent: 0;
+  //padding: 0 10px;
+  width:100%;
+  background-color: #fff;
+  font-size: 16px;
+  line-height: 40px;
+  margin-bottom: 20px;
+}
+.time{
+    font-size: 14px;
+    color: #999;
+    text-align: right;
+    line-height: 21px;
+}
+.timeleft{
+  float:left;
+  font-size: 14px;
+  max-width:70%;
+  color: #999;
+  text-align: left;
+}
+.timeright{
+  float:right;
+  font-size: 14px;
+  color: #999;
+  text-align: right;
+}
+.time::after{
+  clear: both;
+  display: table;
+  content:"";
+}
+.deleteWord{
+  color:#5d5d5d;font-size:24px; position: absolute;top:5px;right:10px;
+}
+.cancelWord{
+  color:#5d5d5d;font-size:24px; float:left;margin-left:20px;margin-top:5px;
+}
+.saveWord{
+  color:#0975f0;font-size:24px; float:left;margin-left:50px;margin-top:5px;
+}
+
+
+ .editorBody{
+   border:1px solid rgb(0, 255, 255);
+ }
+
+ .plusBox{
+   text-align: center;
+ }
+ .wordedit{
+   width:30%;display: inline-block; line-height: 40px;color:#2685f2; cursor: pointer;
+ }
+ .imgedit{
+  width:30%;display: inline-block;line-height: 40px;color:#ff9800; cursor: pointer;
+}
+ .wordPlus{
+   color:#2685f2; font-size:24px; vertical-align: middle; padding-right:5px;
+ }
+ .imgPlus{
+  color:#ff9800; font-size:24px;vertical-align: middle;padding-right:5px;
+}

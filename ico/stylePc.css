@@ -1,0 +1,234 @@
+.bulegenerral {
+	color:#000;
+	padding-right: 0.2rem;
+}
+.bulebig {
+	color:#000;
+}
+.haveSE {
+	color:#000 !important;
+}
+.unhaveSE {
+	color:#000 !important;
+}
+.divedgray {
+	background: #fff;
+	height:0;
+}
+.mask_bgSh {
+	display: block !important;
+}
+.sortTitle,.topText1{font-size: 14px;}
+
+.bottom {
+	background: #f3f3f3;
+	margin: 0 0.07rem;
+}
+.sortTitleBg{
+	background: #fff;
+	padding-bottom: 0.2rem;
+	margin-bottom: 0.4rem;
+}
+.bottom .left {
+	float: left;
+	color:#565656;
+}
+.bottom .left {
+	float:none;
+}
+.bottom .left>div::after {
+	content:"";
+	display: table;
+	clear:both;
+}
+.sortTitle {
+	border-bottom: 1px solid #a5a5a5;
+	padding-bottom: 0.33rem;
+	padding-top: 0.33rem;
+	line-height: 1;
+	letter-spacing: 1px;
+	color:#2f2f2f;
+	padding-left: 0.07rem;
+	padding-right: 0.07rem;
+	position: relative;
+}
+.sortTitle>span {
+	float:right;
+	color:#7d7d7d;
+	max-width:7.5rem;
+	word-break:break-word;
+}
+.changeImg>img {
+	width:0.9rem;
+}
+.sortTitleBg:last-child {
+	padding-bottom: 1rem;
+	border-bottom: 0;
+	margin-bottom: 0;
+}
+.orderItem{
+    position: relative;
+}
+.orderItemquestion{
+    padding-bottom: 0.13rem;
+    padding-top: 0.13rem;
+    line-height: 2;
+    color: #4e4e4e;
+    padding-left: 0.10rem;
+}
+.orderItemquestionAnswer{
+	margin-bottom: 0.5rem;
+    line-height: 1.1;
+    color: #6f6f6f;
+	padding:0.1rem 0.4rem;
+	line-height: 1;
+	display: inline-block;
+	border-radius: 4px;
+	margin-left: 0.10rem;
+}
+.anwserTrue{
+	width:24px;
+}
+.anwserfalse{
+	width:19px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.anwserUnuse{
+	background: #e3e3e3;
+	color: #a1a1a1;
+	border: 1px solid #cbcbcb;
+	margin: 5px auto 0;
+	width:64px;
+}
+.borderdevide{ padding-left: 10px;padding-right: 10px;width: 100%;margin-left: -10px;}
+.borderdevide .fisrt{ position: absolute;left:0;bottom:-7px;width:14px;height:14px;background: #dfdfdf;border-radius:50%;border:none;}
+.borderdevide .second{ position: absolute;right:0;bottom:-7px;width:14px;height:14px;background: #dfdfdf;border-radius:50%;border:none;}
+.bottomInserted{ left: -10px;bottom: -2px;width: 100%;height:1px;border-top: 1px dashed #dedede;}
+.description{
+	border-top: 1px dashed #dedede;
+}
+.topText1{
+	display: block;
+	line-height: 1;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 24px;
+	text-align: left;
+}
+.slideValue{
+	line-height: 1.2;
+	padding-left: 24px;
+	margin-bottom: 5px;
+	float: left;
+	width:45%;
+	padding-right:5px;
+}
+
+.slideValue1{
+	color:#000000;
+	width:70px;
+	float: left;
+	text-align: left;
+}
+.slideValue2{
+    color: #000000;
+	float: left;
+	border-radius: 4px;
+	max-width: 90%;
+}
+.general{
+	color:#000;
+	
+}
+.bigger{
+	color:#000;
+	
+}
+.withoutgeneral{
+	color:#000;
+	
+}
+.slideValueS{
+	height: auto;
+	width:100%;
+	margin-right: -10px;
+}
+.printWriter{
+	color:#000;
+	font-size: 20px;
+	float: right;
+	margin-top: 70px;
+	margin-right: 26px;
+}
+.imgdescription{
+	float: left;
+	width:160px;
+	height:160px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+}
+.imgdescription img{
+	display: inline-block;
+	width:160px;
+	height:160px;
+}
+.paddingIt{
+	padding-bottom: 0.5rem;
+}
+.print{
+
+	height: 40px;
+	position: absolute;
+	top:10px;
+	right:10px;
+	z-index:99;
+	background: #35cf91 !important;
+	color: #fff;
+	text-align: center;
+	line-height: 40px;
+	font-size:14px;
+	padding:0 5px;
+	display: none;
+}
+.mask{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.2);
+    z-index:9;
+    display:none;
+}
+#closeloadingModal {
+    position: fixed;
+    top:50%;
+    left:50%;
+    z-index:11;
+    animation: spin 1800ms infinite linear;
+    -ms-animation: spin 1800ms infinite linear;
+    -webkit-animation: spin 1800ms infinite linear;
+    -moz-animation: spin 1800ms infinite linear;
+    width:50px;
+	height:50px;
+	margin-left: -25px;
+	margin-top: -25px;
+}
+@keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+    0%   { -moz-transform: rotate(0deg); }
+    100% { -moz-transform: rotate(360deg); }
+}
+@-ms-keyframes spin {
+    0%   { -ms-transform: rotate(0deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    0%   { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}

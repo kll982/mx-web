@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button,
+input {
+    border: none;
+    outline: none;
+}
+
+img {
+    display: block;
+    vertical-align: top;
+}
+
+a {
+    text-decoration: none;
+}
+
+.wrap {
+    max-width: 1200px;
+    min-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+}
+
+#wrap {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.title {
+    letter-spacing: 1px;
+    color: #000;
+    font-size: 30px;
+    font-weight: 600;
+    padding: 10px 5px;
+    text-align: center;
+}
+
+header {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 30px 0;
+    font-size: 16px;
+}
+
+.leftHalf {
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.rightHalf {
+    width: 50%;
+    float: right;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.leftTitle,
+.rightValue {
+    display: inline-block;
+    text-align: left;
+    font-weight: normal;
+    box-sizing: border-box;
+    line-height: 1.5;
+    vertical-align: top;
+    float: left;
+}
+
+.block {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+.leftTitle {
+    width: 100px;
+}
+
+.rightValue {
+    max-width: calc(100% - 100px);
+    /* width: 50%; */
+}
+
+.table {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+table {
+    /* max-width: 1200px; */
+    min-width: 800px;
+    width: 100% !important;
+}
+
+table,
+tr,
+td {
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid #2f2f2f;
+
+    margin-bottom: 50px;
+}
+
+thead {
+    font-size: 18px;
+}
+
+.tableWrap {
+    border: 1px solid #2f2f2f;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.tableTitle {
+    text-indent: 10px;
+    /* border-bottom: 1px solid #2f2f2f; */
+}
+
+tbody {
+    font-size: 16px;
+}
+
+.subtitle {
+    width: 85%;
+    border-right: 1px solid #2f2f2f;
+    float: left;
+    box-sizing: border-box;
+    padding-left: 50px;
+}
+
+.option {
+    width: 15%;
+    font-size: 14px;
+    float: right;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+
+.borderBottom {
+    width: 100%;
+    border-bottom: 1px solid #2f2f2f;
+    height: 0px;
+    content: '';
+    /* float: left; */
+}
+
+.borderTop {
+    border-top: 1px solid #2f2f2f;
+}
+
+.problem {
+    width: 100%;
+    padding-top: 20px;
+    padding-left: 50px;
+}
+
+.leftBlock,
+.rightBlock {
+    width: 50%;
+    float: left;
+    padding: 50px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row wrap;
+    /* width: calc(100% - 100px); */
+    justify-content: flex-start;
+}
+
+.imgWrap {
+    width: 33%;
+    height: auto;
+    /* height: 48%; */
+    padding: 1%;
+    /* flex: 0; */
+
+
+}
+
+.imgWrap>img {
+    width: 100%;
+}
+
+
+
+
+footer {
+    font-weight: bold;
+    text-align: right;
+    margin: 50px 0px 100px;
+    font-size: 21px;
+    /* line-height: 1.5; */
+}
+
+.underline {
+    display: inline-block;
+    width: 15%;
+    overflow: hidden;
+    text-decoration: underline;
+}
+
+.printBtn {
+    background: #35cf91 !important;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+    word-break: normal;
+    min-width: 80px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+
+@media print {
+    @page {
+        size: auto;
+        /* auto is the initial value */
+        margin: 0mm 12mm;
+        /* this affects the margin in the printer settings */
+    }
+
+    header {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    table,
+    tr,
+    td {
+        width: 100%;
+    }
+
+    .noprint {
+        display: none;
+        visibility: hidden;
+    }
+}

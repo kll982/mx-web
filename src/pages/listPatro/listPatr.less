@@ -1,0 +1,49 @@
+table{
+    border: none !important;
+}
+.center{
+    text-align: center !important;
+    // border:1px solid #2F8DEB;
+    border: none !important;
+    border-spacing :0;
+    border-right: 5px solid #ffffff !important;
+    border-bottom: 5px solid #ffffff !important;
+}
+table  tr:nth-child(odd){
+    background: #ffffff;
+}
+table  tr:nth-child(even){
+    background: #f7f7f7;
+}
+.buttonSmall{
+    margin: 0 5px;
+   }
+.inputItem{
+       display: inline;
+    //    background: #F5F5F5;
+       width: 160px;
+       height: 28px !important;
+   }
+   .cardTitle {
+    // border-left:4px solid #2F8DEB;
+    line-height: 1.5;
+    font-size: 20px;
+    color: rgba(64, 64, 64, 1);
+    position: relative;
+    margin-bottom: 24px;
+    text-indent: 24px;
+    right: 24px;
+}
+.cardTitle::before {
+    content: "";
+    position: absolute;
+    left:1px;
+    top: 0px;
+    height: 100%;
+    width: 4px;
+    background: #2F8DEB;
+}
+.returnItem{
+    float: right;
+    margin-right: 10px;
+}

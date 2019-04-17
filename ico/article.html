@@ -1,0 +1,273 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta http-equiv="Expires" CONTENT="0">
+  <meta http-equiv="Cache-Control" CONTENT="no-cache">
+  <meta http-equiv="Pragma" CONTENT="no-cache">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="shortcut icon" href="/ico/logo1.ico">
+
+  <script type="text/javascript">
+    //flexable.js 资源加载之前调用，防止重新渲染
+    (function (win, lib) { var doc = win.document; var docEl = doc.documentElement; var metaEl = doc.querySelector('meta[name="viewport"]'); var flexibleEl = doc.querySelector('meta[name="flexible"]'); var dpr = 0; var scale = 0; var tid; var flexible = lib.flexible || (lib.flexible = {}); if (metaEl) { console.warn("将根据已有的meta标签来设置缩放比例"); var match = metaEl.getAttribute("content").match(/initial\-scale=([\d\.]+)/); if (match) { scale = parseFloat(match[1]); dpr = parseInt(1 / scale) } } else { if (flexibleEl) { var content = flexibleEl.getAttribute("content"); if (content) { var initialDpr = content.match(/initial\-dpr=([\d\.]+)/); var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/); if (initialDpr) { dpr = parseFloat(initialDpr[1]); scale = parseFloat((1 / dpr).toFixed(2)) } if (maximumDpr) { dpr = parseFloat(maximumDpr[1]); scale = parseFloat((1 / dpr).toFixed(2)) } } } } if (!dpr && !scale) { var isAndroid = win.navigator.appVersion.match(/android/gi); var isIPhone = win.navigator.appVersion.match(/iphone/gi); var devicePixelRatio = win.devicePixelRatio; if (isIPhone) { if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) { dpr = 3 } else { if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) { dpr = 2 } else { dpr = 1 } } } else { dpr = 1 } scale = 1 / dpr } docEl.setAttribute("data-dpr", dpr); if (!metaEl) { metaEl = doc.createElement("meta"); metaEl.setAttribute("name", "viewport"); metaEl.setAttribute("content", "initial-scale=" + scale + ", maximum-scale=" + scale + ", minimum-scale=" + scale + ", user-scalable=no"); if (docEl.firstElementChild) { docEl.firstElementChild.appendChild(metaEl) } else { var wrap = doc.createElement("div"); wrap.appendChild(metaEl); doc.write(wrap.innerHTML) } } function refreshRem() { var width = docEl.getBoundingClientRect().width; if (width / dpr > 1024) { width = 1024 * dpr } var rem = width / 10; docEl.style.fontSize = rem + "px"; flexible.rem = win.rem = rem } win.addEventListener("resize", function () { clearTimeout(tid); tid = setTimeout(refreshRem, 300) }, false); win.addEventListener("pageshow", function (e) { if (e.persisted) { clearTimeout(tid); tid = setTimeout(refreshRem, 300) } }, false); if (doc.readyState === "complete") { doc.body.style.fontSize = 12 * dpr + "px" } else { doc.addEventListener("DOMContentLoaded", function (e) { doc.body.style.fontSize = 12 * dpr + "px" }, false) } refreshRem(); flexible.dpr = win.dpr = dpr; flexible.refreshRem = refreshRem; flexible.rem2px = function (d) { var val = parseFloat(d) * this.rem; if (typeof d === "string" && d.match(/rem$/)) { val += "px" } return val }; flexible.px2rem = function (d) { var val = parseFloat(d) / this.rem; if (typeof d === "string" && d.match(/px$/)) { val += "rem" } return val } })(window, window["lib"] || (window["lib"] = {}));
+  </script>
+   <script type="text/javascript" src='/ico/config.js'></script>
+   <style  type="text/css">
+    [v-cloak] {
+      display: none;
+    }
+  </style>  
+   <script>
+   console.log(urls)
+   var bulletinId = GetQueryString("bulletinId");
+   function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+   </script>
+  <script type="text/javascript" src='/ico/vue.js'></script>
+  <script type="text/javascript" src='/ico/axios.min.js'></script>
+</head>
+
+<body>
+  <div id="app" class="article" v-cloak>
+    <div class="title">{{showTitle}}</div>
+    <div class="time">
+        <div class="timeleft">{{showDepartment}}</div>
+        <div class="timeright">{{showTime}}</div>
+    </div>
+    <div class="article__content">
+      <p v-for="(item1, index) in contentList" v-bind:class="[item1.type==1? '' : 'widthImg', 'contact1']">
+          {{ item1.textContent }}
+          <img v-if="item1.type==2" :src="item1.imageUrl" alt="显示" class="pataimg"/>
+      </p>
+    </div>
+    
+  </div>
+  <script>
+    Vue.prototype.$http = axios
+    new Vue({
+      el: '#app',
+      data: function(){
+        return{
+            showTitle: "",
+            contentList:[],
+            showTime:"",
+            showDepartment:"",
+          }
+      },
+      methods: {
+        postData() {
+          var self = this
+          axios.get(urls+'article/detail', {
+            params: {
+              id: bulletinId
+            }
+          })
+          .then(function (response) {
+            console.log(response);
+            var p1=response.data.data.response;
+            var code=response.data.code;
+            if(code=="500"){
+              alert(response.data.message)
+              return
+            }
+            var p2=p1.info;
+            console.log(p2);
+            self.showTitle=p2.title;
+            self.contentList=p2.contentList;
+            self.showTime=self.tempToHour(p2.createTime);
+            self.showDepartment=!p2.author.msaName?"":p2.author.msaName;
+            console.log(self.showTitle)
+            console.log(self.contentList)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        },
+        tempToHour(s) {
+          var time = new Date(s);
+          var y = time.getFullYear();
+          var m = time.getMonth() + 1;
+          var d = time.getDate();
+          var s = time.getHours();
+          var k = time.getMinutes();
+          var u = time.getSeconds()
+          if(m<10){
+            m="0"+m
+          }
+          if(d<10){
+            d="0"+d
+          }
+          if(s<10){
+            s="0"+s
+          }
+          if(k<10){
+            k="0"+k
+          }
+          if(u<10){
+            u="0"+u
+          }
+          //console.log(y + "-" + m + "-" + d+" "+s+":"+k+":"+u) 
+          return y + "-" + m + "-" + d
+          
+        }
+      },
+      mounted(){
+        this.postData()
+      }
+    })
+  </script>
+  <style>
+    html,
+    body {
+      width: 100%;
+      /* height:100%; */
+      font-family: '微软雅黑';
+      font-size:12px;
+    }
+
+    body {
+      background: #fff;
+    }
+
+    body::-webkit-scrollbar,
+    html::-webkit-scrollbar {
+      display: none;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    a,
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      /*去掉a、input和button点击时的蓝色外边框和灰色半透明背景*/
+    }
+
+    #app {
+      margin: 0.33rem 0.33rem;
+      
+    }
+
+    .titleImg {
+      display: inline-block;
+      width: 100%;
+      height: auto;
+
+    }
+    .time,.timeleft,.timeright{
+      font-size: 14px;
+      color: #999;
+      text-align: right;
+      line-height:1.4;
+    }
+    [data-dpr="2"] .time,[data-dpr="2"] .timeleft,[data-dpr="2"] .timeright {
+      font-size: 28px;
+    }
+
+    [data-dpr="3"] .time,[data-dpr="3"] .timeleft,[data-dpr="3"] .timeright {
+      font-size: 42px;
+    }
+    .timeleft{
+      float:left;
+      max-width:70%;
+      text-align: left;
+    }
+    .timeright{
+      float:right;
+      text-align: right;
+    }
+    .time::after{
+      clear: both;
+      display: table;
+      content:"";
+    }
+    .article__content {
+      line-height: 1rem;
+      font-size: 16px;
+      padding-bottom: 20px;
+    }
+
+    [data-dpr="2"] .article__content {
+      font-size: 32px;
+    }
+
+    [data-dpr="3"] .article__content {
+      font-size: 48px;
+    }
+
+    .article .article__content p,
+    .article .article__content li,
+    .article .article__content span {
+      word-wrap: break-word;
+      color: #000;
+    }
+
+    .article .article__content p {
+      margin-top: 0.3rem;
+      line-height: 0.8rem;
+    }
+
+    .title {
+      font-size: 12.5px;
+      color: #ff6600;
+      letter-spacing: 1px;
+      position: relative;
+      color: #000;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 0.16rem;
+    }
+
+    [data-dpr="2"] .title {
+      font-size: 44px;
+    }
+
+    [data-dpr="3"] .title {
+      font-size: 66px;
+    }
+
+
+    .container1 {
+      padding-top: 1rem;
+      box-sizing: border-box;
+      height: 100%;
+    }
+    .imgnodata {
+      position: absolute;
+      top: 50%;
+      margin-top: -4rem;
+      left: 0%;
+      width: 100%;
+      text-align: center;
+      line-height: 1rem;
+      color: #999;
+    }
+    .widthImg{
+      text-align: center;
+    }
+    .pataimg {
+      max-width:100%;
+      min-width:50%;
+      display: inline-block;
+      height:auto;
+    }
+  </style>
+
+
+</body>
+
+</html>

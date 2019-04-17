@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>江苏省水路行业安全生产风险管理与隐患治理信息系统</title>
+		<link rel="stylesheet" type="text/css" href="printIt.css" />
+		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="allWrap">
+			<input class="printBtn noPrint" type="button" name="" id="" value="打印检查单" @click="printIt()" />
+			<div class="mainTitle bottomLine">
+				{{d.checkName}}
+				<div class="checklistCode">
+					{{d.checklistCode}}
+				</div>
+			</div>
+
+			<div class="special bottomLine p19_0" v-if="d.checkSortId==1">
+				<span class="half"><b>渡口名称：</b>{{this._value(d.compangInfo.name)}}</span>
+				<span class="half"><b>所属乡镇：</b>{{this._value(d.compangInfo.location)}}</span>
+				<span class="half"><b>运营人：</b> {{this._value(d.compangInfo.operator)}}</span>
+				<span class="half"><b>联系方式：</b>{{this._value(d.compangInfo.operatorPhone)}}</span>
+				<span class="half"><b>渡船船名：</b>{{this._value(d.compangInfo.shipsName)}}</span>
+				<span class="half"><b>载客定额：</b>{{this._value(d.compangInfo.busload)}}</span>
+			</div>
+
+			<div class="publicInfo bottomLine p19_0">
+				<span class="block"><b>检查单位：</b>{{this._value(d.msaName)}}</span>
+				<span class="block"><b>检查时间：</b>{{this._value(this.getDay(d.uploadTime))}}</span>
+				<span class="block"><b>检查方式：</b>{{this._value(InspectionMode)}}</span>
+				<span class="block"><b>检查依据：</b>{{this._value(InspectionBasis)}}</span>
+				<span class="block"><b>检查结果：</b>符合-{{Number(d.accord)}} 当场纠正-{{Number(d.correctCount)}} 限期整改-{{Number(d.reviewCount)}} 不适用-{{Number(d.notApplicableCount)}}
+				</span>
+			</div>
+
+			<div class="DisposalAdvice p19_0">
+				<h4>处置意见：</h4>
+				<p>一、当场纠正：
+					<div class="i2" v-for="(it,i) in w">
+						{{i+1}}、{{it.item}}
+					</div>
+				</p>
+				<p>二、限期整改：
+					<div class="i2" v-for="(it,i) in e">
+						{{i+1}}、{{it.item}}
+					</div>
+				</p>
+				<p class="i2">
+					上述问题，运营人应当在<u>{{day}}</u>内整改完毕后申请复查，并在此期限内落实相应的安全措施，防止事故发生。
+				</p>
+				<p class="i2">
+					附件：{{contentTitle}}
+				</p>
+
+				<div class="DisposalAdviceBottom">
+					<span class="tl marginAuto halfN">
+						<span class="block">检查人：{{ this._value(d.name)}}&emsp;{{this._value(d.synergyPerson)}}</span>
+						<span class="block">联系电话：{{this._value(d.phone)}}</span>
+					</span>
+				</div>
+
+			</div>
+			<div style="page-break-after: always"></div>
+
+			<div class="content">
+				<div class="contentTitle">
+					{{contentTitle}}
+					<div class="checklistCode">
+						{{d.checklistCode}}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var urls = location.origin.replace(/www/g, "bm"),
+			self;
+		new Vue({
+			el: '.allWrap',
+			data: function() {
+				self = this
+				return {
+					theRequest: {},
+					d: {
+						compangInfo: {}
+					},
+					s: [],
+					w: [],
+					e: [],
+					n: [],
+					day:"15日",
+					
+					InspectionMode: "",
+					InspectionBasis: "",
+
+					contentTitle: "内整改完毕后申请复查，并在此期限内落实相应的安全措施，防止事故发生"
+				}
+			},
+			// 方法
+			methods: {
+				_value: function(d) {
+					return !!d ? d : "--"
+				},
+				get_data: function() {
+					var url = location.search;
+					var theRequest = new Object();
+					if (url.indexOf("?") != -1) {
+						var str = url.substr(1);
+						strs = str.split("&");
+						for (var i = 0; i < strs.length; i++) {
+							theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+						}
+					}
+					this.theRequest = theRequest;
+					$.ajax({
+						url: urls + '/checklist/listDetailByDetailId',
+						data: {
+							detailId: theRequest.detailId,
+						},
+						xhrFields: {
+							withCredentials: true
+						},
+						success: function(y) {
+							if (y.code == 200) {
+								console.log("y", y.data.response)
+								var dd = y.data.response;
+								self.d = dd;
+								var s = [],
+									N = [],
+									w = [],
+									e = [];
+								for (var i in dd.list) {
+									var n = dd.list;
+									console.log(n[i])
+									if (n[i].optionId == 1) {
+										s.push(n[i])
+									}
+									if (n[i].optionId == 2) {
+										w.push(n[i])
+									}
+									if (n[i].optionId == 3) {
+										e.push(n[i])
+									}
+									if (n[i].optionId == 4) {
+										N.push(n[i])
+									}
+								}
+								self.s = s;
+								self.w = w;
+								self.e = e;
+								self.n = N;
+							} else {
+								alert(y.message)
+								window.close();
+							}
+						},
+						error: function(e) {
+
+						}
+					})
+				},
+				printIt: function() {
+					window.print();
+				},
+				getDay: function(date) {
+					if (date == null || date == "") {
+						return "--";
+					}
+					var pubtime = new Date(date),
+						pubdate = (pubtime.getFullYear()) + "年" +
+						(pubtime.getMonth() + 1) + "月" +
+						(pubtime.getDate()) + "日 " +
+						(pubtime.getHours()) + ":" +
+						(pubtime.getMinutes() < 10 ? "0" + pubtime.getMinutes() : pubtime.getMinutes()) + ":" +
+						(pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds());
+					return pubdate;
+
+				},
+
+			},
+			beforeMount: function() {
+				this.get_data();
+			},
+
+		})
+	</script>
+</html>

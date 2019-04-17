@@ -1,0 +1,184 @@
+html,
+body {
+	width: 100%;
+	/* height:100%;*/
+	font-family: '微软雅黑';
+	font-size:12px;
+}
+body {
+	background: #f3f3f3;
+}
+#app {
+	background: #f3f3f3;
+	overflow: hidden;
+}
+.title,.piaoju_content2 {
+	background: #fff;
+}
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+	display: none;
+}
+.clearfl::after{
+	clear: both;
+	display: table;
+	content:"";
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+a,
+button,
+input,
+optgroup,
+select,
+textarea {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	/*去掉a、input和button点击时的蓝色外边框和灰色半透明背景*/
+	
+}
+/* #app {
+	margin: 0.33rem 0 0;
+} */
+.titleImg {
+	display: inline-block;
+	width: 100%;
+	height: auto;
+}
+.time,.timeleft,.timeright {
+	font-size: 14px;
+	color: #999;
+	text-align: right;
+	line-height:1.4;
+}
+[data-dpr="2"] .time,[data-dpr="2"] .timeleft,[data-dpr="2"] .timeright {
+	font-size: 28px;
+}
+[data-dpr="3"] .time,[data-dpr="3"] .timeleft,[data-dpr="3"] .timeright {
+	font-size: 42px;
+}
+.timeleft {
+	float:left;
+	max-width:70%;
+	text-align: left;
+}
+.timeright {
+	float:right;
+	text-align: right;
+}
+.time::after {
+	clear: both;
+	display: table;
+	content:"";
+}
+.article__content {
+	line-height: 1rem;
+	font-size: 16px;
+	padding-bottom: 20px;
+}
+.piaoju_content2 .left div {
+	font-size: 16px;
+}
+[data-dpr="2"] .article__content,[data-dpr="2"] .piaoju_content2 .left div {
+	font-size: 32px;
+}
+[data-dpr="3"] .article__content,[data-dpr="3"] .piaoju_content2 .left div {
+	font-size: 48px;
+}
+.article .article__content p,
+.article .article__content li,
+.article .article__content span {
+	word-wrap: break-word;
+	color: #000;
+}
+.article .article__content p {
+	margin-top: 0.3rem;
+	line-height: 0.8rem;
+}
+.title {
+	font-size: 12.5px;
+	color: #ff6600;
+	letter-spacing: 1px;
+	position: relative;
+	color: #000;
+	font-size: 22px;
+	font-weight: 600;
+	padding-bottom: 0.16rem;
+	padding-left: 0.15rem;
+	padding-right: 0.15rem;
+	padding-top: 0.33rem;
+}
+[data-dpr="2"] .title {
+	font-size: 44px;
+}
+[data-dpr="3"] .title {
+	font-size: 66px;
+}
+.container1 {
+	padding-top: 1rem;
+	box-sizing: border-box;
+	height: 100%;
+}
+.imgnodata {
+	position: absolute;
+	top: 50%;
+	margin-top: -4rem;
+	left: 0%;
+	width: 100%;
+	text-align: center;
+	line-height: 1rem;
+	color: #999;
+}
+.widthImg {
+	text-align: center;
+}
+.pataimg {
+	max-width:100%;
+	min-width:50%;
+	display: inline-block;
+	height:auto;
+}
+.piaoju_content2 .left,.piaoju_content2 .right {
+	float: left;
+	color:#565656;
+}
+.piaoju_content2 .left {
+	float:none;
+}
+.piaoju_content2 .left>div::after {
+	content:"";
+	display: table;
+	clear:both;
+}
+.piaoju_content2 .left div {
+	border-bottom: 1px solid #a5a5a5;
+	padding-bottom: 0.33rem;
+	padding-top: 0.33rem;
+	line-height: 1;
+	letter-spacing: 1px;
+	color:#7d7d7d;
+	padding-left: 0.15rem;
+	padding-right: 0.15rem;
+}
+.piaoju_content2 .left div>span {
+	float:right;
+	color:#7d7d7d;
+	max-width:7.5rem;
+	word-break:break-word;
+}
+.piaoju_content2 .left div>em {
+	float:left;
+}
+.piaoju_content2 .left div:last-child {
+	padding-bottom: 1rem;
+	border-bottom: 0;
+}
+.rightdl>dl {
+	float: left;
+}
+.rightdl>dl>img {
+	float: left;
+	width:0.5rem;
+	height:0.5rem;
+}

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江苏省水路行业安全生产风险管理与隐患治理信息系统</title>
+		<meta http-equiv="Expires" CONTENT="0">
+		<meta http-equiv="Cache-Control" CONTENT="no-cache">
+		<meta http-equiv="Pragma" CONTENT="no-cache">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="shortcut icon" href="logo1.ico">
+		<link rel="stylesheet" href="DailySupervisionItemDetails.css">
+		<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js"></script>
+		<style type="text/css" media="print">
+			@page {
+				size: auto;
+				/* auto is the initial value */
+				margin: 0mm 0mm;
+				/* this affects the margin in the printer settings */
+			}
+
+			/* body {} */
+			html {
+				padding: 12mm 0mm;
+			}
+
+			#content {
+				width: 76%;
+				/* width: 800px; */
+				/*_width: 76%;*/
+				/* float: left; */
+				box-sizing: border-box;
+				overflow: hidden;
+			}
+
+			.img {
+				width: 110px;
+			}
+
+			.nowrap {
+				width: 60%;
+			}
+
+			.nowrap2 {
+				width: 58%;
+			}
+		</style>
+	</head>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src='vue.js'></script>
+	<script type="text/javascript" src='axios.min.js'></script>
+	<!--<script type="text/javascript" src='config.js'></script>-->
+
+	<body>
+		<div class="wrap">
+			<div id="content" class="relative">
+				<div class="title">
+					<span>{{Data.checklistTitle}}</span>
+				</div>
+				<div class="line-height2 margin30 font-size12">
+					<div class="left half pl5 ">
+						<div class="">
+							<span v-if="Data.checkSortId==1">所在乡镇：</span>
+							<span v-else>经营单位：</span>
+							<span>{{Data.companyName}}</span>
+						</div>
+						<div v-if="Data.checkSortId!=1" class="">
+							<span>是否通航：</span>
+							<span v-if="Data.checkSortId==2">通航水域</span>
+							<span v-else-if="Data.checkSortId==3">非通航水域</span>
+						</div>
+						<div class="">
+							<span>检查时间：</span>
+							<span>{{Data.uploadTime == null?"-":time(Data.uploadTime)}}</span>
+						</div>
+						<!--当场纠正数量+限期整改-->
+						<div class="">
+							<span>隐患：</span>
+							<span v-if="theRequest.dangerous.split('+')[0] == 0 && theRequest.dangerous.split('+')[1] == 0">无隐患</span>
+							<span v-else-if="theRequest.dangerous.split('+')[0] == 0 && theRequest.dangerous.split('+')[0] != 0">当场纠正&nbsp;{{theRequest.dangerous.split("+")[0]}}</span>
+							<span v-else-if="theRequest.dangerous.split('+')[0] == 0 && theRequest.dangerous.split('+')[1] != 0">限期整改&nbsp;{{theRequest.dangerous.split("+")[1]}}</span>
+							<span v-else>当场纠正&nbsp;{{theRequest.dangerous.split("+")[0]}} &nbsp;&nbsp;
+								限期整改&nbsp;{{theRequest.dangerous.split("+")[1]}}</span>
+						</div>
+						<div class="">
+							<span>是否解决：</span>
+							<span>{{theRequest.isSolve == "1" ? "未解决" : "已解决"}}</span>
+						</div>
+					</div>
+					<div class="right half pl5 ">
+						<div class="">
+							<span v-if="Data.checkSortId==1">运营人：</span>
+							<span v-else>联系人：</span>
+							<span>{{Data.operator}}</span>
+						</div>
+						<div class="">
+							<span v-if="Data.checkSortId==1">运营人手机：</span>
+							<span v-else>联系人手机：</span>
+							<span>{{Data.operatorPhone}}</span>
+						</div>
+						<div class="">
+							<span>检查人：</span>
+							<span>{{Data.createBy}}</span>
+						</div>
+						<div class="">
+							<span>检查人单位：</span>
+							<span>{{Data.createMsaName}}</span>
+						</div>
+						<div v-if="Data.checkSortId!=1">
+							<span>备案时间：</span>
+							<span>{{Data.recordTime == null?"-":time(Data.recordTime)}}</span>
+						</div>
+					</div>
+				</div>
+				<!-- table -->
+				<table cellspacing="0" collapse="collapse" class="col-10 margin30">
+					<tbody class="col-10" v-for="(item,index) in grade.parent">
+						<tr class="left col-10">
+							<th colspan="0" class="font-size14 noWeigth line-height2 col-10">
+								{{SectionToChinese(index+1)}}、&nbsp;
+								{{item.one}}
+							</th>
+						</tr>
+						<tr v-for="(i,ind) in item.children" class="left col-10">
+							<td class="font-size12 col-10 line-height2">
+								<div class="col-8 left  border-right-00">
+									<span class="left indent40">{{ind+1}}.</span>
+									<p class="left col-9" style="margin-left: 5px">{{i.three}}</p>
+								</div>
+								<div class="col-2 right">
+									<span class="left" style="margin-left: 20px">{{i.optionName}}</span>
+								</div>
+								<!--符合 -->
+								<div v-if="i.optionId == 1" class="border-top-00 error font-size11 line-height2 left col-10 paddingV30 indent40">
+									<p>问题描述</p>
+									<p class="font-size10 line-height1">&nbsp;</p>
+									<div class="half left line-height2">
+										<span class="left error-children"><span class="left">现场图片:</span></span>
+										<div style="display:inline-block;overflow: hidden;" class="ti20 nowrap2">
+											<span v-for="j in i.urls">
+												<img class="img left error-children " :src="j" alt="" style="margin:10px 5px;">
+											</span>
+										</div>
+										<span class="col-10 left error-children"><span class="left">位&nbsp;&nbsp;&nbsp;置:</span><span class="ti20 nowrap">{{(i.location == null ||i.location ==
+                                            "undefined")?"":i.location}}</span></span>
+									</div>
+
+								</div>
+								<!--限期整改 -->
+								<div v-if="i.optionId != 1" class="border-top-00 error font-size11 line-height2 left col-10 paddingV30 indent40">
+									<p>问题描述</p>
+									<p class="font-size10 line-height1">&nbsp;</p>
+									<div class="half left line-height2">
+										<span class="col-10 left error-children"><span class="left">问题描述:</span><span class="ti20 nowrap2">{{i.reviewDescribe}}</span></span>
+										<span class="col-10 left error-children" v-if="i.optionId == 3"><span class="left">整改要求:</span><span class="ti20 nowrap2">{{i.reviewRequire}}</span></span>
+										<span class="left error-children"><span class="left">现场图片:</span></span>
+										<div style="display:inline-block;overflow: hidden;" class="ti20 nowrap2">
+											<span v-for="j in i.urls">
+												<img class="img left error-children " :src="j" alt="" style="margin:10px 5px;">
+											</span>
+										</div>
+
+										<span class="col-10 left error-children"><span class="left">位&nbsp;&nbsp;&nbsp;置:</span><span class="ti20 nowrap">{{(i.location == null ||i.location ==
+                                            "undefined")?"":i.location}}</span></span>
+									</div>
+									<div class="half right line-height2">
+										<span class="col-10 left error-children"><span class="left">检查时间:</span><span class="ti20 nowrap2">{{i.uploadTime
+                                            == null?"":time(i.uploadTime)}}</span></span>
+										<span v-if="i.optionId == 3" class="col-10 left error-children"><span class="left">复查时间:</span><span class="ti20 nowrap2">{{i.reviewTime == null? "":timeDay(i.reviewTime)}}</span></span>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+				<p class="text-right font-size16 right marginBottom100">
+					<strong> 经营人(签字):__________________ </strong>
+				</p>
+				<span @click="Print()" class="printBtn absolute right-top" v-show="noShow">打印检查单</span>
+				<!-- <text v-text="theRequest"></text> -->
+			</div>
+		</div>
+	</body>
+	<script>
+		// window.onresize = window.onload = function () {
+		//     var right0 = (document.documentElement.clientWidth - 1200) / 2  + "px";
+		//     document.getElementsByClassName("right-top")[0].style.right = right0;
+		// };
+		var self, chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"],
+			chnUnitSection = ["", "万", "亿", "万亿", "亿亿"],
+			chnUnitChar = ["", "十", "百", "千"];
+		var urls = location.origin.replace(/www/g, "bm");
+		// console.log(head);
+		// // var urls="http://bm.jsmsa.com/";
+		// var urls = "http://bm.moxiang1.com/";
+		// import promise from 'es6-promise';
+		// promise.polyfill();
+		Vue.prototype.$http = axios;
+		new Vue({
+			el: '#content',
+			data: function() {
+				return {
+					theRequest: {},
+					Data: {},
+					Title: "",
+					// 1 渡口渡船
+					// 2 通航水域
+					// 3 非通航水域
+					noShow: true,
+					grade: {
+						parent: []
+					},
+				}
+			},
+			methods: {
+				Print: function() {
+					// 打印前隐藏
+					var printBtn = document.getElementsByClassName("printBtn")[0];
+					this.noShow = false;
+					printBtn.style.display = "none";
+					// 页眉和页脚
+					// if (!!window.ActiveXObject || "ActiveXObject" in window) { //是否ie
+					this.remove_ie_header_and_footer();
+					// }
+					// 打印
+					window.print();
+					// 打印后显示
+					printBtn.style.display = "inline-block";
+					this.noShow = true;
+					// 打印后关闭
+					// if (navigator.userAgent.indexOf("MSIE") > 0) {
+					//     window.opener = null;
+					//     window.close();
+					// } else if (navigator.userAgent.indexOf("Firefox") != -1 || navigator.userAgent.indexOf("Chrome") != -1) {
+					//     window.location.href = 'about:blank';
+					//     window.close();
+					// } else {
+					//     window.opener = null;
+					//     window.open('', '_self', '');
+					//     window.close();
+					// }
+				},
+				remove_ie_header_and_footer: function() {
+					// var hkey_path;
+					// hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+					// try {
+					//     var RegWsh = new ActiveXObject("WScript.Shell");
+					//     RegWsh.RegWrite(hkey_path + "header", "");
+					//     RegWsh.RegWrite(hkey_path + "footer", "");
+					// } catch (e) {}
+
+					// var hkey_root, hkey_path, hkey_key;
+					// hkey_root = "HKEY_CURRENT_USER";
+					// hkey_path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+					// //设置网页打印的页眉页脚为空
+					// try {
+					//     var RegWsh = new ActiveXObject("WScript.Shell");
+					//     hkey_key = "header";
+					//     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+					//     hkey_key = "footer";
+					//     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+					//     hkey_key = "margin_bottom";
+					//     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+					//     hkey_key = "margin_left";
+					//     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+					//     hkey_key = "margin_right";
+					//     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+					//     hkey_key = "margin_top";
+					//     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+					//     return true;
+					// } catch (e) {
+					//     return false;
+					// }
+				},
+				GetReques: function() {
+					var url = location.search; //获取url中"?"符后的字串
+					var theRequest = new Object();
+					if (url.indexOf("?") != -1) {
+						var str = url.substr(1);
+						strs = str.split("&");
+						for (var i = 0; i < strs.length; i++) {
+							theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+						}
+					}
+					// setData
+					this.theRequest = theRequest;
+					axios.get(urls + '/checklist/listDetailByDetailId', {
+						params: {
+							detailId: theRequest.detailId
+						},
+						withCredentials: true,
+					}).then(function(response) {
+						if (response.data.code == 200) {
+							var datas = response.data.data.response.list;
+							self.Data = datas;
+							var data = datas.checklistDtos;
+							var children = [],
+								grade = {
+									parent: []
+								},
+								parent = [];
+							// 数据处理
+							if (data.length > 1) {
+								for (var i = 1; i < data.length; i++) {
+									var j = i - 1;
+									if (data[i].one == data[j].one) {
+										children.push(data[j]);
+									} else {
+										children.push(data[j]);
+										parent.push({
+											one: data[j].one,
+											children: children
+										});
+										children = [];
+									}
+									if (i == data.length - 1) {
+										children.push(data[data.length - 1]);
+										parent.push({
+											one: data[data.length - 1].one,
+											children: children
+										});
+										grade.parent = parent
+									}
+								}
+							} else {
+								children.push(data[0])
+								parent.push({
+									one: data[0].one,
+									children: children
+								});
+								grade.parent = parent;
+							}
+							self.grade = grade;
+						} else {
+							alert(response.data.message);
+							window.close();
+							return
+						}
+
+					})
+				},
+				time: function(data) {
+					if (data == null) {
+						return "";
+					}
+					var pubtime = new Date(data),
+						pubdate = (pubtime.getFullYear()) + "年" +
+						(pubtime.getMonth() + 1) + "月" +
+						(pubtime.getDate()) + "日 " +
+						(pubtime.getHours()) + ":" +
+						(pubtime.getMinutes() < 10 ? "0" + pubtime.getMinutes() : pubtime.getMinutes()) + ":" +
+						(pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds());
+					return pubdate;
+				},
+				timeDay: function(data) {
+					if (data == null) {
+						return "";
+					}
+					var pubtime = new Date(data),
+						pubdate = (pubtime.getFullYear()) + "年" +
+						(pubtime.getMonth() + 1) + "月" +
+						(pubtime.getDate()) + "日 ";
+					return pubdate;
+				},
+				SectionToChinese: function(section) {
+					var strIns = '',
+						chnStr = '';
+					var unitPos = 0;
+					var zero = true;
+					while (section > 0) {
+						var v = section % 10;
+						if (v === 0) {
+							if (!zero) {
+								zero = true;
+								chnStr = chnNumChar[v] + chnStr;
+							}
+						} else {
+							zero = false;
+							strIns = chnNumChar[v];
+							strIns += chnUnitChar[unitPos];
+							chnStr = strIns + chnStr;
+						}
+						unitPos++;
+						section = Math.floor(section / 10);
+					}
+					return chnStr;
+				}
+			},
+			beforeMount: function() {
+				self = this;
+				self.GetReques();
+			},
+		})
+	</script>
+
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>江苏省水路行业安全生产风险管理与隐患治理信息系统</title>
+    <link rel="shortcut icon" href="logo1.ico" type="image/x-icon">
+    <style>
+        @page {
+            size: auto;
+            /* auto is the initial value */
+            margin: 0mm 12mm;
+            /* this affects the margin in the printer settings */
+        }
+
+        .printwrap {
+            margin: 0 auto;
+            max-width: 1200px;
+            min-width: 800px;
+            margin-top: 20px;
+
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        div {
+            padding: 10px 0px;
+            overflow: hidden;
+            font-size: 18px;
+        }
+
+        table.printTable {
+            width: 100%;
+            border: 1px solid #1f1212;
+            border-collapse: collapse;
+            border-spacing: 0px;
+
+        }
+
+        tr {
+            border: 1px solid #1f1212;
+
+        }
+
+        th {
+            border: 1px solid #1f1212;
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        td {
+            border: 1px solid #1f1212;
+            padding: 3px 5px;
+        }
+
+        td:first-of-type {
+            width: 30%;
+            text-align: center;
+        }
+
+        td:nth-of-type(2) {
+            width: 50%;
+        }
+
+        td:last-of-type {
+            width: 20%;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 20px;
+            margin-left: 30px;
+            float: right;
+        }
+    </style>
+</head>
+<script src="../../../ico/jquery.js"></script>
+
+<body>
+    <div class="printwrap">
+        <h2 class="title"></h2>
+        <div>
+            <span class="dataOrigin"></span>
+            <time class="statisticsTime" style="float: right"></time>
+        </div>
+
+        <table class="printTable">
+            <thead>
+                <tr>
+                    <th>分类</th>
+                    <th>统计项目</th>
+                    <th>数量</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+
+            </tbody>
+        </table>
+        <div>
+            <span class="name"></span>
+            <time style="float: right" class="phone"></time>
+        </div>
+    </div>
+</body>
+<script>
+    var OK = false;
+    var http = location.origin.replace(/www/g, "bm"),
+        url = location.search;
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    remove_ie_header_and_footer();
+    $.ajax({
+        url: http + "/spStatistic/summarizTask",
+        type: "get",
+        data: {
+            msaId: theRequest.msaId,
+            taskId: theRequest.taskId,
+            endTime: theRequest.endTime,
+            endYear: theRequest.endYear,
+            isChild: theRequest.isChild,
+            startTime: theRequest.startTime,
+            startYear: theRequest.startYear,
+        },
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            if (res.code == 500) {
+                var q = confirm(res.message);
+                if (q == true) {
+                    window.close();
+                } else {
+                    window.close();
+                }
+
+            } else if (res.code == 600) {
+                var q = confirm("请登录");
+                if (q == true) {
+                    window.close();
+                } else {
+                    window.close();
+                }
+            } else {
+                let li = res.data.response;
+                let list = res.data.response.item;
+                let lists = res.data.response.list;
+                for (let i in list) {
+                    for (let l in lists) {
+                        if (list[i].id == lists[l].itemId) {
+                            list[i].value = lists[l].statisticsValue;
+                        }
+
+                    }
+                }
+                $(".title").html(li.title);
+                $(".dataOrigin").html("数据源：" + li.dataOrigin);
+                $(".statisticsTime").html(li.statisticsTime);
+                $(".name").html("汇总人：" + li.name + "（" + li.msaName + "）");
+                $(".phone").html("联系电话：" + li.phone + "&emsp;&emsp;" + "汇总日期：" + li.time);
+                $(".tbody").html("");
+                for (var i in list) {
+                    $(".tbody").append(
+                        '<tr><td>' + list[i].one + '</td><td>' + list[i].two + '</td><td>' + Number(
+                            list[i].value) + '</td></tr>'
+                    )
+                }
+                OK = true;
+                if (OK == true) {
+                    window.print();
+                    window.close();
+                }
+            }
+        }
+    })
+
+    function remove_ie_header_and_footer() {
+        var hkey_path;
+        hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell");
+            RegWsh.RegWrite(hkey_path + "header", "");
+            RegWsh.RegWrite(hkey_path + "footer", "");
+        } catch (e) {}
+
+        var hkey_root, hkey_path, hkey_key;
+        hkey_root = "HKEY_CURRENT_USER";
+        hkey_path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        //设置网页打印的页眉页脚为空
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell");
+            hkey_key = "header";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "footer";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "margin_bottom";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "margin_left";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "margin_right";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "margin_top";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // window.print();
+    // window.close();
+    // http: //bm.moxiang1.com/spStatistic/summarizTask?msaId=10&taskId=117&startYear=2019&endYear=2019&startTime=2019-01-10&endTime=2019-01-27&isChild=1
+    //     http: //www.moxiang1.com/spStatistic/summarizTask?msaId=10&taskId=117&endTime=2019-01-27&endYear=2019&isChild=1&startTime=2019-01-10&startYear=2019
+</script>
+
+</html>

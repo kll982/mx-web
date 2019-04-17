@@ -1,0 +1,412 @@
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.nodata{
+	width: 100%;
+    text-align: center;
+    border-top:1px solid rgba(0, 0, 0, 0.25);
+    padding-top: 10px;
+}
+.flexRow{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */ 
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex;
+    flex-direction:row;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    
+}
+.flexColumn{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */ 
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex;
+    flex-direction:column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+   
+}
+.flexFullItem {
+    -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;         /* OLD - Firefox 19- */
+    -webkit-flex: 1;          /* Chrome */
+    -ms-flex: 1;              /* IE 10 */
+    flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+.flexTableRow{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */ 
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex;
+    flex-direction:row;
+    
+    
+}
+.flexTableColumn{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */ 
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex;
+    flex-direction:column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background: #fff;
+    
+}
+.boxcontent{
+    border:1px solid #999999;
+}
+.info100{
+    width:100%;
+    border-bottom:1px solid #999999;
+    word-break: break-word;
+    text-align: center;
+
+}
+.info50{
+    width:50%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center; 
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+}
+.info10{
+    width:10%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+
+}
+.info20{
+    width:20%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+
+}
+.info40{
+    width:40%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+
+}
+.info40,.info20,.info10{
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center; 
+    justify-content: center;
+}
+
+.info50,.info100,.info10,.info20,.info40{
+    line-height: 1.1;
+    padding:5px 0;
+}
+.push1{
+    padding: 5px 0;
+}
+.rightBorder{
+    position: relative;
+}
+.rightBorder>div{
+    border-right:1px solid #999999;
+}
+.rightBorder>div:last-child{
+    border-right-width:0;
+}
+.positionAb{
+    position: absolute;
+    top:-1px;
+    left:-1px;
+    right:-1px;
+    border: 1px solid #999;
+}
+.table100{
+    width:100%;
+    border-bottom:1px solid #999999;
+    word-break: break-word;
+    text-align: center;
+    background: #fff;
+
+}
+.table50{
+    width:50%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+    background: #fff;
+
+}
+.table10{
+    width:10%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+    background: #fff;
+
+}
+.table20{
+    width:20%;
+    text-align: center;
+    word-break: break-word;
+    // border-bottom:1px solid #999999;
+    background: #fff;
+}
+.table40{
+    width:40%;
+    text-align: center;
+    word-break: break-word;
+    border-bottom:1px solid #999999;
+    background: #fff;
+
+}
+.table40,.table20,.table10{
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center; 
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    cursor:pointer;
+}
+.table50,.table100,.table10,.table20,.table40{
+    line-height: 1.1;
+    padding:5px 0;
+}
+.tableBorder{
+    position: relative;
+}
+.tableBorder>td{
+    border-right:1px solid #999999;
+}
+.tableLarge1{
+    padding:20px 0;
+}
+.tableLarge2{
+    padding:15px 0;
+    width:22.22%;
+}
+.tableMiddle1{
+    padding:0;
+    align-items: inherit;
+    -webkit-align-items: inherit;
+    width:90%;
+}
+.tableMiddle1>div{
+   flex:1;
+   border-bottom: 1px solid #999999;
+//    padding:20px 0;
+}
+
+.tableMiddle2{
+    padding:0;
+    width:77.78%;
+}
+.tableMiddle3{
+    width:55.56%
+}
+.tableMiddle2>div{
+   flex:1;
+   border-bottom: 1px solid #999999;
+//    padding:5px 0;
+//    padding:20px 0;
+}
+.tableMiddle2>div:last-child{
+    border-bottom: 0;
+}
+.aligncenter{
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center; 
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    align-items: inherit;
+    -webkit-align-items: inherit;
+}
+.tableMiddle31{
+    width:28.57%;
+    border-right: 1px solid #999999;
+    padding:5px 0;
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center; 
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+}
+.tableMiddle32{
+    flex:1;
+    text-align: center;
+    word-break: break-word;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.stepAction{
+    position: fixed;
+    bottom: 20px;
+    left:50%;
+}
+.widthout1 .number1{ display: none;}
+.widthout2 .number2{ display: none;}
+.widthout3 .number3{ display: none;}
+.widthout12 .number1,.widthout12 .number2{ display: none;}
+.widthout13 .number1,.widthout13 .number3{ display: none;}
+.widthout23 .number2,.widthout23 .number3{ display: none;}
+.widthout3 .number1{ width: 25%;}
+.widthout3 .number2{ width: 25%;}
+.widthout2 .number1{ width: 25%;}
+.widthout2 .number3{ width: 25%;}
+.widthout1 .number3{ width: 25%;}
+.widthout1 .number2{ width: 25%;}
+.widthout12 .number3{ width: 50%;}
+.widthout13 .number2{ width: 50%;}
+.widthout23 .number1{ width: 50%;}
+
+//table样式
+.widthout3 .table10,.widthout2 .table10,.widthout1 .table10{width:25%;}
+.widthout3 .tableMiddle2,.widthout2 .tableMiddle2,.widthout1 .tableMiddle2{width:75%;}
+.widthout3 .tableMiddle31,.widthout2 .tableMiddle31,.widthout1 .tableMiddle31{width:33.33%;}
+
+.widthout3 .tableMiddle2 > div:last-child,.widthout2 .tableMiddle2 > div:last-child,.widthout1 .tableMiddle2 > div:last-child,{
+    border-bottom:1px solid #999999;
+}
+.widthout3 .flexTableRow:last-child .tableMiddle2> div:last-child,.widthout2 .flexTableRow:last-child .tableMiddle2> div:last-child,.widthout1 .flexTableRow:last-child .tableMiddle2> div:last-child,{
+    border-bottom:0;
+}
+.positionAb ,.positionAb ,.positionAb{
+    border-right:1px solid #999999 !important;
+    background: #fff;
+    width:100%;
+}
+.widthout13 .table10,.widthout23 .table10,.widthout12 .table10{width:25%;}
+.widthout13 .tableMiddle2,.widthout23 .tableMiddle2,.widthout12 .tableMiddle2{width:100%;}
+.widthout13 .tableMiddle31,.widthout23 .tableMiddle31,.widthout12 .tableMiddle31{width:50%;}
+.positionAb>tbody>tr:first-child{
+    margin-top:-2px;
+}
+.positionAb>tbody>tr{
+    margin-left:-2px;
+}
+.td25{
+    width:25%;
+    text-align:center;
+}
+.td10{
+    width:10%;
+    text-align:center;
+}
+.td20{
+    width:20%;
+    text-align:center;
+}
+.td50{
+    width:50%;
+    text-align:center;
+    
+}
+.littlepadding,.push1td{
+    padding:4px 0;
+    border-bottom: 1px solid #999999;
+    border-right: 1px solid #999999;
+    text-align: center;
+}
+.fi1 {}
+.td100{
+    width:100%;
+
+}
+.zhanwei.top1{
+
+} 
+.zhanwei .tdborder1{
+    width:10%;
+} 
+.zhanwei .tdborder2{
+    width:20%;
+} 
+.zhanwei .tdborder3{
+    width:20%;
+} 
+td input{
+    width:90% !important;
+    margin-left:auto;
+    margin-right:auto;
+}
+.isDiveI{
+    background: red;
+}
+i{
+    font-style: normal;
+}
+.menu1{
+    width: 0; /*设置为0 隐藏自定义菜单*/
+    height: 125px;
+    overflow: hidden; /*隐藏溢出的元素*/
+    box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
+    position: fixed; /*自定义菜单相对与body元素进行定位*/
+    z-index:20;
+}
+.menu{
+    width: 130px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+    background: #108ee9
+}
+.menu2{
+    width: 130px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+    background: red;
+}
+.menubg{
+    position: fixed;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0);
+    z-index:1;
+    top:0;
+    left:0;
+
+}
+.tdaREA{
+    background: red;
+
+}

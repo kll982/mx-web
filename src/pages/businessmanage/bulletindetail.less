@@ -1,0 +1,237 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 20px;
+}
+
+h1, h2, h4, h4, h5, h6 {
+  text-align: left;
+}
+
+.setdepart {
+  width: 100%;
+  display: inline-block;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.setdepart::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.container {
+  width: 620px;
+  margin: 20px auto;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 20px 20px;
+  box-shadow: 0 0 24px #aeb6cc;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #d1d1d1;
+  box-sizing: content-box;
+  position: relative;
+}
+
+.containerBg {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background: #fff;
+  z-index:1
+}
+.proArt{
+  margin: 10px auto;
+}
+
+.articleTitle {
+  margin: 10px auto;
+  position: relative;
+  z-index: 5;
+}
+
+.articleTitleInput {
+  width: 620px;
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 0;
+  font-weight: bold;
+  font-size: 18px!important;
+
+  
+}
+.articleSortIndex1{
+  position: relative;
+  width:130px;
+  line-height: 40px;
+}
+.articleSortIndex{
+  line-height: 40px;
+  height:40px;
+  width: 50px;
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 0;
+  margin-top:10px;
+}
+
+.editer {
+  position: relative;
+  z-index: 11;
+}
+.editerBg{
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background: #fff;
+}
+
+.suudj{
+	position: absolute;
+	left:0px;
+  top:0px;
+  right:0;
+  bottom: 0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+	-moz-opacity: 0;
+	filter:alpha(opacity=0);
+	-webkit-opacity: 0;
+	-o-opacity:0;
+	-khtml-opacity:0;
+	opacity: 0;
+  cursor: pointer;
+  height:26px;
+	z-index:11;
+}
+
+.wordContainer {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 11;
+  margin-bottom: 20px;
+
+}
+.wordContainer::after{
+  clear: both;
+  content:"";
+  display: table;
+
+}
+
+.button:first-child {
+  margin-left: 30%;
+}
+
+.button {
+  float: left;
+  margin-left: 20%;
+}
+
+.imgContainer {
+  width: 100%;
+  height: auto;
+  position: relative;
+  text-align: center;
+  z-index: 11;
+}
+.imgCenter{
+  max-width:100%;
+  min-width: 70%;
+  display: inline-block;
+  height:auto;
+}
+.box{
+  width:100%;
+  resize:none;
+  background-color: #fff;
+  padding: 0 10px;
+  border: none;
+  font-size: 16px!important;
+  line-height: 1.8;
+
+}
+.deleteWord{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+  z-index: 1;
+  background-color: #999;
+  color: #fff;
+  font-size: 18px;
+  padding: 2px;
+  border-radius: 2px;
+
+}
+
+.cancelWord {
+  color: #5d5d5d;
+  font-size: 24px;
+  float: left;
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.saveWord {
+  color: #0975f0;
+  font-size: 24px;
+  float: left;
+  margin-left: 50px;
+  margin-top: 5px;
+}
+
+
+ .editorBody{
+   border:1px solid rgb(0, 255, 255);
+ }
+
+.plusBox {
+  text-align: center;
+  position: relative;
+  z-index: 11;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.wordedit {
+  width: 30%;
+  display: inline-block;
+  line-height: 26px;
+  color: #2685f2;
+  cursor: pointer;
+  position: relative;
+  z-index: 21;
+}
+
+.imgedit {
+  width: 30%;
+  display: inline-block;
+  line-height: 26px;
+  color: #ff9800;
+  cursor: pointer;
+  position: relative;
+  z-index: 21;
+}
+
+.wordPlus {
+  color: #2685f2;
+  font-size: 24px;
+  vertical-align: middle;
+  padding-right: 5px;
+}
+
+.imgPlus {
+  color: #ff9800;
+  font-size: 24px;
+  vertical-align: middle;
+  padding-right: 5px;
+}

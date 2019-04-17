@@ -1,0 +1,348 @@
+@left : 308px;
+
+.leftWidth {
+    height: 100%;
+    position: relative;
+    float: left;
+    width: @left;
+    position: absolute;
+    z-index: 1;
+    background: white;
+    padding: 24px 40px;
+    overflow-y: auto;
+}
+
+.leftButtonWrap {
+    background: white;
+    width: 12px;
+    height: 108px;
+    box-sizing: center-box;
+    position: absolute;
+    top: 50%;
+    margin-top: -54px;
+    z-index: 2;
+    border-radius: 0px 30px 30px 0px;
+    display: inline-block;
+    vertical-align: middle;
+
+    i {
+        line-height: 108px;
+        text-align: center;
+        color: #999999;
+        font-size: 12px;
+        vertical-align: middle;
+    }
+}
+
+.rightWidth {
+    float: right;
+    height: 100%;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #F7F7F7;
+    // padding-bottom: 100px;
+}
+
+.cardWrap {
+    background: white;
+    margin: 24px 68px 0px 24px;
+    padding: 18px 20px 24px;
+
+}
+
+.cardWrap:last-of-type {
+    margin-bottom: 80px;
+}
+
+.cardTitle {
+    // border-left:4px solid #2F8DEB;
+    line-height: 1.5;
+    font-size: 20px;
+    color: rgba(64, 64, 64, 1);
+    position: relative;
+    margin-bottom: 24px;
+
+    .cardTitleRightItem {
+        float: right;
+    }
+}
+
+.cardTitle::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 0px;
+    height: 100%;
+    width: 4px;
+    background: #2F8DEB;
+
+}
+
+.BlueButton12 {
+    font-size: 12px;
+    background: #2F8DEB;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 5px 20px;
+    border-radius: 4px;
+}
+
+.searchGroup {
+    text-align: left;
+
+    >* {
+        // float: left;
+        min-width: 50%;
+        max-width: 70%;
+    }
+}
+
+.Model {
+    dl {
+        width: 100%;
+        padding: 8px 0px;
+        text-align: center;
+        overflow: hidden;
+
+        dt {
+            display: inline-block;
+            width: 30%;
+            text-align: right;
+            margin-right: 20px;
+            vertical-align: top;
+        }
+
+        dd {
+            display: inline-block;
+            width: 50%;
+            text-align: left;
+
+            >* {
+                width: 100%;
+            }
+
+            img {
+                width: 16px;
+            }
+        }
+    }
+}
+
+.must {
+    color: red;
+    font-style: normal;
+}
+
+.Table {
+    width: 100%;
+
+    tr {
+        width: 100%;
+
+        td,
+        th {
+            border-right: 5px solid #ffffff !important;
+            // border-bottom: 5px solid #ffffff !important;
+            border-bottom: none;
+        }
+    }
+
+    th {
+        background: #EBEBEB !important;
+    }
+
+    tr:nth-of-type(2n+1) {
+        background: #FFFFFF !important;
+    }
+
+    tr:nth-of-type(2n) {
+        background: #F5F5F5 !important;
+    }
+
+
+}
+
+.fromList {
+    overflow: hidden;
+
+    dl {
+        overflow: hidden;
+
+        dd.justify {
+            width: 100px;
+            height: 30px;
+            float: left;
+            margin-right: 16px;
+            display: inline-block;
+            text-align: justify;
+            line-height: 1.7;
+
+        }
+
+        dd.justify:after {
+            display: inline-block;
+            /*行内元素*/
+            content: '';
+            width: 100%;
+            /*可以挤掉文字，保证不跟文字在同一行*/
+            // visibility: hidden;
+        }
+
+        dt {
+            width: 426px;
+            float: left;
+            vertical-align: middle;
+            // text-align: left;
+            overflow: hidden;
+
+            >input {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.longButton {
+    width: 212px;
+    height: 32px;
+    line-height: 1;
+    font-size: 14px;
+    padding: 9px 8px;
+    text-align: center;
+    box-sizing: border-box;
+    letter-spacing: 8px;
+    background: linear-gradient(128deg, rgba(47, 141, 235, 1), rgba(61, 125, 235, 1));
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+.rightButton {
+    line-height: 1;
+    font-size: 12px;
+    padding: 9px 24px;
+    text-align: center;
+    box-sizing: border-box;
+    background: linear-gradient(128deg, rgba(47, 141, 235, 1), rgba(61, 125, 235, 1));
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+.button(@background, @color, @fontsize, @padding) {
+
+    background: @background;
+    color: @color;
+    border-radius: 4px;
+    padding: @padding;
+    outline: none;
+    border: 1px solid transparent;
+    letter-spacing: 4px;
+    font-size: @fontsize;
+    line-height: 1.5;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:link,
+    &:visited {
+        background: transparent;
+        color: @background;
+        border: 1px solid @background;
+    }
+}
+
+.Button5ECF8B {
+    .button(#5ECF8B, #fff, 12px, 4px 10px 4px 14px);
+}
+
+.Button2F8DEB {
+    .button(#2F8DEB, #fff, 12px, 4px 10px 4px 14px);
+}
+
+.ButtonF04B31 {
+    .button(#F04B31, #fff, 12px, 4px 10px 4px 14px);
+}
+
+.ButtonF0BD31 {
+    .button(#F0BD31, #fff, 12px, 4px 10px 4px 14px)
+}
+
+.ButtonMargin {
+    margin: 0px 10px 10px 0px;
+}
+
+.nowrap {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.leftImgWrap {
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+        display: inline-block;
+    }
+
+    .leftImg_rightItem {
+        display: inline-block;
+        margin-left: 18px;
+
+        >span {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        >p {
+            color: #BFBFBF;
+            font-size: 14px;
+            text-align: center;
+        }
+    }
+
+}
+
+.colorFont(@color) {
+    color: @color;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.bluesColor {
+    .colorFont(#2F8DEB)
+}
+
+.yellowsColor {
+    .colorFont(#F0BD31)
+}
+
+.orangesColor {
+    .colorFont(#F06C31)
+}
+
+.redsColor {
+    .colorFont(#F03131)
+}
+
+.graysColor {
+    .colorFont(#6A7A8B)
+}
+
+.size20 {
+    font-size: 18px;
+}
+
+.tagGray {
+    border: 1px solid #dde1eb;
+    background: #ebeef2;
+}
+
+// className={this.state.list.level == 1 ? MaritimeAffairs.bluesColor : this.state.list.level == 2 ? MaritimeAffairs.yellowsColor : this.state.list.level == 3 ? MaritimeAffairs.orangesColor : this.state.list.level == 4 ? MaritimeAffairs.redsColor : MaritimeAffairs.graysColor}

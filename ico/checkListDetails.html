@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>江苏省水路行业安全生产风险管理与隐患治理信息系统</title>
+	<!-- <link rel="shortcut icon" href="logo1.ico"> -->
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<style type="text/css">
+		body {
+			padding: 15px;
+		}
+
+		header {
+			font-size: 16px;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		#content {
+			font-size: 14px;
+		}
+
+		.block {
+			overflow: hidden;
+			padding: 5px 0px;
+			line-height: 1.7;
+		}
+
+		.itemRightValue {
+			display: inline-block;
+			width: calc(100% - 15px * 5);
+			float: right;
+			word-break: break-all;
+		}
+
+		.secondSize {
+			width: calc(100% - 15px * 3);
+		}
+
+		.threeSize {
+			width: calc(100% - 15px * 4);
+		}
+
+		.fiveSize {
+			width: calc(100% - 15px * 6);
+		}
+
+		.imgwrap {
+			width: 31%;
+			/* height: 0; */
+			padding-bottom: 31%;
+			margin: 1%;
+			box-sizing: border-box;
+			background: transparent no-repeat center/cover;
+			position: relative;
+			overflow: hidden;
+			vertical-align: middle;
+			cursor: pointer;
+		}
+
+		.imgwrap>img {
+			margin: auto;
+			/* vertical-align: middle; */
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+			outline: none;
+		}
+
+		.flex {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: flex-start;
+			box-sizing: border-box;
+		}
+
+		/* 放大 */
+		.bigger {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: none;
+			text-align: center;
+			/* background: transparent no-repeat center/cover; */
+			background: rgba(0, 0, 0, 0.6);
+			cursor: pointer;
+		}
+
+
+		.bigger>img {
+			width: 90%;
+			width: auto;
+			margin: auto;
+			/* vertical-align: middle; */
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			cursor: pointer;
+		}
+
+		.blueTag {
+			border: 1px solid #418aeb;
+			padding: 0px 10px;
+			color: #418aeb;
+		}
+
+		a {
+			color: #418aeb;
+		}
+
+		.redTag {
+			border: 1px solid red;
+			padding: 0px 10px;
+			color: red;
+		}
+	</style>
+</head>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+
+<body>
+	<header></header>
+	<div id="content">
+		<div class="block hiddenUnits">
+			隐患单位：<span class="itemRightValue"></span>
+		</div>
+		<div class="block supervisoryUnits">
+			督办单位：<span class="itemRightValue"></span>
+		</div>
+		<div class="block reviewPeople">
+			复查人：<span class="itemRightValue threeSize"></span>
+		</div>
+		<div class="block reviewTime">
+			复查时间：<a class="itemRightValue" href="javascript:void(0);"></a>
+		</div>
+		<div class="block problemDescription">
+			问题描述：<span class="itemRightValue"></span>
+		</div>
+
+		<div class="block require">
+			整改要求：<span class="itemRightValue"></span>
+		</div>
+		<div class="block rectification">
+			整改后情况：<span class="itemRightValue fiveSize"></span>
+		</div>
+		<div class="block img">
+			照片:
+			<div class="itemRightValue secondSize flex"></div>
+		</div>
+		<div class="block result">
+			整改结果：<span class="itemRightValue"></span>
+		</div>
+
+	</div>
+	<div class="bigger">
+		<img alt="">
+	</div>
+</body>
+<script type="text/javascript">
+	window.obj = {
+		reviewId: "",
+	};
+
+	getName()
+	window.onload = function () {
+
+		window.url = location.origin.replace("www", "bm");
+		$.ajax({
+			url: url + "/checklist/solveTheProblem",
+			data: {
+				reviewId: obj.reviewId,
+			},
+			xhrFields: {
+				withCredentials: true
+			},
+			success: function (res) {
+				var datas = res.data.response;
+				// 标题
+				$("header").text("隐患项名称："+datas.itemName)
+				// 隐患单位
+				$(".hiddenUnits .itemRightValue").text(datas.companyName)
+				// 督办单位
+				$(".supervisoryUnits .itemRightValue").text(datas.companyMsaName)
+				// 复查人
+				$(".reviewPeople .itemRightValue").text(datas.name)
+				// 复查时间
+				$(".reviewTime .itemRightValue").text(datas.reviewTime)
+				// 问题描述
+				$(".problemDescription .itemRightValue").text(datas.reviewDescribe)
+				// 整改要求
+				$(".require .itemRightValue").text(datas.reviewRequire)
+				// 整改后情况
+				$(".rectification .itemRightValue").text(datas.finishDescribe)
+				$(".img .itemRightValue").html(imgs(datas.pic))
+				// 整改结果
+				$(".result .itemRightValue").html('<span class="tag">' + datas.result + '</span>')
+				if (datas.result == "隐患解除") {
+					$(".tag").addClass("blueTag")
+				} else {
+					$(".tag").addClass("redTag")
+				}
+			}
+		})
+	}
+
+	// 对象
+	function getName() {
+		// var name = getCookie("data");
+		var url = location.search; //获取url中"?"符后的字串
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for (var i = 0; i < strs.length; i++) {
+				var name = unescape(strs[i].split("=")[0]);
+				var value = unescape(strs[i].split("=")[1]);
+				obj[name] = value;
+			}
+			return obj;
+		}
+		// var strs = name.split("&");
+		// for (var i = 0; i < strs.length; i++) {
+		// var name = unescape(strs[i].split("=")[0]);
+		// var value = unescape(strs[i].split("=")[1]);
+		// obj[name] = value;
+		// }
+	}
+
+	function imgs(urls) {
+		var imgs = "";
+		if (!!!urls) {
+			return "无";
+		} else {
+			var U = urls.split(",");
+			for (var i in U) {
+				imgs +=
+					'<div class="imgwrap"  data-url="' + U[i] +
+					'"><img class="clickBigger" onclick="bigger(' + "'" + U[i] + "'" + ')" src="' + U[i] +
+					'" title=""></div>';
+			}
+			return imgs
+		}
+	}
+
+	// 放大
+	$(".bigger").click(function () {
+		$(".bigger").css("display", "none")
+	})
+
+	function bigger(U) {
+		$(".bigger").css({
+			"display": "block",
+		})
+		$(".bigger img").attr({
+			"src": U
+		})
+	}
+</script>
+
+</html>

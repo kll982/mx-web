@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>江苏省水路行业安全生产风险管理与隐患治理信息系统</title>
+    <link rel="shortcut icon" href="logo1.ico">
+    <link rel="stylesheet" href="dailyPrint.css">
+</head>
+<script src="jquery.js"></script>
+
+<body>
+    <!-- checkSortIdIS1
+    checkSortIdISThreeItem
+    checkSortIdIS8
+    checkSortIdIS9
+    checkSortIdIS11 -->
+
+
+    <div id="allWrap">
+        <input class="noPrint printBtn" type="button" value="打印检查单" />
+        <div id="titleWrap">
+            <h1 id="mainTitle"></h1>
+            <h3 id="subTitle"></h3>
+            <h5 id="SerialNumber"></h5>
+        </div>
+        <div id="basic">
+            <div class="leftWrap">
+                <div class="block operator">
+                    <span class="leftTitle">运营人：</span>
+                    <span class="rightValue threeSpcing"></span>
+                </div>
+                <div class="block operatorPhone">
+                    <span class="leftTitle">运营人手机：</span>
+                    <span class="rightValue fiveSpcing"></span>
+                </div>
+
+
+
+                <!-- 1 -->
+                <div class="block checkSortIdIS1 shipsName">
+                    <span class="leftTitle">渡船船名：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+                <!-- 2,3 -->
+                <div class="block checkSortIdISThreeItem companyName">
+                    <span class="leftTitle">经营单位：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+                <!-- 8 -->
+                <div class="block checkSortIdIS8 employeeCount">
+                    <span class="leftTitle">职工人数：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+                <div class="block checkSortIdIS8 managerCount">
+                    <span class="leftTitle">安全管理人员：</span>
+                    <span class="rightValue sixSpcing"></span>
+                </div>
+                <div class="block checkSortIdIS8 employeeCount">
+                    <span class="leftTitle">持证上岗人员</span>
+                    <span class="rightValue sixSpcing"></span>
+                </div>
+
+                <!-- 9 -->
+                <div class="block checkSortIdIS9 shipLoad">
+                    <span class="leftTitle">船舶吨位：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+
+                <!-- 11 -->
+                <div class="block checkSortIdIS11 yachtCount">
+                    <span class="leftTitle">拥有游艇数：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+
+                <!-- 14 -->
+                <div class="block checkSortIdIS14 isSystem">
+                    <span class="leftTitle">是否体系：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+
+            </div>
+            <div class="rightWrap">
+                <div class="block companyMsaName">
+                    <span class="leftTitle">所属海事局：</span>
+                    <span class="rightValue fiveSpcing"></span>
+                </div>
+                <div class="block address">
+                    <span class="leftTitle">地址/作用水域：</span>
+                    <span class="rightValue servenSpcing"></span>
+                </div>
+
+                <!-- 1 -->
+                <div class="block checkSortIdIS1 CarryPassenger">
+                    <span class="leftTitle">载客定额：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+                <!-- 2,3 -->
+                <div class="block checkSortIdISThreeItem recordTime">
+                    <span class="leftTitle">备案时间：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+                <!-- 8 -->
+                <div class="block checkSortIdIS8 machineCount">
+                    <span class="leftTitle">加油机数量：</span>
+                    <span class="rightValue sixSpcing"></span>
+                </div>
+                <div class="block checkSortIdIS8 gunCount">
+                    <span class="leftTitle">加油枪数量：</span>
+                    <span class="rightValue sixSpcing"></span>
+                </div>
+                <div class="block checkSortIdIS8 systemName">
+                    <span class="leftTitle">主要管理制度名称：</span>
+                    <span class="rightValue eightSpcing"></span>
+                </div>
+
+            </div>
+        </div>
+        <div id="fixed">
+            <div class="leftWrap">
+                <div class="block checkName">
+                    <span class="leftTitle">检查人：</span>
+                    <span class="rightValue threeSpcing"></span>
+                </div>
+                <div class="block uploadTime">
+                    <span class="leftTitle">检查时间：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+
+                <div class="block isSolve">
+                    <span class="leftTitle">隐患是否解决：</span>
+                    <span class="rightValue sixSpcing tag"></span>
+                </div>
+            </div>
+            <div class="rightWrap">
+                <div class="block msaName">
+                    <span class="leftTitle">检查单位：</span>
+                    <span class="rightValue fiveSpcing"></span>
+                </div>
+                <div class="block checkCount">
+                    <span class="leftTitle">检查项目：</span>
+                    <span class="rightValue fourSpcing"></span>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <!-- 1 -->
+            <div class="contentItem">
+                <div class="contentTitle">一、符合<span class="rightItem"></span></div>
+                <div class="contentText"></div>
+            </div>
+            <!-- 2 -->
+            <div class="contentItem">
+                <div class="contentTitle">二、当场纠正<span class="rightItem"></span></div>
+                <div class="contentText"></div>
+            </div>
+            <!-- 3 -->
+            <div class="contentItem">
+                <div class="contentTitle">三、限期整改<span class="rightItem"></span></div>
+                <div class="contentText"></div>
+            </div>
+            <!-- 4 -->
+            <div class="contentItem">
+                <div class="contentTitle">四、不适用<span class="rightItem"></span></div>
+                <div class="contentText"></div>
+            </div>
+        </div>
+        <footer>
+            <div class="footerTitle">备注/建议：</div>
+            <div class="footerContent"></div>
+        </footer>
+    </div>
+    <div class="bigger">
+        <img src="" alt="">
+    </div>
+</body>
+<script>
+    window.obj = {
+        detailId: "",
+    };
+    window.url = location.origin.replace("www", "bm");
+    var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"],
+        chnUnitSection = ["", "万", "亿", "万亿", "亿亿"],
+        chnUnitChar = ["", "十", "百", "千"];
+    getName();
+
+    $(document).ready(function () {
+        // 打印
+        document.getElementsByTagName("input")[0].onclick = function () {
+            window.print();
+        }
+
+        $.ajax({
+            url: url + '/checklist/listDetailByDetailId',
+            data: {
+                detailId: obj.detailId,
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (response) {
+                if (response.code == 200) {
+                    var datas = response.data.response,
+                        list = datas.list;
+                    console.log(datas);
+                    $("#mainTitle").text(datas.checkName.split("--")[0]);
+                    $("#subTitle").text(datas.checkName.split("--")[1]);
+                    $("#SerialNumber").text("检查单编号：" + rightValue(datas.checklistCode));
+
+                    // checkSortIdIS1
+                    // checkSortIdISThreeItem
+                    // checkSortIdIS8
+                    // checkSortIdIS9
+                    // checkSortIdIS11
+                    if (datas.checkSortId == 1) {
+                        // $(".checkSortIdIS1").css("display", "block");
+                        $(".checkSortIdISThreeItem").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS8").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS9").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS11").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS14").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                    } else if (datas.checkSortId == 2 || datas.checkSortId == 3 || datas
+                        .checkSortId == 12) {
+                        $(".checkSortIdIS1").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS8").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS9").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS11").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS14").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                    } else if (datas.checkSortId == 8) {
+                        $(".checkSortIdIS1").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdISThreeItem").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS9").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS11").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS14").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                    } else if (datas.checkSortId == 9) {
+                        $(".checkSortIdIS1").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdISThreeItem").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS8").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS11").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS14").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                    } else if (datas.checkSortId == 11) {
+                        $(".checkSortIdIS1").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdISThreeItem").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS8").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS9").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS14").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                    }else if(datas.checkSortId == 14){
+                        $(".checkSortIdIS1").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdISThreeItem").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS8").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS9").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                        $(".checkSortIdIS11").css({
+                            "display": "none",
+                            "margin": 0,
+                            "padding": 0,
+                        });
+                    }
+                    // 地址/作用水域:
+                    $(".address .rightValue").text(rightValue(datas.compangInfo.location));
+
+                    // 1
+                    // 渡船船名：
+                    $(".shipsName .rightValue").text(rightValue(datas.compangInfo.shipsName));
+                    // 载客定额
+                    $(".CarryPassenger .rightValue").text(rightValue(datas.compangInfo.busload));
+
+                    // 2,3,12
+                    // 经营单位
+                    $(".companyName .rightValue").text(rightValue(datas.unit));
+                    // 备案时间
+                    $(".recordTime .rightValue").text(getDay(datas.recordTime));
+
+                    // 8
+                    $(".employeeCount .rightValue").text(rightValue(datas.compangInfo
+                        .employeeCount));
+                    $(".managerCount .rightValue").text(rightValue(datas.compangInfo.managerCount));
+                    $(".machineCount .rightValue").text(rightValue(datas.compangInfo.machineCount));
+                    $(".gunCount .rightValue").text(rightValue(datas.compangInfo.gunCount));
+                    $(".systemName .rightValue").text(rightValue(datas.compangInfo.systemName));
+                    // 9
+                    // 船舶吨位：
+                    $(".shipLoad .rightValue").text(rightValue(datas.compangInfo.shipLoad));
+                    // 11
+                    // 拥有游艇数：
+                    $(".yachtCount .rightValue").text(rightValue(datas.compangInfo.yachtCount));
+// 14
+$(".isSystem .rightValue").text(rightValue(datas.compangInfo.isSystem))
+
+
+                    // 所属海事局
+                    $(".companyMsaName .rightValue").text(rightValue(datas.companyMsaName));
+                    // 运营人
+                    $(".operator .rightValue").text(rightValue(datas.operator));
+                    // 运营人手机
+                    $(".operatorPhone .rightValue").text(rightValue(datas.operatorPhone));
+                    // 检查时间
+                    $(".uploadTime .rightValue").text(getDay(datas.uploadTime));
+
+                    var checkName = rightValue(datas.name) + " (" + rightValue(datas.phone) + ") " +
+                        (datas.synergyPerson == null ? "" : datas.synergyPerson == "" ? "" : datas
+                            .synergyPerson);
+
+                    // 检查人
+                    $(".checkName .rightValue").text(checkName);
+                    // 检查人手机
+                    // $(".checkPhone .rightValue").text(rightValue(datas.phone));
+                    // 检查人单位
+                    $(".msaName .rightValue").text(rightValue(datas.msaName));
+
+                    // 符合
+                    var successNum = isNaN(datas.accord) ? "" : "符合-" + Number(datas.accord);
+                    // 当场纠正
+                    var warnNum = isNaN(datas.correctCount) ? "" : " 当场纠正-" + Number(datas
+                        .correctCount);
+                    // 限期整改
+                    var errorNum = isNaN(datas.reviewCount) ? "" : " 限期整改-" + Number(datas
+                        .reviewCount);
+                    // 不适用
+                    var notApply = isNaN(datas.notApplicableCount) ? "" : " 不适用-" + Number(datas
+                        .notApplicableCount);
+
+                    $(".checkCount .rightValue").text(successNum + " " + warnNum + " " + errorNum +
+                        " " + notApply);
+                    $(".isSolve .rightValue").text(datas.isSolve == 1 ? "未解决" : "已解决");
+                    if (datas.isSolve == 1) {
+                        $(".tag").addClass("redTag")
+                    } else {
+                        $(".tag").addClass("blueTag")
+                    }
+                    // 符合几项
+                    $(".contentTitle").eq(0).children(".rightItem").html("共 " + Number(datas
+                            .accord) +
+                        " 项");
+                    // 当场纠正几项
+                    $(".contentTitle .rightItem").eq(1).html("共 " + Number(datas.correctCount) +
+                        " 项");
+                    // 限期整改几项
+                    $(".contentTitle .rightItem").eq(2).html("共 " + Number(datas.reviewCount) +
+                        " 项");
+                    // 不适用几项
+                    $(".contentTitle .rightItem").eq(3).html("共 " + Number(datas
+                            .notApplicableCount) +
+                        " 项");
+
+                    // 备注/建议
+                    $(".footerContent").text(rightValue(datas.remarks));
+                    var SuccessList = [],
+                        WarnList = [],
+                        ErrorList = [],
+                        NotApplyList = [];
+                    for (var key in list) {
+                        if (list[key].optionId == 1) {
+                            SuccessList.push(list[key]);
+
+                        } else if (list[key].optionId == 2) {
+                            WarnList.push(list[key]);
+
+                        } else if (list[key].optionId == 3) {
+                            ErrorList.push(list[key]);
+                        } else if (list[key].optionId == 4) {
+                            NotApplyList.push(list[key]);
+                        }
+                    }
+
+                    for (var key in SuccessList) {
+                        $(".contentItem").eq(0).children(".contentText").append(
+                            returnSuccessHtml(Number(key) + 1,
+                                SuccessList[key].item, SuccessList[key].location, SuccessList[
+                                    key].picUrl))
+                    }
+                    for (var key in WarnList) {
+                        $(".contentItem").eq(1).children(".contentText").append(returnWarnHtml(
+                            Number(key) + 1,
+                            WarnList[key].item, WarnList[key].troubleDescribe, WarnList[key]
+                            .location,
+                            WarnList[key].picUrl))
+                    }
+                    for (var key in ErrorList) {
+                        $(".contentItem").eq(2).children(".contentText").append(returnErrorHtml(
+                            Number(key),
+                            Number(key) + 1,
+                            ErrorList[key].dtos,
+                            ErrorList[key].item, ErrorList[key].troubleDescribe,
+                            ErrorList[key].reviewRequire, ErrorList[key].reviewTime,
+                            ErrorList[key].location, ErrorList[key].picUrl))
+
+                    }
+                    for (var key in NotApplyList) {
+                        $(".contentItem").eq(3).children(".contentText").append(
+                            returnNotApplyHtml(Number(key) + 1,
+                                NotApplyList[key].item, NotApplyList[key].location))
+                    }
+
+                } else {
+                    alert(response.message);
+                    window.close();
+                    return
+                }
+            },
+        })
+    })
+    // 符合
+    function returnSuccessHtml(index, title, position, urls) {
+        return ' <div class="contentSubtitle">' + index + '.' +
+            rightValue(title) +
+            '</div><div class="contentText"><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+            rightValue(position) +
+            '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight flex">' +
+            imgs(urls) + '</div></div></div>';
+    }
+    // 不适用
+    function returnNotApplyHtml(index, title, position) {
+        return ' <div class="contentSubtitle">' + index + '.' +
+            rightValue(title) +
+            '</div><div class="contentText"><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+            rightValue(position) +
+            '</div></div></div>';
+    }
+    // 当场纠正
+    function returnWarnHtml(index, title, describe, position, urls) {
+        return ' <div class="contentSubtitle">' + index + '.' +
+            rightValue(title) +
+            '</div><div class="contentText"><div class="block"><span class="contentLeft">检查描述：</span><div class="contentRight">' +
+            rightValue(describe) +
+            '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+            rightValue(position) +
+            '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight flex">' +
+            imgs(urls) + '</div></div></div>';
+    }
+    // 限期整改
+    function returnErrorHtml(key, index, dtos, title, describe, result, reviewTime, position, urls) {
+        var auditKind = "";
+        // 未复查
+        if (dtos == null || dtos.length == 0) {
+            auditKind =
+                '<div class="reviewTitle"><span class="contentLeft">复查情况</span><div class="contentRight">未复查</div></div>'
+        } else {
+            auditKind =
+                '<div class="reviewTitle">' + '复查情况' + '<div class="rightItem noPrint" onclick="upOrDown(' + key +
+                ')">' + ' <span class="showOrNot">展开</span> ' + '<img class="rightItem" src="./arrow.png"/>' +
+                '</div></div>' + '<div class="reviewContentWrap">'
+            // 复查情况
+            for (var i in dtos) {
+                // 符合（隐患消除）
+                if (dtos[i].optionId == 1) {
+                    // 审核情况
+                    var pass = "";
+                    if (dtos[i].isPass == 0) {
+                        auditKind +=
+                            '<div class="reviewItem"><div class="block"><span class="contentLeft">时间：</span><div class="contentRight">' +
+                            getDay(dtos[i].createTime) +
+                            '</div></div><div class="block"><span class="contentLeft">检查人：</span><div class="contentRight">' +
+                            dtos[i].createBy + " (" + dtos[i].operatorPhone + ") " + " " + (dtos[i].synergyPerson ==
+                                null ? "" : dtos[i].synergyPerson == "" ? "" : dtos[i].synergyPerson) + " " +
+                            '</div></div><div class="block"><span class="contentLeft">复查结果：</span><div class="contentRight">' +
+                            '不符合 限期整改' +
+                            '</div></div><div class="block"><span class="contentLeft">检查描述</span><div class="contentRight">' +
+                            dtos[i].reviewDescribe +
+                            '</div></div><div class="block"><span class="contentLeft">整改要求：</span><div class="contentRight">' +
+                            dtos[i].reviewRequire +
+                            '</div></div><div class="block"><span class="contentLeft">复查时间：</span><div class="contentRight">' +
+                            '<a href="javascript:void(0);">' + dtos[i].reviewTime + '</a>' +
+                            '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+                            rightValue(dtos[i].location) +
+                            '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight">' +
+                            imgs(dtos[i].url) +
+                            '</div></div></div>';
+                    }
+                    // 未审核
+                    else if (dtos[i].isPass == 1) {
+                        auditKind +=
+                            '<div class="reviewItem"><div class="block"><span class="contentLeft">时间：</span><div class="contentRight">' +
+                            getDay(dtos[i].createTime) +
+                            '</div></div><div class="block"><span class="contentLeft">检查人：</span><div class="contentRight">' +
+                            dtos[i].createBy + " (" + dtos[i].operatorPhone + ") " + " " + (dtos[i].synergyPerson ==
+                                null ? "" : dtos[i].synergyPerson == "" ? "" : dtos[i].synergyPerson) + " " +
+                            '</div></div><div class="block"><span class="contentLeft">复查结果：</span><div class="contentRight">' +
+                            '符合 隐患消除' +
+                            '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+                            rightValue(dtos[i].location) +
+                            '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight">' +
+                            imgs(dtos[i].url) +
+                            '</div></div>' +
+                            '<div class="block"><span class="contentLeft">审核结果</span><div class="contentRight">' +
+                            '待审核' +
+                            '</div></div></div>';
+                    }
+                    // 未通过
+                    else if (dtos[i].isPass == 2) {
+                        auditKind +=
+                            '<div class="reviewItem"><div class="block"><span class="contentLeft">时间：</span><div class="contentRight">' +
+                            getDay(dtos[i].createTime) +
+                            '</div></div><div class="block"><span class="contentLeft">检查人：</span><div class="contentRight">' +
+                            dtos[i].createBy + " (" + dtos[i].operatorPhone + ") " + " " + (dtos[i].synergyPerson ==
+                                null ? "" : dtos[i].synergyPerson == "" ? "" : dtos[i].synergyPerson) + " " +
+                            '</div></div><div class="block"><span class="contentLeft">复查结果：</span><div class="contentRight">' +
+                            '符合 隐患消除' +
+                            '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+                            rightValue(dtos[i].location) +
+                            '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight">' +
+                            imgs(dtos[i].url) +
+                            '</div></div>' +
+                            '<div class="block"><span class="contentLeft">审核结果</span><div class="contentRight">' +
+                            '未通过 退回' +
+                            '</div></div><div class="block"><span class="contentLeft">审核人：</span><div class="contentRight">' +
+                            '' + dtos[i].passNameAndPhone +
+                            '</div></div><div class="block"><span class="contentLeft">退回原因：</span><div class="contentRight">' +
+                            '' + dtos[i].noPassCause +
+                            '</div></div></div>';
+                    }
+                    // 通过
+                    else if (dtos[i].isPass == 3) {
+                        auditKind +=
+                            '<div class="reviewItem"><div class="block"><span class="contentLeft">时间：</span><div class="contentRight">' +
+                            getDay(dtos[i].createTime) +
+                            '</div></div><div class="block"><span class="contentLeft">检查人：</span><div class="contentRight">' +
+                            dtos[i].createBy + " (" + dtos[i].operatorPhone + ") " + " " + (dtos[i].synergyPerson ==
+                                null ? "" : dtos[i].synergyPerson == "" ? "" : dtos[i].synergyPerson) + " " +
+                            '</div></div><div class="block"><span class="contentLeft">复查结果：</span><div class="contentRight">' +
+                            '符合 隐患消除' +
+                            '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+                            rightValue(dtos[i].location) +
+                            '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight">' +
+                            imgs(dtos[i].url) +
+                            '</div></div>' +
+                            '<div class="block"><span class="contentLeft">审核结果</span><div class="contentRight">' +
+                            '通过' +
+                            '</div></div><div class="block"><span class="contentLeft">审核人：</span><div class="contentRight">' +
+                            '' + dtos[i].passNameAndPhone +
+                            '</div></div></div>';
+                    }
+                }
+                // 不符合（限期整改）
+                else if (dtos[i].optionId == 3) {
+                    auditKind +=
+                        '<div class="reviewItem"><div class="block"><span class="contentLeft">时间：</span><div class="contentRight">' +
+                        getDay(dtos[i].createTime) +
+                        '</div></div><div class="block"><span class="contentLeft">检查人：</span><div class="contentRight">' +
+                        dtos[i].createBy + " (" + dtos[i].operatorPhone + ") " + " " + (dtos[i].synergyPerson == null ?
+                            "" : dtos[i].synergyPerson == "" ? "" : dtos[i].synergyPerson) + " " +
+                        '</div></div><div class="block"><span class="contentLeft">复查结果：</span><div class="contentRight">' +
+                        '不符合 限期整改' +
+                        '</div></div><div class="block"><span class="contentLeft">检查描述</span><div class="contentRight">' +
+                        dtos[i].reviewDescribe +
+                        '</div></div><div class="block"><span class="contentLeft">整改要求：</span><div class="contentRight">' +
+                        dtos[i].reviewRequire +
+                        '</div></div><div class="block"><span class="contentLeft">复查时间：</span><div class="contentRight">' +
+                        '<a href="javascript:void(0);">' + dtos[i].reviewTime + '</a>' +
+                        '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+                        rightValue(dtos[i].location) +
+                        '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight">' +
+                        imgs(dtos[i].url) +
+                        '</div></div></div>';
+                }
+                // 不符合（继续整改）
+                else if (dtos[i].optionId == 4) {
+                    auditKind +=
+                        '<div class="reviewItem"><div class="block"><span class="contentLeft">时间：</span><div class="contentRight">' +
+                        getDay(dtos[i].createTime) +
+                        '</div></div><div class="block"><span class="contentLeft">检查人：</span><div class="contentRight">' +
+                        dtos[i].createBy + " (" + dtos[i].operatorPhone + ") " + " " + (dtos[i].synergyPerson == null ?
+                            "" : dtos[i].synergyPerson == "" ? "" : dtos[i].synergyPerson) + " " +
+                        '</div></div><div class="block"><span class="contentLeft">复查结果：</span><div class="contentRight">' +
+                        '不符合 继续整改' +
+                        '</div></div><div class="block"><span class="contentLeft">检查描述</span><div class="contentRight">' +
+                        dtos[i].reviewDescribe +
+                        '</div></div><div class="block"><span class="contentLeft">整改要求：</span><div class="contentRight">' +
+                        dtos[i].reviewRequire +
+                        '</div></div><div class="block"><span class="contentLeft">复查时间：</span><div class="contentRight">' +
+                        '<a href="javascript:void(0);">' + dtos[i].reviewTime + '</a>' +
+                        '</div></div><div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+                        rightValue(dtos[i].location) +
+                        '</div></div><div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight">' +
+                        imgs(dtos[i].url) +
+                        '</div></div></div>';
+                }
+            }
+        }
+
+        return ' <div class="contentSubtitle">' + index + '.' + rightValue(title) + '</div>' +
+            '<div class="contentText">' +
+            '<div class="block"><span class="contentLeft">检查描述：</span><div class="contentRight">' + rightValue(
+                describe) +
+            '</div></div>' +
+            '<div class="block"><span class="contentLeft">整改要求：</span><div class="contentRight">' +
+            rightValue(result) +
+            '</div></div>' +
+            '<div class="block"><span class="contentLeft">复查时间：</span><div class="contentRight">' +
+            '<a href="javascript:void(0);">' + rightValue(reviewTime) + '</a>' +
+
+            '</div></div>' +
+            '<div class="block"><span class="contentLeft">定位：</span><div class="contentRight">' +
+            rightValue(position) +
+            '</div></div>' +
+            '<div class="block"><span class="contentLeft">现场照片：</span><div class="contentRight flex">' +
+            imgs(urls) + '</div></div>' + '<div class="review">' + auditKind + '</div>' + '</div>';
+    }
+    // 图片
+    function imgs(urls) {
+        var imgs = "";
+        if (!!!urls) {
+            return "无";
+        } else {
+            var U = urls.split(",");
+            for (var i in U) {
+                imgs +=
+                    '<div class="imgwrap"  data-url="' + U[i] +
+                    '"><img class="clickBigger" onclick="bigger(' + "'" + U[i] + "'" + ')" src="' + U[i] +
+                    '" title="" alt="' + U[i] + '"></div>';
+            }
+            return imgs
+        }
+    }
+
+
+    // 赋值
+    function rightValue(value) {
+        if (!!!value || value === "undefined" || value == "null") {
+            return "";
+        } else {
+            return value;
+        }
+
+    }
+
+    // 获取cookie
+    function getCookie(cname) {
+        var name = cname + "=";
+        var Cookies = document.cookie.split(';');
+        for (var key in Cookies) {
+            var cookie = myTrim(Cookies[key]);
+            if (cookie.indexOf(name) == 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return ""
+    }
+    // 对象
+    function getName() {
+        // var name = getCookie("data");
+        var url = location.search; //获取url中"?"符后的字串
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                var name = unescape(strs[i].split("=")[0]);
+                var value = unescape(strs[i].split("=")[1]);
+                obj[name] = value;
+            }
+            return obj;
+        }
+        // var strs = name.split("&");
+        // for (var i = 0; i < strs.length; i++) {
+        // var name = unescape(strs[i].split("=")[0]);
+        // var value = unescape(strs[i].split("=")[1]);
+        // obj[name] = value;
+        // }
+    }
+    // 去掉两端空格
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm, '');
+    }
+    // 时间戳转换
+    function getDay(date) {
+        if (date == null || date == "") {
+            return "--";
+        }
+        var pubtime = new Date(date),
+            pubdate = (pubtime.getFullYear()) + "年" +
+            (pubtime.getMonth() + 1) + "月" +
+            (pubtime.getDate()) + "日 " +
+            (pubtime.getHours()) + ":" +
+            (pubtime.getMinutes() < 10 ? "0" + pubtime.getMinutes() : pubtime.getMinutes()) + ":" +
+            (pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds());
+        return pubdate;
+
+    }
+    // 转换大写数字
+    function SectionToChinese(section) {
+        var strIns = '',
+            chnStr = '';
+        var unitPos = 0;
+        var zero = true;
+        while (section > 0) {
+            var v = section % 10;
+            if (v === 0) {
+                if (!zero) {
+                    zero = true;
+                    chnStr = chnNumChar[v] + chnStr;
+                }
+            } else {
+                zero = false;
+                strIns = chnNumChar[v];
+                strIns += chnUnitChar[unitPos];
+                chnStr = strIns + chnStr;
+            }
+            unitPos++;
+            section = Math.floor(section / 10);
+        }
+        return chnStr;
+    }
+
+    // 放大
+    $(".bigger").click(function () {
+        $(".bigger").css("display", "none")
+    })
+
+    function bigger(U) {
+        $(".bigger").css({
+            "display": "block",
+        })
+        $(".bigger img").attr({
+            "src": U
+        })
+    }
+
+    // 展开收起
+    function upOrDown(key) {
+        var Div = $(".reviewTitle").eq(key).next(".reviewContentWrap"),
+            Dis = Div.css("display"),
+            Title = $(".reviewTitle").eq(key).children(".rightItem");
+
+        if (Dis == "block") {
+            Div.fadeOut();
+            Title.children("img").css({
+                "transform": "rotate(270deg)",
+                "transition": "all 0.5s",
+            })
+            Title.children(".showOrNot").text("展开");
+
+        } else if (Dis == "none") {
+            Title.children("img").css({
+                "transform": "rotate(90deg)",
+                "transition": "all 0.5s",
+            })
+            Div.fadeIn();
+            Title.children("span").text("收起");
+        }
+    }
+</script>
+<script language="JavaScript">
+    pagesetup_null();
+    var hkey_root, hkey_path, hkey_key;
+    hkey_root = "HKEY_CURRENT_USER"
+    hkey_path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\"
+    //设置网页打印的页眉页脚为空
+    function pagesetup_null() {
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell")
+            hkey_key = "header"
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "")
+            hkey_key = "footer"
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "")
+        } catch (e) {}
+    }
+    //设置网页打印的页眉页脚为默认值
+    function pagesetup_default() {
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell")
+            hkey_key = "header"
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "&w&b页码，&p/&P"), hkey_key = "footer"
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "&u&b&d")
+        } catch (e) {}
+    }
+</script>
+
+</html>

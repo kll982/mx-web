@@ -1,0 +1,2417 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta http-equiv="Expires" CONTENT="0">
+  <meta http-equiv="Cache-Control" CONTENT="no-cache">
+  <meta http-equiv="Pragma" CONTENT="no-cache">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="shortcut icon" href="/ico/logo1.ico">
+  <script type="text/javascript" src='./jquery.js'></script>
+   <script type="text/javascript" src='./html2canvas.min.js'></script>
+   <script type="text/javascript" src='./canvas2image.js'></script>
+   <script type="text/javascript" src='./jspdf.debug.js'></script>
+  
+   <script type="text/javascript" src='/ico/config.js'></script>
+
+<style  type="text/css">
+	[v-cloak] {
+		display: none;
+	}
+</style>  
+<style media=print type="text/css">
+  .noprint{visibility:hidden}
+  
+  .beside1{
+    width:80%;
+  }
+  .imgdescription{
+    width:120px;
+	  height:120px;
+  }
+  .basic1>em{
+    width:60% !important;
+  }
+  .special1>em{
+    width:57% !important;
+  }
+  /* .piaoju_content2 .left div{
+    width:100px;
+    float: left;
+  } */
+  .piaoju_content2 .left .basic1{
+    width:47% !important;
+  }
+  
+  </style>
+   <link rel="stylesheet" href="/ico/stylePc1.css">
+   <link rel="stylesheet" href="/ico/stylePc.css">
+   <script>
+//   console.log(urls)
+   var detailId = GetQueryString("detailId");
+   function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+   </script>
+    
+  <script type="text/javascript" src='/ico/vue.js'></script>
+  <script type="text/javascript" src='/ico/axios.min.js'></script>
+</head>
+
+<body>
+    
+  <div id="app" class="article" v-cloak>
+    <div class="title">{{showTitle}}</div>
+    <div class="piaoju_content2 border_change clearfl">
+      <div class="left clearfl">
+        <div v-if="orderType==1" class="basic1"><span>所在乡镇：</span><em>{{basicTown}}</em></div>
+        <div v-if="orderType==1" class="basic1"><span>乡镇负责人：</span><em>{{basicTownManager}}</em></div>
+        <div v-if="orderType==1" class="basic1 special1"><span>乡镇负责人手机：</span><em>{{basicTownManagerPhone}}</em></div>
+        <div v-if="orderType==1" class="basic1"><span>运营人：</span><em>{{basicOperator}}</em></div>
+        <div v-if="orderType==1" class="basic1"><span>运营人手机：</span><em>{{basicOperatorPhone}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>经营单位：</span><em>{{basicUnit}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>联系人：</span><em>{{basicOperator}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>联系人手机：</span><em>{{basicOperatorPhone}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>是否通航：</span><em>{{navigableWaterStatus}}</em></div>
+        <div v-if="orderType==2" class="basic1"><span>备案时间：</span><em>{{terminalTime1}}</em></div>
+        <div class="basic1"><span>检查单位：</span><em>{{basicMsaName}}</em></div>
+        <div class="basic1"><span>检查人：</span><em>{{basicUserName}}</em></div>
+        <div class="basic1"><span>隐患：</span><em class="rightdl">
+            <dl><span class="bulegenerral">一般{{basicGeneralGrade}}</span><span class="bulebig">重大{{basicBigGrade}}</span></dl>
+        </em></div>
+        <div class="basic1"><span>是否解决：</span><em></em><span v-bind:class="[showSearchIt ? 'haveSE' : 'unhaveSE']">{{basicFixStatus}}</span></div>
+        <div class="basic1"><span>备注：</span><em>{{basicRemark}}</em></div>
+      </div>
+    </div>
+    <div class="divedgray"></div>
+    <div class="bottom1" v-for="(item1, index1) in orderSortList">
+    <div class="topText1">{{item1.sortName}}</div>
+    <table border="0" class="pricematch">
+      <tbody>
+        <tr>
+          <th class="clearfl">
+              <div class="tablecell a1" style="padding-top:5px !important;">序号</div>
+              <div class="tablecell a2" style="padding-top:5px !important;">检查项目</div>
+              <div class="tablecell a3">结果</div>
+          </th>
+        </tr>
+        <tr v-for="(item2, index2) in item1.orderItemList">
+          <td class="clearfl">
+              <div class="tablecell a1">{{index2+1}}</div>
+              <div class="tablecell a2">{{item2.itemName}}</div>
+              <div class="tablecell a3">
+                  <img class="anwserTrue" src="/ico/checktTrue.png" v-if="item2.checkValue==1"/>
+                  <img class="anwserfalse" src="/ico/checktFalsee.png" v-if="item2.checkValue==2"/>
+                  <div class="anwserUnuse" v-if="item2.checkValue==0">不适用
+                  </div>
+              </div>
+              <div class="clss"></div>
+              <div v-if="item2.checkValue==2" v-bind:class="[item2.checkValue==2 && item2.recheckList.length==0? 'paddingIt' : '','description']">
+                  <span class="topText1">问题描述</span>
+                  <div class="slideValue clearfl"><span class="slideValue1">隐患等级</span>
+                    <span class="slideValue2 general" v-if="item2.grade==1">一般</span>
+                    <span class="slideValue2 bigger" v-if="item2.grade==2">重大</span>
+                    <span class="slideValue2 withoutgeneral" v-if="item2.grade==0">无隐患</span>
+                  </div>
+                  <div class="slideValue clearfl"><span class="slideValue1">检查时间</span>
+                    <span class="slideValue2">{{tempToMinute(item2.createTime)}}</span>
+                  </div>
+                  <div class="slideValue clearfl"><span class="slideValue1">现场问题</span>
+                    <span class="slideValue2">{{item2.description}}</span>
+                  </div>
+                  <div class="slideValue clearfl slideValueS">
+                      <span class="slideValue1">现场图片</span>
+                      <span class="slideValue2 beside1">
+                        <img v-for="(item3, index3) in item2.picList" :src="item3.url" class="imgdescription" />
+                        <span v-if="item2.picList.length==0">暂无图片</span>
+                      </span>
+                  </div>
+                  <div class="slideValue clearfl"><span class="slideValue1">处理措施</span>
+                    <span class="slideValue2">{{item2.dealMeasure}}</span>
+                  </div>
+                  <div class="slideValue clearfl"><span class="slideValue1">处理结果</span>
+                    <span class="slideValue2">{{item2.dealResult}}</span>
+                  </div>
+                  <div class="slideValue clearfl" v-show="!item2.deadLine?false:true"><span class="slideValue1">期限天数</span>
+                    <span class="slideValue2">{{item2.deadLine}}天</span>
+                  </div>
+                  <div class="slideValue clearfl"><span class="slideValue1">位置</span>
+                    <span class="slideValue2">{{!item2.location?"—":item2.location}}</span>
+                  </div>
+              </div>
+              <div v-for="(item4, index4) in item2.recheckList" v-if="item2.checkValue==2" v-bind:class="[item2.checkValue==2 && item2.recheckList.length>0? 'paddingIt' : '','description']">
+                  <span class="topText1">复查问题</span>
+                  <div class="slideValue clearfl"><span class="slideValue1">复查时间</span>
+                    <span class="slideValue2">{{tempToMinute(item4.createTime)}}</span>
+                  </div>
+                  <div class="slideValue clearfl"><span class="slideValue1">现场问题</span>
+                    <span class="slideValue2">{{item4.description}}</span>
+                  </div>
+                  <div class="slideValue clearfl slideValueS">
+                      <span class="slideValue1">现场图片</span>
+                      <span class="slideValue2">
+                        <img v-for="(item3, index3) in item4.picList" :src="item3.url" class="imgdescription" />
+                        <span v-if="item4.picList.length==0">暂无图片</span>
+                      </span>
+                  </div>
+              </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+   
+  <div class="mask" v-bind:class="[!showP ? 'mask_bgSh' : '','mask']" id="top7" style="display: none;">
+      <img id="closeloadingModal" src="/ico/waitForloading.png" alt="" />
+  </div>
+  <div onclick="printW()" v-bind:class="[showP ? 'mask_bgSh' : '','print noprint']">打印检查单</div>
+  <img src="" alt="" id="imgSrc" style="display:none"/>
+  <script>
+    var fakerData={
+      "text": null,
+      "code": 200,
+      "message": null,
+      "data": {
+        "response": {
+          "order": {
+            "id": 1,
+            "companyId": 190,
+            "type": "1",
+            "operator": "张小燕",
+            "operatorPhone": "18900000000",
+            "townManager": "丸小儿",
+            "townManagerPhone": "13100000000",
+            "navigableWaterStatus": null,
+            "recordTime": null,
+            "userId": 3,
+            "checkMsaId": 24,
+            "msaId": 24,
+            "createTime": 1526615624000,
+            "postTime": 1526641965000,
+            "postStatus": "1",
+            "fixStatus": "0",
+            "fixTime": null,
+            "generalGrade": 0,
+            "bigGrade": 0,
+            "remark": null,
+            "status": "1",
+            "orderSortList": [
+              {
+                "id": 1,
+                "orderId": 1,
+                "sortId": 1,
+                "sortName": "渡口",
+                "orderNum": 0,
+                "createTime": 1526615624000,
+                "orderItemList": [
+                  {
+                    "id": 1,
+                    "orderSortId": 1,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 1,
+                    "itemName": "码头、坡道和候渡场所等渡口设施是否符合要求",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 2,
+                    "orderSortId": 1,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 2,
+                    "itemName": "渡口标志、标牌是否齐全，信息是否及时更新",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 3,
+                    "orderSortId": 1,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 3,
+                    "itemName": "视屏监控设施是否安装并正常使用",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 4,
+                    "orderSortId": 1,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 4,
+                    "itemName": "是否配备专职或兼职的渡口工作人员",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 5,
+                    "orderSortId": 1,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 5,
+                    "itemName": "是否建立安全管理管理责任制，相关负责人及船员是否熟悉安全责任及安全管理制度",
+                    "orderNum": 4,
+                    "checkValue": "2",
+                    "grade": "1",
+                    "description": "测试现场问题1",
+                    "dealMeasureId": 1,
+                    "dealMeasure": "责令改正",
+                    "dealResultId": 1,
+                    "dealResult": "事故隐患当场纠正",
+                    "lng": 119.389887,
+                    "lat": 32.236635,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [
+                      {
+                        "id": 1,
+                        "orderItemId": 5,
+                        "userId": 3,
+                        "checkMsaId": 24,
+                        "msaId": 24,
+                        "description": "复查问题1",
+                        "createTime": 1526643068000,
+                        "picList": [],
+                        "pics": null,
+                        "userName": "王小二",
+                        "fixStatus": null
+                      }
+                    ],
+                    "picList": [{
+                        "id": 15,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/1.png"
+                      },
+                      {
+                        "id": 16,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/2.png"
+                      },
+                      {
+                        "id": 17,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/3.png"
+                      },
+                      {
+                        "id": 16,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/2.png"
+                      },
+                      {
+                        "id": 17,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/3.png"
+                      },
+                      {
+                        "id": 16,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/2.png"
+                      },
+                      {
+                        "id": 17,
+                        "troubleId": 65,
+                        "type": "1",
+                        "url": "https://ccb-piaoju.oss-cn-shenzhen.aliyuncs.com/trouble_pic/2018-05-24/766749948954939392/3.png"
+                      }
+                    ],
+                    "pics": null
+                  },
+                  {
+                    "id": 6,
+                    "orderSortId": 1,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 6,
+                    "itemName": "是否建立应急部署制度，落实应急部署要求 ，并按照要求组织开展应急训练、演习",
+                    "orderNum": 5,
+                    "checkValue": "0",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "orderId": 1,
+                "sortId": 2,
+                "sortName": "渡船",
+                "orderNum": 1,
+                "createTime": 1526615624000,
+                "orderItemList": [
+                  {
+                    "id": 7,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 7,
+                    "itemName": "船舶登记证书、船舶检验证书是否齐全有效",
+                    "orderNum": 0,
+                    "checkValue": "2",
+                    "grade": "1",
+                    "description": "测试现场问题2",
+                    "dealMeasureId": 5,
+                    "dealMeasure": "行政处罚",
+                    "dealResultId": 1,
+                    "dealResult": "事故隐患当场纠正",
+                    "lng": 119.395995,
+                    "lat": 32.22344,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [
+                      {
+                        "id": 2,
+                        "orderItemId": 7,
+                        "userId": 3,
+                        "checkMsaId": 24,
+                        "msaId": 24,
+                        "description": "复查问题2-1",
+                        "createTime": 1526643543000,
+                        "picList": [],
+                        "pics": null,
+                        "userName": "王小二",
+                        "fixStatus": null
+                      },
+                      {
+                        "id": 3,
+                        "orderItemId": 7,
+                        "userId": 3,
+                        "checkMsaId": 24,
+                        "msaId": 24,
+                        "description": "复查问题2-2",
+                        "createTime": 1526643550000,
+                        "picList": [],
+                        "pics": null,
+                        "userName": "王小二",
+                        "fixStatus": null
+                      }
+                    ],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 8,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 8,
+                    "itemName": "渡船识别标志、标识是否齐全明显",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 9,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 9,
+                    "itemName": "渡船是否按规定定期维护保养；船体结构是否满足要求",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 10,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 10,
+                    "itemName": "是否按规定配备消防、救生等相关设备，设备是否功能正常，显见易取立即可用",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 11,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 11,
+                    "itemName": "是否按照规定配备助航设备，设备是否功能正常",
+                    "orderNum": 4,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 12,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 12,
+                    "itemName": "船舶机器设备（主机、辅助机械等）是否功能良好",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 13,
+                    "orderSortId": 2,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 13,
+                    "itemName": "其他必要的安全设施和应急安全设备是否运行完好",
+                    "orderNum": 6,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "orderId": 1,
+                "sortId": 3,
+                "sortName": "船员",
+                "orderNum": 2,
+                "createTime": 1526615624000,
+                "orderItemList": [
+                  {
+                    "id": 14,
+                    "orderSortId": 3,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 3,
+                    "sortName": "船员",
+                    "itemId": 14,
+                    "itemName": "是否持有合格有效的船员证书、证件",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 15,
+                    "orderSortId": 3,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 3,
+                    "sortName": "船员",
+                    "itemId": 15,
+                    "itemName": "是否督促乘客正确穿着救生衣或携带救生浮具",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 16,
+                    "orderSortId": 3,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 3,
+                    "sortName": "船员",
+                    "itemId": 16,
+                    "itemName": "是否具备相关渡运设施、设备的实际操作能力",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "orderId": 1,
+                "sortId": 4,
+                "sortName": "渡运",
+                "orderNum": 3,
+                "createTime": 1526615624000,
+                "orderItemList": [
+                  {
+                    "id": 17,
+                    "orderSortId": 4,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 17,
+                    "itemName": "是否存在危险货物过渡行为",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 18,
+                    "orderSortId": 4,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 18,
+                    "itemName": "是否在核定载车、载客定额内渡运车辆、旅客",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 19,
+                    "orderSortId": 4,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 19,
+                    "itemName": "非公路渡口有无违章装载机动车辆的行为",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 20,
+                    "orderSortId": 4,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 20,
+                    "itemName": "乘客、车辆上下渡船是否有序",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 21,
+                    "orderSortId": 4,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 21,
+                    "itemName": "是否存在不具备夜航条件的渡船夜渡行为；是否存在恶劣天气冒险航行或强行横越等渡运行为",
+                    "orderNum": 4,
+                    "checkValue": "0",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 22,
+                    "orderSortId": 4,
+                    "orderId": 1,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 22,
+                    "itemName": "渡口及附近水域是否存在可能影响渡船渡运安全的障碍物或设施",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526615624000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              }
+            ],
+            "msaName": "高邮市地方海事处",
+            "title": "二里铺 渡口渡船检查",
+            "companyName": "二里铺",
+            "userName": "王小二",
+            "town": "界首镇",
+            "unit": null,
+            "appType": null,
+            "appParam": null
+          }
+        },
+        "time": 1530509801984
+      }
+    };
+    var fakerData1={
+      "text": null,
+      "code": 200,
+      "message": null,
+      "data": {
+        "response": {
+          "order": {
+            "id": 2,
+            "companyId": 188,
+            "type": "1",
+            "operator": null,
+            "operatorPhone": null,
+            "townManager": null,
+            "townManagerPhone": null,
+            "navigableWaterStatus": null,
+            "recordTime": null,
+            "userId": 3,
+            "checkMsaId": 24,
+            "msaId": 24,
+            "createTime": 1526644433000,
+            "postTime": 1526648197000,
+            "postStatus": "1",
+            "fixStatus": "0",
+            "fixTime": null,
+            "generalGrade": 0,
+            "bigGrade": 0,
+            "remark": null,
+            "status": "1",
+            "orderSortList": [
+              {
+                "id": 5,
+                "orderId": 2,
+                "sortId": 1,
+                "sortName": "渡口",
+                "orderNum": 0,
+                "createTime": 1526644433000,
+                "orderItemList": [
+                  {
+                    "id": 23,
+                    "orderSortId": 5,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 1,
+                    "itemName": "码头、坡道和候渡场所等渡口设施是否符合要求",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 24,
+                    "orderSortId": 5,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 2,
+                    "itemName": "渡口标志、标牌是否齐全，信息是否及时更新",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 25,
+                    "orderSortId": 5,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 3,
+                    "itemName": "视屏监控设施是否安装并正常使用",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 26,
+                    "orderSortId": 5,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 4,
+                    "itemName": "是否配备专职或兼职的渡口工作人员",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 27,
+                    "orderSortId": 5,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 5,
+                    "itemName": "是否建立安全管理管理责任制，相关负责人及船员是否熟悉安全责任及安全管理制度",
+                    "orderNum": 4,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 28,
+                    "orderSortId": 5,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 6,
+                    "itemName": "是否建立应急部署制度，落实应急部署要求 ，并按照要求组织开展应急训练、演习",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "orderId": 2,
+                "sortId": 1,
+                "sortName": "渡口",
+                "orderNum": 0,
+                "createTime": 1526645938000,
+                "orderItemList": [
+                  {
+                    "id": 51,
+                    "orderSortId": 10,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 1,
+                    "itemName": "码头、坡道和候渡场所等渡口设施是否符合要求",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645938000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 52,
+                    "orderSortId": 10,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 2,
+                    "itemName": "渡口标志、标牌是否齐全，信息是否及时更新",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645938000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 53,
+                    "orderSortId": 10,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 3,
+                    "itemName": "视屏监控设施是否安装并正常使用",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645938000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 54,
+                    "orderSortId": 10,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 4,
+                    "itemName": "是否配备专职或兼职的渡口工作人员",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645938000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 55,
+                    "orderSortId": 10,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 5,
+                    "itemName": "是否建立安全管理管理责任制，相关负责人及船员是否熟悉安全责任及安全管理制度",
+                    "orderNum": 4,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645938000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 56,
+                    "orderSortId": 10,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 1,
+                    "sortName": "渡口",
+                    "itemId": 6,
+                    "itemName": "是否建立应急部署制度，落实应急部署要求 ，并按照要求组织开展应急训练、演习",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645938000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "orderId": 2,
+                "sortId": 2,
+                "sortName": "渡船",
+                "orderNum": 1,
+                "createTime": 1526644433000,
+                "orderItemList": [
+                  {
+                    "id": 29,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 7,
+                    "itemName": "船舶登记证书、船舶检验证书是否齐全有效",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 30,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 8,
+                    "itemName": "渡船识别标志、标识是否齐全明显",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 31,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 9,
+                    "itemName": "渡船是否按规定定期维护保养；船体结构是否满足要求",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 32,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 10,
+                    "itemName": "是否按规定配备消防、救生等相关设备，设备是否功能正常，显见易取立即可用",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 33,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 11,
+                    "itemName": "是否按照规定配备助航设备，设备是否功能正常",
+                    "orderNum": 4,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 34,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 12,
+                    "itemName": "船舶机器设备（主机、辅助机械等）是否功能良好",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 35,
+                    "orderSortId": 6,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 13,
+                    "itemName": "其他必要的安全设施和应急安全设备是否运行完好",
+                    "orderNum": 6,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "orderId": 2,
+                "sortId": 2,
+                "sortName": "渡船",
+                "orderNum": 1,
+                "createTime": 1526645991000,
+                "orderItemList": [
+                  {
+                    "id": 57,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 7,
+                    "itemName": "船舶登记证书、船舶检验证书是否齐全有效",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 58,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 8,
+                    "itemName": "渡船识别标志、标识是否齐全明显",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 59,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 9,
+                    "itemName": "渡船是否按规定定期维护保养；船体结构是否满足要求",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 60,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 10,
+                    "itemName": "是否按规定配备消防、救生等相关设备，设备是否功能正常，显见易取立即可用",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 61,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 11,
+                    "itemName": "是否按照规定配备助航设备，设备是否功能正常",
+                    "orderNum": 4,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 62,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 12,
+                    "itemName": "船舶机器设备（主机、辅助机械等）是否功能良好",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 63,
+                    "orderSortId": 11,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 2,
+                    "sortName": "渡船",
+                    "itemId": 13,
+                    "itemName": "其他必要的安全设施和应急安全设备是否运行完好",
+                    "orderNum": 6,
+                    "checkValue": "2",
+                    "grade": "1",
+                    "description": "现场问题3",
+                    "dealMeasureId": 2,
+                    "dealMeasure": "责令离岗",
+                    "dealResultId": 2,
+                    "dealResult": "事故隐患限期改正",
+                    "lng": 119.241199,
+                    "lat": 32.215986,
+                    "location": null,
+                    "deadLine": 7,
+                    "deadLineTime": 1527264000000,
+                    "fixStatus": "0",
+                    "createTime": 1526645991000,
+                    "fixTime": null,
+                    "recheckList": [
+                      {
+                        "id": 4,
+                        "orderItemId": 63,
+                        "userId": 3,
+                        "checkMsaId": 24,
+                        "msaId": 24,
+                        "description": "还有问题啊啊啊",
+                        "createTime": 1526652605000,
+                        "picList": [],
+                        "pics": null,
+                        "userName": "王小二",
+                        "fixStatus": null
+                      }
+                    ],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "orderId": 2,
+                "sortId": 3,
+                "sortName": "船员",
+                "orderNum": 2,
+                "createTime": 1526644433000,
+                "orderItemList": [
+                  {
+                    "id": 36,
+                    "orderSortId": 7,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 3,
+                    "sortName": "船员",
+                    "itemId": 14,
+                    "itemName": "是否持有合格有效的船员证书、证件",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 37,
+                    "orderSortId": 7,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 3,
+                    "sortName": "船员",
+                    "itemId": 15,
+                    "itemName": "是否督促乘客正确穿着救生衣或携带救生浮具",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 38,
+                    "orderSortId": 7,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 3,
+                    "sortName": "船员",
+                    "itemId": 16,
+                    "itemName": "是否具备相关渡运设施、设备的实际操作能力",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "orderId": 2,
+                "sortId": 4,
+                "sortName": "渡运",
+                "orderNum": 3,
+                "createTime": 1526644433000,
+                "orderItemList": [
+                  {
+                    "id": 39,
+                    "orderSortId": 8,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 17,
+                    "itemName": "是否存在危险货物过渡行为",
+                    "orderNum": 0,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 40,
+                    "orderSortId": 8,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 18,
+                    "itemName": "是否在核定载车、载客定额内渡运车辆、旅客",
+                    "orderNum": 1,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 41,
+                    "orderSortId": 8,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 19,
+                    "itemName": "非公路渡口有无违章装载机动车辆的行为",
+                    "orderNum": 2,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 42,
+                    "orderSortId": 8,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 20,
+                    "itemName": "乘客、车辆上下渡船是否有序",
+                    "orderNum": 3,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 43,
+                    "orderSortId": 8,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 21,
+                    "itemName": "是否存在不具备夜航条件的渡船夜渡行为；是否存在恶劣天气冒险航行或强行横越等渡运行为",
+                    "orderNum": 4,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  },
+                  {
+                    "id": 44,
+                    "orderSortId": 8,
+                    "orderId": 2,
+                    "userId": 3,
+                    "checkMsaId": 24,
+                    "msaId": 24,
+                    "sortId": 4,
+                    "sortName": "渡运",
+                    "itemId": 22,
+                    "itemName": "渡口及附近水域是否存在可能影响渡船渡运安全的障碍物或设施",
+                    "orderNum": 5,
+                    "checkValue": "1",
+                    "grade": "0",
+                    "description": null,
+                    "dealMeasureId": null,
+                    "dealMeasure": null,
+                    "dealResultId": null,
+                    "dealResult": null,
+                    "lng": null,
+                    "lat": null,
+                    "location": null,
+                    "deadLine": null,
+                    "deadLineTime": null,
+                    "fixStatus": "0",
+                    "createTime": 1526644433000,
+                    "fixTime": null,
+                    "recheckList": [],
+                    "picList": [],
+                    "pics": null
+                  }
+                ]
+              }
+            ],
+            "msaName": "高邮市地方海事处",
+            "title": "南门 渡口渡船检查",
+            "companyName": "南门",
+            "userName": "王小二",
+            "town": "高邮镇",
+            "unit": null,
+            "appType": null,
+            "appParam": null
+          }
+        },
+        "time": 1530597479015
+      }
+    };
+    var printSrc="";
+
+    Vue.prototype.$http = axios
+    new Vue({
+      el: '#app',
+      data: function(){
+        return{
+            showTitle: "",
+            contentList:[],
+            basicTown:"",
+            basicTownManager:"",
+            basicTownManagerPhone:"",
+            basicOperator:"",
+            basicOperatorPhone:"",
+            basicMsaName:"",
+
+            basicUserName:"",
+            basicFixStatus:0,
+            basicGeneralGrade:0,
+            basicBigGrade:0,
+            basicRemark:"",
+            showSearchIt:true,
+            orderType:1,
+            
+            basicUnit:"",
+            navigableWaterStatus:"非通航水域",
+            terminalTime1:"—",
+            orderSortList:[],
+            patato:0,
+            showP:false,
+            imgSrc:"",
+          }
+      },
+      methods: {
+        postData() {
+          var self = this;
+          // var p1=fakerData.data.response;
+          // var p2=p1.order;
+          // console.log(p2);
+          // self.showTitle=p2.title;
+          // self.orderType=p2.type;
+          // if(p2.type==1){
+          //   self.basicTown=p2.town;
+          //   self.basicTownManager=!p2.townManager?"—":p2.townManager;
+          //   self.basicTownManagerPhone=!p2.townManagerPhone?"—":p2.townManagerPhone;
+          //   self.basicOperator=!p2.operator?"—":p2.operator;
+          //   self.basicOperatorPhone=!p2.operatorPhone?"—":p2.operatorPhone;
+          // }else if(p2.type==2){
+          //   self.basicUnit=p2.unit;
+          //   self.basicOperator=!p2.operator?"—":p2.operator;
+          //   self.basicOperatorPhone=!p2.operatorPhone?"—":p2.operatorPhone;
+          //   self.navigableWaterStatus=!p2.navigableWaterStatus?"非通航水域":"通航水域";
+          //   self.terminalTime1=!p2.recordTime?"—":self.tempToHour(p2.recordTime);
+          // }
+          // self.basicMsaName=p2.msaName;
+          // self.basicUserName=p2.userName;
+          // self.basicFixStatus=p2.fixStatus=="0"?"已解决":"未解决";
+          // self.basicGeneralGrade=p2.generalGrade;
+          // self.basicBigGrade=p2.bigGrade;
+          // self.basicRemark=!p2.remark?"—":p2.remark;
+          // self.showSearchIt=p2.fixStatus=="0"?true:false;
+          // self.orderSortList=p2.orderSortList;
+          // self.showP=true;
+          // return
+          
+          axios.get(urls+'order/posted/detail', {
+            params: {
+              id: detailId
+            }
+          })
+          .then(function (response) {
+            console.log(response);
+            var p1=response.data.data.response;
+            var code=response.data.code;
+            if(code=="500"){
+              alert(response.data.message)
+              return
+            }
+            console.log(p1)
+            var p2=p1.order;
+            console.log(p2);
+            self.showTitle=p2.title;
+            self.orderType=p2.type;
+            if(p2.type==1){
+              self.basicTown=p2.town;
+              self.basicTownManager=!p2.townManager?"—":p2.townManager;
+              self.basicTownManagerPhone=!p2.townManagerPhone?"—":p2.townManagerPhone;
+              self.basicOperator=!p2.operator?"—":p2.operator;
+              self.basicOperatorPhone=!p2.operatorPhone?"—":p2.operatorPhone;
+            }else if(p2.type==2){
+              self.basicUnit=p2.unit;
+              self.basicOperator=!p2.operator?"—":p2.operator;
+              self.basicOperatorPhone=!p2.operatorPhone?"—":p2.operatorPhone;
+              self.navigableWaterStatus=!p2.navigableWaterStatus?"非通航水域":"通航水域";
+              self.terminalTime1=!p2.recordTime?"—":self.tempToHour(p2.recordTime);
+            }
+            self.basicMsaName=p2.msaName;
+            self.basicUserName=p2.userName;
+            self.basicFixStatus=p2.fixStatus=="0"?"已解决":"未解决";
+            self.basicGeneralGrade=p2.generalGrade;
+            self.basicBigGrade=p2.bigGrade;
+            self.basicRemark=!p2.remark?"—":p2.remark;
+            self.showSearchIt=p2.fixStatus=="0"?true:false;
+            self.orderSortList=p2.orderSortList;
+            self.showP=true;
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        },
+        tempToHour(s) {
+          var time = new Date(s);
+          var y = time.getFullYear();
+          var m = time.getMonth() + 1;
+          var d = time.getDate();
+          var s = time.getHours();
+          var k = time.getMinutes();
+          var u = time.getSeconds()
+          if(m<10){
+            m="0"+m
+          }
+          if(d<10){
+            d="0"+d
+          }
+          if(s<10){
+            s="0"+s
+          }
+          if(k<10){
+            k="0"+k
+          }
+          if(u<10){
+            u="0"+u
+          }
+          //console.log(y + "-" + m + "-" + d+" "+s+":"+k+":"+u) 
+          return y + "-" + m + "-" + d
+          
+        },
+        tempToMinute(s) {
+          var time = new Date(s);
+          var y = time.getFullYear();
+          var m = time.getMonth() + 1;
+          var d = time.getDate();
+          var s = time.getHours();
+          var k = time.getMinutes();
+          var u = time.getSeconds()
+          if(m<10){
+            m="0"+m
+          }
+          if(d<10){
+            d="0"+d
+          }
+          if(s<10){
+            s="0"+s
+          }
+          if(k<10){
+            k="0"+k
+          }
+          if(u<10){
+            u="0"+u
+          }
+          //console.log(y + "-" + m + "-" + d+" "+s+":"+k+":"+u) 
+          return y + "-" + m + "-" + d+" "+s+":"+k
+          
+        },
+        toggleShow(value){
+          var self = this;
+          
+          this.patato=-1;
+          console.log(this.patato)
+        },
+        toggleShow1(value){
+          var self = this;
+          this.patato=value;
+        }
+        
+      },
+      mounted(){
+        this.postData()
+      }
+    })
+    function printW(){
+      var prnhtml=window.document.body.innerHTML;   
+      window.document.body.innerHTML=prnhtml;  
+      window.print();   
+      window.document.body.innerHTML=prnhtml;  
+    }
+  </script>
+
+</body>
+
+</html>
