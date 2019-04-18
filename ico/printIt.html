@@ -13,7 +13,7 @@
 			<div class="mainTitle bottomLine">
 				{{d.checkName}}
 				<div class="checklistCode">
-					{{d.checklistCode}}
+					检查编号：{{d.checklistCode}}
 				</div>
 			</div>
 
@@ -31,7 +31,8 @@
 				<span class="block"><b>检查时间：</b>{{this._value(this.getDay(d.uploadTime))}}</span>
 				<span class="block"><b>检查方式：</b>{{this._value(InspectionMode)}}</span>
 				<span class="block"><b>检查依据：</b>{{this._value(InspectionBasis)}}</span>
-				<span class="block"><b>检查结果：</b>符合-{{Number(d.accord)}} 当场纠正-{{Number(d.correctCount)}} 限期整改-{{Number(d.reviewCount)}} 不适用-{{Number(d.notApplicableCount)}}
+				<span class="block"><b>检查结果：</b>符合-{{Number(d.accord)}} 当场纠正-{{Number(d.correctCount)}} 限期整改-{{Number(d.reviewCount)}}
+					不适用-{{Number(d.notApplicableCount)}}
 				</span>
 			</div>
 
@@ -67,12 +68,74 @@
 			<div class="content">
 				<div class="contentTitle">
 					{{contentTitle}}
-					<div class="checklistCode">
-						{{d.checklistCode}}
+					<div class="contentChecklistCode">
+						检查编号：{{d.checklistCode}}
 					</div>
 				</div>
+				<!-- 1 -->
+				<div class="bottomLine _strong">
+					一、符合项 <span class="rightItem">共{{s.length}}项</span>
+				</div>
+				<div style="padding: 17px 0px 21px">
+					<div class="i2" v-for="(it,i) in s">
+						{{i+1}}、{{it.item}}
+					</div>
+				</div>
+				<!-- 2 -->
+				<div class="bottomLine _strong">
+					二、不符合（当场纠正） <span class="rightItem">共{{w.length}}项</span>
+				</div>
+				<div style="padding: 17px 0px 21px">
+					<div class="" v-for="(it,i) in w" style="padding: 17px 0px 21px">
+						{{i+1}}、{{it.item}}
+						<p class="i2">检查描述：{{it.troubleDescribe}}</p>
+						<p class="i2">地理位置：{{it.location}}</p>
+						<div class="i2 oh">现场照片：
+							<div class="imgArea">
 
+								<div class="imgWrap" v-for="n in it.picUrl.split(',')">
+									<img :src="n" @click="bigger(n)" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 3 -->
+				<div class="bottomLine _strong">
+					三、不符合（限期整改） <span class="rightItem">共{{e.length}}项</span>
+				</div>
+				<div style="padding: 17px 0px 21px">
+					<div class="" v-for="(it,i) in e" style="padding: 17px 0px 21px">
+						{{i+1}}、{{it.item}}
+						<p class="i2">检查描述：{{it.troubleDescribe}}</p>
+						<p class="i2">整改要求：{{it.reviewRequire}}</p>
+						<p class="i2">整改限期：{{it.reviewTime}}</p>
+						<p class="i2">地理位置：{{it.location}}</p>
+						<div class="i2 oh">
+							<span style="float: left;">
+								现场照片：
+							</span>
+							<span v-if="!!!it.picUrl" style="text-align:left;margin:0;float: left;text-indent: 0;">无</span>
+							<div class="imgArea" v-else>
+								<div class="imgWrap" v-for="n in it.picUrl.split(',')">
+									<img :src="n" @click="bigger(n)" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 4 -->
+				<div class="bottomLine _strong">
+					四、不适用 <span class="rightItem">共{{n.length}}项</span>
+				</div>
+				<div style="padding: 17px 0px 21px">
+					<div v-for="(it,i) in n">
+						{{i+1}}、{{it.item}}
+					</div>
+				</div>
 			</div>
+
+			<div class="biggerImg" @click="imgs()"></div>
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -91,8 +154,8 @@
 					w: [],
 					e: [],
 					n: [],
-					day:"15日",
-					
+					day: "15日",
+
 					InspectionMode: "",
 					InspectionBasis: "",
 
@@ -125,7 +188,6 @@
 						},
 						success: function(y) {
 							if (y.code == 200) {
-								console.log("y", y.data.response)
 								var dd = y.data.response;
 								self.d = dd;
 								var s = [],
@@ -134,7 +196,6 @@
 									e = [];
 								for (var i in dd.list) {
 									var n = dd.list;
-									console.log(n[i])
 									if (n[i].optionId == 1) {
 										s.push(n[i])
 									}
@@ -169,16 +230,31 @@
 					if (date == null || date == "") {
 						return "--";
 					}
-					var pubtime = new Date(date),
+
+					var weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+						pubtime = new Date(date),
 						pubdate = (pubtime.getFullYear()) + "年" +
 						(pubtime.getMonth() + 1) + "月" +
 						(pubtime.getDate()) + "日 " +
 						(pubtime.getHours()) + ":" +
 						(pubtime.getMinutes() < 10 ? "0" + pubtime.getMinutes() : pubtime.getMinutes()) + ":" +
-						(pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds());
+						(pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds()) + "  " + weekday[pubtime.getDay()];
 					return pubdate;
 
 				},
+				bigger: function(u) {
+					$(".biggerImg").css({
+						"display": "block",
+						height: document.body.clientHeight + "px",
+						background: 'rgba(0,0,0,.8) url(' + u + ') no-repeat fixed center/80%'
+					})
+				},
+				imgs: function(urls) {
+					$(".biggerImg").css({
+						"display": "none",
+						height: "0px"
+					})
+				}
 
 			},
 			beforeMount: function() {

@@ -25,7 +25,7 @@ export default class SearchChecklistCode extends React.Component {
         super(props);
         self = this;
         this.state = {
-            code: 1
+            code: ""
         }
     }
     // 挂载前
@@ -179,13 +179,13 @@ export default class SearchChecklistCode extends React.Component {
 
     }
     toFirst() {
-        this.getTableData(1);
+        this.getTable(1);
     }
     onPageChange(page) {
-        this.getTableData(page);
+        this.getTable(page);
     }
     toLast() {
-        this.getTableData(this.state.page.pages);
+        this.getTable(this.state.page.pages);
     }
     // 渲染
     render() {

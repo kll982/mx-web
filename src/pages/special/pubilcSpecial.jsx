@@ -128,7 +128,7 @@ export default class PubilcSpecial extends React.Component {
                     key: "sortName",
                     className: publicstyle.center,
                 }, {
-                    title: "专项检查名称",
+                    title: "隐患排查名称",
                     dataIndex: "checklistTitle",
                     key: "checklistTitle",
                     className: publicstyle.center,
@@ -160,13 +160,21 @@ export default class PubilcSpecial extends React.Component {
                     render: (text, record) => {
                         return <Tag color={record.statusColor}>{record.statusValue}</Tag>
                     }
+                },{
+                    title: "风险分级",
+                    dataIndex: "isLevel",
+                    key: "isLevel",
+                    className: publicstyle.center,
+                    render: (text, record) => {
+                        return <Tag className={MaritimeAffairs.tagGray}>{record.isLevelName}</Tag>
+                    }
                 }, {
                     title: "发布单位",
                     dataIndex: "msaName",
                     key: "msaName",
                     className: publicstyle.center,
                 }, {
-                    title: "专项检查时间",
+                    title: "时间",
                     dataIndex: "timeFrame",
                     key: "timeFrame",
                     className: publicstyle.center,
@@ -175,15 +183,7 @@ export default class PubilcSpecial extends React.Component {
                     dataIndex: "department",
                     key: "department",
                     className: publicstyle.center,
-                }, {
-                    title: "是否分级",
-                    dataIndex: "isLevel",
-                    key: "isLevel",
-                    className: publicstyle.center,
-                    render: (text, record) => {
-                        return <Tag className={MaritimeAffairs.tagGray}>{record.isLevelName}</Tag>
-                    }
-                }, {
+                },  {
                     title: "操作",
                     dataIndex: "action",
                     key: "action",
@@ -219,6 +219,7 @@ export default class PubilcSpecial extends React.Component {
                             }}>编辑</button>
                             <button style={{ display: record.statusCode == 2 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF04B31} onClick={this.deleteItem.bind(this, record.taskId)}>删除</button>
                             <button style={{ display: record.statusCode == 1 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF0BD31} onClick={this.stopItem.bind(this, record.taskId)}>停用</button>
+                            <button style={{ display: record.statusCode == 1 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF04B31} onClick={this.toDetailItem.bind(this, record.taskId)}>专项检查</button>
 
                             <a href={record.excelUrl} download={record.checklistTitle}>
                                 <img style={{ display: "inline-block", verticalAlign: "middle", padding: "4px", margin: "0px 10px 10px 0px", float: "right", }} src={downIcon} alt="" />
@@ -291,6 +292,18 @@ export default class PubilcSpecial extends React.Component {
         });
         // deleteItem
     }
+    // 专项检查
+    toDetailItem(record){
+        hashHistory.push({
+            pathname: "/main/professionCheck",
+            state: {
+                taskId: record.taskId,
+                pageNum: this.state.page.pageNum,
+                sortName:record.sortName,
+                sortId:record.checkSortId,
+            }
+        })
+    }
     getDay(date) {
         if (date == null) {
             return "";
@@ -316,10 +329,10 @@ export default class PubilcSpecial extends React.Component {
     }
     add = () => {
         if (!!!this.state.specialName) {
-            return message.error("请输入专项检查名称")
+            return message.error("请输入隐患排查名称")
         }
         if (!!!this.state.checkItem) {
-            return message.error("请选择专项检查项目")
+            return message.error("请选择隐患排查项目")
         }
         if (!!!this.state.startTime || !!!this.state.endTime || !!!this.state.startDay || !!!this.state.endDay) {
             return message.error("请选择检查时间")
@@ -328,7 +341,7 @@ export default class PubilcSpecial extends React.Component {
             return message.error("请选择参与部门")
         }
         if (!!!this.state.distinguish) {
-            return message.error("请选择是否分级")
+            return message.error("请选择风险分级")
         }
         if (!!!this.state.file || !!!this.state.cbannerUrl) {
             return message.error("请上传检查单")
@@ -362,10 +375,10 @@ export default class PubilcSpecial extends React.Component {
     }
     edit = () => {
         if (!!!this.state.EspecialName) {
-            return message.error("请输入专项检查名称")
+            return message.error("请输入隐患排查名称")
         }
         if (!!!this.state.EcheckSortId) {
-            return message.error("请选择专项检查项目")
+            return message.error("请选择隐患排查项目")
         }
         if (!!!this.state.EstartTime || !!!this.state.EendTime || !!!this.state.EstartDay || !!!this.state.EendDay) {
             return message.error("请选择检查时间")
@@ -374,7 +387,7 @@ export default class PubilcSpecial extends React.Component {
             return message.error("请选择参与部门")
         }
         if (!!!this.state.EdistinguishCode) {
-            return message.error("请选择是否分级")
+            return message.error("请选择风险分级")
         }
         if (!!!this.state.Efile || !!!this.state.EcbannerUrl) {
             return message.error("请上传检查单")
@@ -417,7 +430,7 @@ export default class PubilcSpecial extends React.Component {
         return (
             <div className={stylez.wrapPadding} style={{ padding: "0px", background: "#F7F7F7" }}>
                 <div className={MaritimeAffairs.cardWrap}>
-                    <div className={MaritimeAffairs.cardTitle}>专项检查</div>
+                    <div className={MaritimeAffairs.cardTitle}>隐患排查管理</div>
                     <Button type="primary" ghost onClick={() => {
                         let iii = ReactDOM.findDOMNode(this["files"]);
                         if (!!iii) {
@@ -439,7 +452,7 @@ export default class PubilcSpecial extends React.Component {
                             startDay: null,
                             endDay: null,
                         })
-                    }}>发布专项检查</Button>
+                    }}>发布隐患排查项目</Button>
 
                     {this.state.tableData ?
                         <div style={{ overflow: "hidden", marginTop: 40 }}>
@@ -460,23 +473,23 @@ export default class PubilcSpecial extends React.Component {
                         : ""}
                 </div>
                 <Modal visible={this.state.visibily}
-                    title="发布专项检查"
+                    title="发布隐患排查"
                     onOk={this.add}
                     onCancel={this.noAdd}
                     okText="确认"
                     cancelText="取消"
                     className={MaritimeAffairs.Model}>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>专项检查名称：</dt>
-                        <dd><Input placeholder={"请输入专项检查名称"} value={this.state.specialName} onInput={
+                        <dt><span className={MaritimeAffairs.must}>*</span>隐患排查名称：</dt>
+                        <dd><Input placeholder={"请输入隐患排查名称"} value={this.state.specialName} onInput={
                             (e) => this.setState({
                                 specialName: e.target.value,
                             })} /></dd>
                     </dl>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>专项检查项目：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>隐患排查项目：</dt>
                         <dd>
-                            <Select placeholder={"请选择专项检查项目"} value={this.state.checkItem}
+                            <Select placeholder={"请选择隐患排查项目"} value={this.state.checkItem}
                                 onChange={(value) => {
                                     this.setState({
                                         checkItem: value,
@@ -491,7 +504,7 @@ export default class PubilcSpecial extends React.Component {
                         </dd>
                     </dl>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>专项检查时间：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>隐患排查时间：</dt>
                         <dd>
                             <RangePicker format="YYYY-MM-DD" value={[this.state.startTime, this.state.endTime]} onChange={(date, dateString) => {
                                 this.setState({
@@ -538,9 +551,9 @@ export default class PubilcSpecial extends React.Component {
                             })} /></dd>
                     </dl>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>是否分级：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>风险分级：</dt>
                         <dd>
-                            <Select placeholder={"请选择是否分级"} value={this.state.distinguish}
+                            <Select placeholder={"请选择风险分级"} value={this.state.distinguish}
                                 onChange={(distinguish) => {
                                     this.setState({
                                         distinguish
@@ -640,23 +653,23 @@ export default class PubilcSpecial extends React.Component {
                     </dl>
                 </Modal>
 
-                <Modal visible={this.state.editItem} title="编辑专项检查"
+                <Modal visible={this.state.editItem} title="编辑隐患排查"
                     onOk={this.edit}
                     onCancel={this.noEdit}
                     className={MaritimeAffairs.Model}>
 
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>专项检查名称：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>隐患排查名称：</dt>
                         <dd>
-                            <Input placeholder={"请输入专项检查名称"} value={this.state.EspecialName} onInput={
+                            <Input placeholder={"请输入隐患排查名称"} value={this.state.EspecialName} onInput={
                                 (e) => this.setState({
                                     EspecialName: e.target.value,
                                 })} /></dd>
                     </dl>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>专项检查项目：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>隐患排查项目：</dt>
                         <dd>
-                            <Select placeholder={"请选择专项检查项目"} value={this.state.EcheckItem}
+                            <Select placeholder={"请选择隐患排查项目"} value={this.state.EcheckItem}
                                 onChange={(value) => {
                                     this.setState({
                                         EcheckItem: value,
@@ -672,7 +685,7 @@ export default class PubilcSpecial extends React.Component {
                         </dd>
                     </dl>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>专项检查时间：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>隐患排查时间：</dt>
                         <dd>
                             <RangePicker format="YYYY-MM-DD" value={[moment(this.state.EstartTime, "YYYY-MM-DD"), moment(this.state.EendTime, "YYYY-MM-DD")]} onChange={(date, dateString) => {
                                 this.setState({
@@ -719,9 +732,9 @@ export default class PubilcSpecial extends React.Component {
                             })} /></dd>
                     </dl>
                     <dl>
-                        <dt><span className={MaritimeAffairs.must}>*</span>是否分级：</dt>
+                        <dt><span className={MaritimeAffairs.must}>*</span>风险分级：</dt>
                         <dd>
-                            <Select placeholder={"请选择是否分级"} value={this.state.EdistinguishValue}
+                            <Select placeholder={"请选择风险分级"} value={this.state.EdistinguishValue}
                                 onChange={(distinguish) => {
                                     this.setState({
                                         EdistinguishValue: distinguish,
