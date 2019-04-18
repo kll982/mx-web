@@ -96,6 +96,7 @@ import auditDetails from "../pages/audit/auditDetails.jsx"; // 审核页
 import Department from "../pages/MaritimeAffairs/department.jsx";  // 部门管理
 
 import ProjectItemItm from "../pages/MaritimeAffairs/projectItem.jsx"; //项目管理
+import ProfessionCheck from "../pages/MaritimeAffairs/professionCheck.jsx"; //隐患排查专项检查
 import addDepartment from "../pages/MaritimeAffairs/addDepartment.jsx";  // 新增科室
 import ProInform from "../pages/MaritimeAffairs/proInform.jsx"; //基本信息
 import checklistManagement from "../pages/MaritimeAffairs/checklistManagement.jsx";  // 检查单
@@ -204,6 +205,8 @@ class Routes extends React.Component {
 
                         {/* 项目管理 */}
                         <Route path="projectItem" component={ProjectItemItm} />
+                        {/* 隐患排查专项检查 */}
+                        <Route path="professionCheck" component={ProfessionCheck}/>
                         {/* 基本信息 */}
                         <Route path="proInform" component={ProInform} />
                         {/* 安全检查 */}
