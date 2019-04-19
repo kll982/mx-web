@@ -362,7 +362,7 @@ export default class ListPatrolInfo extends React.Component {
         return (
             <div className={stylez.wrapPadding} style={{ background: "#f4f4f4", padding: "0" }}>
                 <Breadcrumb separator=">" style={{ textAlign: "left", padding: '15px', background: "#fff" }}>
-                    <Breadcrumb.Item><Link to="">检查单统计</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item><Link to="">检查管理</Link></Breadcrumb.Item>
                     <Breadcrumb.Item>安全检查</Breadcrumb.Item>
                 </Breadcrumb>
                 <Spin spinning={this.state.load}>

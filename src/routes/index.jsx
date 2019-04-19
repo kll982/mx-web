@@ -117,6 +117,9 @@ import specialDetails from '../pages/special/specialDetails.jsx'; // 专项检�
 import searchChecklistCode from '../pages/special/searchChecklistCode.jsx'; // 检查单查询
 import dailySpecial from '../pages/special/dailySpecial.jsx'; // 日常专项检查
 
+import hiddenDanger from '../pages/special/hiddenDanger.jsx'; // 日常专项检查
+import hiddenDangerDetails from '../pages/special/hiddenDangerDetails.jsx'; // 日常专项检查
+
 
 
 
@@ -234,6 +237,11 @@ class Routes extends React.Component {
                         <Route path="specialDetails" component={specialDetails} />
                         <Route path="searchChecklistCode" component={searchChecklistCode} />
                         <Route path="dailySpecial" component={dailySpecial} />
+                        
+                        <Route path="hiddenDanger" component={hiddenDanger} />
+                        <Route path="hiddenDangerDetails" component={hiddenDangerDetails} />
+
+                        
                     </Route>
                 </Router>
             </Provider>
