@@ -27,7 +27,8 @@ let report = port + "spStatistic/",
     msaInfo = port + "msaInfo/",
     checklistSort = port + "checklistSort/",
     charts = port + "checklistChartController/",
-    spChecklistController = port + "spChecklistController/";
+    spChecklistController = port + "spChecklistController/",
+    newSpChecklistController = port + "newSpChecklistController/";
 
 const apiList = {
     tradePageSize: 5,
@@ -477,6 +478,11 @@ const apiList = {
     spChecklistStatisticsPage: spChecklistController + "spChecklistStatisticsPage", //专项检查统计页面
     listCheckMsaIdName: spChecklistController + "listCheckMsaIdName", // 返回专项检查被统计部门信息
     listChecklistByCode: port + "checklist/listChecklistByCode", // 检查单编号条件查询
+
+    createSpTaskPage: newSpChecklistController + "createSpTaskPage", // 开展专项检查页面
+    createSpTask: newSpChecklistController + "createSpTask", // 开展专项检查
+    blockSpTask: newSpChecklistController + "blockSpTask", //停用专项检查
+    removeSpTask: newSpChecklistController + "removeSpTask", // 删除专项检查
 };
 
 export default apiList;

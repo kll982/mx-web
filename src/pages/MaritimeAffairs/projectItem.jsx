@@ -124,6 +124,8 @@ class projectItem extends React.Component {
                             <button onClick={self.ToChecksfhgn.bind(self, record.idItem, record.sort)} className={MaritimeAffairs.Button5ECF8B + " " + MaritimeAffairs.ButtonMargin}>检查单</button>
 
                             <button onClick={self.ToLibrarysdfny.bind(self, record.idItem, record.sort)} className={MaritimeAffairs.ButtonF0BD31 + " " + MaritimeAffairs.ButtonMargin}>检查对象名录库</button>
+
+                            <button onClick={self.ToSpecial.bind(self, record.idItem, record.sort)} className={MaritimeAffairs.ButtonF04B31 + " " + MaritimeAffairs.ButtonMargin}>专项检查</button>
                         </div>,
                         props: {
                             rowSpan: 1
@@ -155,6 +157,15 @@ class projectItem extends React.Component {
     ToLibrarysdfny = (sortId, checkName) => {
         hashHistory.push({
             pathname: "main/library",
+            state: {
+                sortId: sortId,
+                checkName: checkName,
+            }
+        })
+    }
+    ToSpecial(sortId, checkName){
+        hashHistory.push({
+            pathname: "main/dailySpecial",
             state: {
                 sortId: sortId,
                 checkName: checkName,

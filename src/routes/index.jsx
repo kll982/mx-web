@@ -115,6 +115,9 @@ import special from '../pages/special/special.jsx'; // 专项检查
 import pubilcSpecial from '../pages/special/pubilcSpecial.jsx'; // 发布专项检查
 import specialDetails from '../pages/special/specialDetails.jsx'; // 专项检查详情
 import searchChecklistCode from '../pages/special/searchChecklistCode.jsx'; // 检查单查询
+import dailySpecial from '../pages/special/dailySpecial.jsx'; // 日常专项检查
+
+
 
 
 class Routes extends React.Component {
@@ -230,6 +233,7 @@ class Routes extends React.Component {
                         <Route path="pubilcSpecial" component={pubilcSpecial} />
                         <Route path="specialDetails" component={specialDetails} />
                         <Route path="searchChecklistCode" component={searchChecklistCode} />
+                        <Route path="dailySpecial" component={dailySpecial} />
                     </Route>
                 </Router>
             </Provider>
