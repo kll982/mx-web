@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="shortcut icon" href="logo1.ico" type="image/x-icon">
+		<title>江苏省水路行业安全生产风险管理与隐患治理信息系统</title>
+		<link rel="stylesheet" type="text/css" href="printIt.css" />
+		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="allWrap">
+			<input class="printBtn noPrint" type="button" name="" id="" value="打印检查单" @click="printIt()" />
+			<div class="mainTitle1">
+				船舶现场监督报告
+				<div class="subtitle">
+					根据《中华人民共和国船舶安全监督规则》签发
+				</div>
+			</div>
+			<div class="baseInfo">
+				<div class="half fs22">
+					船&emsp;&emsp;名：<u>{{name}}</u>
+				</div>
+				<div class="half fs22">
+					国籍/船籍港：<u>{{nationality}}</u>
+				</div>
+				<div class="half fs22">
+					船舶种类：<u>{{kind}}</u>
+				</div>
+				<div class="half fs22">
+					IMO号/船舶识别号：<u>{{IMO}}</u>
+				</div>
+				<div class="half fs22">
+					船舶管理人：<u>{{people}}</u>
+				</div>
+				<div class="half fs22">
+					船长签名：<u>{{peopleName}}</u>
+				</div>
+				<div class="half fs22">
+					<input name="checkbox" type="checkbox" v-model="sp" disabled>专项检查：
+				</div>
+			</div>
+			<table border="" cellspacing="" cellpadding="">
+				<thead>
+					<tr>
+						<th rowspan="2" width="72px">序号</th>
+						<th rowspan="2" width="555px">检查项目</th>
+						<th colspan="3">检查结果</th>
+					</tr>
+					<tr>
+						<th>是</th>
+						<th>否</th>
+						<th>不适用</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(i,it) in item">
+						<td>{{it +1}}</td>
+						<td>{{i.item}}</td>
+						<td><input name="checkbox" type="checkbox" v-model="i.optionId==1" disabled></td>
+						<td><input name="checkbox" type="checkbox" v-model="i.optionId==2||i.optionId==3" disabled></td>
+						<td><input name="checkbox" type="checkbox" v-model="i.optionId==4" disabled></td>
+					</tr>
+				</tbody>
+
+			</table>
+
+			<div class="block" style="padding-left: 11px;">
+				<div class="w84">
+					<div class="title">问&ensp;题&ensp;描&ensp;述</div>
+				</div>
+				<div class="w15">
+					<div class="title">处理决定</div>
+
+				</div>
+				<div v-for="i in item" class="fs22" style="width:100%;padding:10px 0px;overflow: hidden;word-break: break-all;">
+					<div class="w84">
+						<u>{{i.item}}</u>
+					</div>
+					<div class="w15">
+						<u>{{i.handle}}</u>
+					</div>
+				</div>
+			</div>
+			<div class="fs24">
+				注：船舶应对所提供资料的真实性和所操作的有效性负责，本报告是对检查当时船舶安全技术状况抽查情况的记录，不作为船舶适航的凭证。
+			</div>
+			<div class="fs17" style="padding-left:12px;margin: 24px 0px 33px;">
+				<div class="fs24"><strong>处理决定包括：</strong></div>
+				<span class="p_0_40">01 警示教育</span>
+				<span class="p_0_40">02 停止作业</span>
+				<span class="p_0_40">03 立案调查</span>
+				<span class="p_0_40">09 违法记分</span>
+				<span class="p_0_40">17 开航前纠正</span>
+				<span class="p_0_40">19 在开航后限定的期限内纠正（需标注期限）</span>
+				<span class="p_0_40">99 文字说明</span>
+			</div>
+			<p class="fs24">
+				<input name="checkbox" type="checkbox" v-model="sp2" disabled> 启动船舶安全检查
+			</p>
+			<p class="fs24">
+				<span style="display: inline-block;width:33%;margin-right: 0.5%;float: left;">检查机构：<u>{{mechanism}}</u></span>
+				<span style="display: inline-block;width:33%;margin-right: 0.5%;float: left;">执法人员：<u>{{mechanism}}</u></span>
+				<span style="display: inline-block;width:33%;float: right;">检查日期：<u>{{mechanism}}</u></span>
+				</p>
+			
+
+
+		</div>
+	</body>
+	<script>
+		var urls = location.origin.replace(/www/g, "bm"),
+			self;
+		new Vue({
+			el: '.allWrap',
+			data: function() {
+				self = this
+				return {
+					sp: true,
+					sp2:false,
+					name: "name",
+					kind: "kind",
+					IMO: "IMO number",
+					nationality: "nationality",
+					people: "people",
+					peopleName: "peopleName",
+					item: [{
+							item: "看着街上的人群，各个都把自己捂得严严实实的，好似一个个奇怪的布包裹。窗外的天，是灰蒙蒙的一片，灰色的霾把所有的物体都笼罩了起来。",
+							optionId: "1",
+							handle: "Lorem mmagnam",
+						},
+						{
+							item: "它来时，真的像《西游记》里描写的魔鬼施魔法，云郁郁，雾腾腾，天空像得了抑郁症，压抑、憋闷、扭曲。夏天的雾霾，像地沟油一样粘腻;冬天的雾霾，像盔甲一样沉重。",
+							optionId: "2",
+							handle: "Lorem tmagnam",
+						},
+						{
+							item: "白天走在街道上，伸手不见五指，周围的建筑全被雾笼罩了，在家里通过窗户往外望去，外面就像仙境一般，雾把所有的东西都淹没了，能看到的，只有白色的雾。",
+							optionId: "3",
+							handle: " porro magnam",
+						},
+						{
+							item: "近了，近了，我已听到春天的脚步声了，这一切都报告着春天的到来，我整个心都飘了出去，飘到那鲜艳的花儿上，飘到那油绿的草地上。",
+							optionId: "4",
+							handle: "Lorem i nam",
+						}
+					],
+					mechanism:"mechanism",
+				}
+			},
+			methods: {
+				printIt: function() {
+					window.print();
+				},
+			}
+		})
+	</script>
+</html>

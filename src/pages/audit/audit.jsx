@@ -98,6 +98,7 @@ export default class audit extends React.Component {
             var list = res.data.response.list;
             var pageInfo = res.data.response.pageInfo;
             var tableData = [];
+            console.log(list);
             if (list == null) {
                 return;
             } else {
@@ -113,6 +114,7 @@ export default class audit extends React.Component {
                     obj.reviewMsaName = item.reviewMsaName;//督办单位(复查人所属海事部门)
                     obj.uploadTime = this.getDay(item.uploadTime);//上报时间
 
+                    obj.sortId = item.sortId;
                     obj.passByName = item.passByName;// 审核人
                     obj.passByMsaName = item.passByMsaName;// 审核人部门
                     obj.passTime = this.getDay(item.passTime);//审核时间
@@ -201,6 +203,7 @@ export default class audit extends React.Component {
                 companyName: record.companyName,
                 resultsChooseed: this.state.resultsChooseed,
                 loadAudit: true,
+                sortId:record.sortId,
             }
         })
     }
@@ -216,6 +219,7 @@ export default class audit extends React.Component {
                 companyName: record.companyName,
                 resultsChooseed: this.state.resultsChooseed,
                 loadAudit: false,
+                sortId:record.sortId,
             }
         })
     }

@@ -57,6 +57,7 @@ export default class auditDetails extends React.Component {
     // 挂载前
     componentWillMount() {
         prposData = self.props.location.state;
+        console.log(prposData)
         var Default = this.getDates(Date.now() + 24 * 60 * 60 * 1000 * 7);
         // console.log(Default)
         this.setState({
@@ -324,7 +325,7 @@ export default class auditDetails extends React.Component {
                                 <span className={audit.rightValue}>{this.state.datas.before_describe}</span>
                             </div>
                             <div className={audit.titleValueWrap}>
-                                <span className={audit.leftTitle}>整改要求</span>
+                                <span className={audit.leftTitle}>{this.state.prposData.sortId > 14 && this.state.prposData.sortId < 18 ?  "处理决定": "整改要求"}</span>
                                 <span className={audit.cententsymbol}>：</span>
                                 <span className={audit.rightValue}>{this.state.datas.before_require}</span>
                             </div>

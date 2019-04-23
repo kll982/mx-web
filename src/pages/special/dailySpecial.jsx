@@ -123,7 +123,7 @@ export default class AddMangerment extends React.Component {
                             return <Button type="danger" onClick={()=>{
                                 confirm({
                                     title: '终止'+r.name,
-                                    content: '确定终止该检查单吗',
+                                    content: '确定终止该日常专项检查吗',
                                     onOk() {
                                         $jsonppost(self,api.blockSpTask,{
                                             taskId:r.taskId 
@@ -143,7 +143,7 @@ export default class AddMangerment extends React.Component {
                             return <Button type="danger" onClick={()=>{
                                 confirm({
                                     title: '删除'+r.name,
-                                    content: '确定删除该检查单吗',
+                                    content: '确定删除该日常专项检查吗',
                                     onOk() {
                                         $jsonppost(self,api.removeSpTask,{
                                             taskId:r.taskId,
