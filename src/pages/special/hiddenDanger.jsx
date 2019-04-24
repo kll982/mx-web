@@ -144,6 +144,7 @@ export default class AddMangerment extends React.Component {
                 </Breadcrumb>
                 <div className={publicstyle.clearfloatTop}></div>
                 <div className={MaritimeAffairs.cardWrap}>
+                <div className={MaritimeAffairs.cardTitle}>隐患排查</div>
                     <Spin spinning={this.state.loading} tip="获取数据中，请稍后..." delay={100} style={{ background: "transparent", width: "100%", }}>
                         {this.state.tableData ?
                             <div style={{ overflow: "hidden", marginTop: 40 }}>

@@ -367,6 +367,7 @@ export default class ListPatrolInfo extends React.Component {
                 </Breadcrumb>
                 <Spin spinning={this.state.load}>
                     <div className={MaritimeAffairs.cardWrap}>
+                    <div className={MaritimeAffairs.cardTitle}>安全检查</div>
                         <Table dataSource={stateItem.dataSource} className={stateItem.level != "省" ? projectItemLess.celltable : ""} columns={stateItem.columns} pagination={false} bordered={true} />
                     </div>
                 </Spin>

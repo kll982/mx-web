@@ -27,7 +27,7 @@
 					国籍/船籍港：<u>{{da.compangInfo.nationality}}</u>
 				</div>
 				<div class="half fs22">
-					船舶种类：<u>{{kind}}</u>
+					船舶种类：<u>{{da.checkSortName}}</u>
 				</div>
 				<div class="half fs22">
 					IMO号/船舶识别号：<u>{{da.compangInfo.shipCode}}</u>
@@ -36,7 +36,7 @@
 					船舶管理人：<u>{{da.compangInfo.operator}}</u>
 				</div>
 				<div class="half fs22">
-					船长签名：<u>{{peopleName}}</u>
+					船长签名：<u>&ensp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
 				</div>
 				<div class="half fs22">
 					<input name="checkbox" type="checkbox" v-model="sp" disabled>专项检查：
@@ -79,7 +79,7 @@
 						<u>{{i.troubleDescribe}}</u>
 					</div>
 					<div class="w15">
-						<u>{{i.handle}}</u>
+						<u>{{i.reviewRequire}}</u>
 					</div>
 				</div>
 			</div>

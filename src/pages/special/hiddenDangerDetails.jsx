@@ -117,7 +117,7 @@ export default class SpecialDetails extends React.Component {
                 li.reviewCount = item.reviewCount;
                 li.shortName = item.shortName;
                 li.synergyPerson = item.synergyPerson;
-                // li.uploadTime = this.getDay(item.uploadTime);
+                li.uploadTime = this.getDay(item.uploadTime);
 
                 arr.push(li);
             })
@@ -211,6 +211,20 @@ export default class SpecialDetails extends React.Component {
                 },],
             })
         })
+    }
+    getDay(date) {
+        if (date == null) {
+            return "";
+        }
+        var pubtime = new Date(date),
+            pubdate = (pubtime.getFullYear()) + "年" +
+                (pubtime.getMonth() + 1) + "月" +
+                (pubtime.getDate()) + "日 " +
+                (pubtime.getHours()) + ":" +
+                (pubtime.getMinutes() < 10 ? "0" + pubtime.getMinutes() : pubtime.getMinutes()) + ":" +
+                (pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds());
+        return pubdate;
+
     }
     // 选择所属海事局单位
     selectChildrenUnits(value) {
