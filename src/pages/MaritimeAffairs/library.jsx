@@ -48,8 +48,6 @@ export default class Library extends React.Component {
         msaId = (userInfo.departmentId == 1 ? "" : userInfo.departmentId);
         node = (level == "省" ? true : false);
 
-        console.log("propsData", propsData.msaId);
-
         this.setState({
             propsData: propsData,
             userInfo: userInfo,
@@ -63,7 +61,6 @@ export default class Library extends React.Component {
             levelValue: !!!propsData.levelValue ? "" : propsData.levelValue,
             riskLevelValue: !!!propsData.riskLevelValue ? "" : propsData.riskLevelValue,
         }, () => {
-            console.log("msaId", this.state.msaId)
             this.getChildrenMsa();
             if (node == false) {
                 this.getLevel();
@@ -213,7 +210,7 @@ export default class Library extends React.Component {
                     title: "其他信息",
                     // dataIndex: "other",
                     key: "other",
-                    width: "20%",
+                    width: "18%",
                     className: publicstyle.center,
                     render: (text, record) => {
                         if (record.sortId == 1) {
@@ -247,7 +244,14 @@ export default class Library extends React.Component {
                             return <div style={{ textAlign: "left", padding: "0px 24px" }}>
                                 <span className={MaritimeAffairs.nowrap}>是否体系：{!!!record.other.isSystem ? "" : record.other.isSystem}</span>
                             </div>
-                        } else {
+                        } else if (record.sortId >= 15 && record.sortId < 18) {
+                            return <div style={{ textAlign: "left", padding: "0px 24px" }}>
+                            <span>IMO号/船舶识别号：{!!!record.other.shipCode ? "" : record.other.shipCode}</span>
+                            <br/>
+                            <span>国籍/船籍港：{!!!record.other.nationality ? "" : record.other.nationality}</span>
+                        </div>
+                        }
+                        else {
                             return "--"
                         }
                     }

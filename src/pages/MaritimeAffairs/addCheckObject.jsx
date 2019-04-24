@@ -54,6 +54,9 @@ export default class AddCheckObject extends React.Component {
             shipLoad: "",
             // 游艇俱乐部
             yachtCount: "",
+            // 船舶
+            nationality:"",
+            shipCode:"",
         }
     }
     // 挂载前
@@ -104,6 +107,9 @@ export default class AddCheckObject extends React.Component {
                 yachtCount: propsData.record.other.yachtCount,
                 // 水路危险货物运输企业
                 isSystem: propsData.record.other.isSystem,
+                // 船舶
+                nationality:propsData.record.other.nationality,
+                shipCode:propsData.record.other.shipCode,
             }, () => {
                 this.getLevel();
                 this.getChildrenMsa();
@@ -280,6 +286,16 @@ export default class AddCheckObject extends React.Component {
             isSystem,
         })
     }
+    ChangeshipCode(e){
+        this.setState({
+            shipCode: e.target.value,
+        })
+    }
+    ChangeNationality(e){
+        this.setState({
+            nationality: e.target.value,
+        })
+    }
     save() {
         if (!!!this.state.title) {
             return message.error("请输入检查对象名称")
@@ -290,8 +306,10 @@ export default class AddCheckObject extends React.Component {
         if (!!!this.state.MsaNameValue) {
             return message.error("请输入检查对象所在辖区")
         }
-        if (!!!this.state.location) {
-            return message.error("请输入检查对象 地址/作业海域")
+        if (this.state.propsData.sortId < 14 || this.state.propsData.sortId >= 18) {
+            if (!!!this.state.location) {
+                return message.error("请输入检查对象 地址/作业海域")
+            }
         }
         let reg = /^1(3|4|5|7|8)\d{9}$/;
         if (!!this.state.operatorPhone && reg.test(this.state.operatorPhone) == false) {
@@ -373,6 +391,12 @@ export default class AddCheckObject extends React.Component {
         } else if (this.state.propsData.sortId == 14) {
             excess = {
                 isSystem: this.state.isSystem
+            }
+        }else if(this.state.propsData.sortId > 14||this.state.propsData.sortId < 18){
+            delete datas.location;
+            excess = {
+                nationality: this.state.nationality,
+                shipCode: this.state.shipCode,
             }
         }
         Object.assign(datas, excess);
@@ -474,7 +498,7 @@ export default class AddCheckObject extends React.Component {
                         <Input style={{ width: "50%" }} onChange={this.changeOperatorMobile.bind(this)} value={this.state.operatorPhone} maxLength="11" placeholder={"请输入运营人手机号"}></Input>
                     </dl>
 
-                    <dl className={Cardstyles.formitem1}>
+                    <dl className={Cardstyles.formitem1} style={{ display: this.state.propsData.sortId < 15 || this.state.propsData.sortId >= 18 ? "block" : "none" }}>
                         <span className={Cardstyles.bitian}><i></i>地址/作业海域：</span>
                         <Input value={this.state.location} onChange={this.ChangeLocation.bind(this)} style={{ width: "50%" }} placeholder={"请填写单位地址"}></Input>
                     </dl>
@@ -547,6 +571,16 @@ export default class AddCheckObject extends React.Component {
                             <Option value={"否"}>否</Option>
                         </Select>
                     </dl>
+                    {/* 船舶 */}
+                    <dl style={{ display: this.state.propsData.sortId > 14 || this.state.propsData.sortId <= 18 ? "block" : "none" }} className={Cardstyles.formitem1}>
+                        <span className={Cardstyles.bitian}>IMO号/船舶识别号：</span>
+                        <Input value={this.state.shipCode} onChange={this.ChangeshipCode.bind(this)} style={{ width: "50%" }} placeholder="请输入IMO号/船舶识别号"></Input>
+                    </dl>
+                    <dl style={{ display: this.state.propsData.sortId > 14 || this.state.propsData.sortId <= 18 ? "block" : "none" }} className={Cardstyles.formitem1}>
+                        <span className={Cardstyles.bitian}>国籍/船籍港：</span>
+                        <Input value={this.state.nationality} onChange={this.ChangeNationality.bind(this)} style={{ width: "50%" }} placeholder="请输入国籍/船籍港"></Input>
+                    </dl>
+
 
                     {/* button */}
                     <dl className={styles.formitem1} style={{ textAlign: "center" }}>

@@ -64,7 +64,7 @@ export default class SearchChecklistCode extends React.Component {
                 li.isSolveName = item.isSolve == 1 ? "未解决" : item.isSolve == 0 ? "已解决" : "无隐患";
                 li.level = item.level;
                 li.msaId = item.msaId;
-                li.msaName = item.msaName;
+                li.msaName = !!item.msaName?item.msaName:"--";
                 li.reviewCount = item.reviewCount;
                 li.shortName = item.shortName;
                 li.synergyPerson = item.synergyPerson;
@@ -158,7 +158,13 @@ export default class SearchChecklistCode extends React.Component {
                     key: "action",
                     className: publicstyle.center,
                     render: (text, record) => {
-                        return <Button type="primary" onClick={() => { window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId) }}>查看检查单</Button>
+                        return <Button type="primary" onClick={() => {
+                            if (this.state.sortId > 14 && this.state.sortId < 18) {
+                                window.open("../../../ico/shipPrint.html?detailId=" + record.detailId)
+                            } else {
+                                window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId)
+                            }
+                        }}>查看检查单</Button>
                     }
                 },],
             })

@@ -44,7 +44,6 @@ export default class Archive extends React.Component {
     componentWillMount() {
         this.fetchMsaInfos();
         propsData = this.props.location.state;
-
         let level = localStorage.getItem("level");
         // var userInfo = JSON.parse(localStorage.getItem("userInfo"));
         this.setState({
@@ -195,7 +194,13 @@ export default class Archive extends React.Component {
                     key: "action",
                     className: publicstyle.center,
                     render: (text, record) => {
-                        return <Button type="primary" onClick={() => { window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId) }}>查看检查单</Button>
+                        return <Button type="primary" onClick={() => { 
+                            if(this.state.propsData.sortId>14&&this.state.propsData.sortId<18){
+                                window.open("../../../ico/shipPrint.html?detailId=" + record.detailId)
+                            }else{
+                                window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId)
+                            }
+                             }}>查看检查单</Button>
                     }
                 },],
             })

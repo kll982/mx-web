@@ -57,6 +57,8 @@ export default class ListChecklistByConditional extends React.Component {
     dataAll = () => {
         let level = localStorage.getItem('level')
         let data = {};
+        let sortId = self.props.location.state.id;
+        console.log("sortId", sortId);
         if (level == '省') {
             data = {
                 checkSortId: self.props.location.state.id,
@@ -171,7 +173,13 @@ export default class ListChecklistByConditional extends React.Component {
                         key: "action",
                         className: publicstyle.center,
                         render: (text, record) => {
-                            return <Button type="primary" onClick={() => { window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId) }}>查看检查单</Button>
+                            return <Button type="primary" onClick={() => {
+                                if (sortId <= 14) {
+                                    window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId)
+                                } else if (sortId > 14 && sortId < 18) {
+                                    window.open("../../../ico/shipPrint.html?detailId=" + record.detailId)
+                                }
+                            }}>查看检查单</Button>
                         }
                     },],
                 })
@@ -347,7 +355,13 @@ export default class ListChecklistByConditional extends React.Component {
                         key: "action",
                         className: publicstyle.center,
                         render: (text, record) => {
-                            return <Button type="primary" onClick={() => { window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId) }}>查看检查单</Button>
+                            return <Button type="primary" onClick={() => {
+                                if (sortId <= 14) {
+                                    window.open("../../../ico/DailySupervisionItemDetails.html?detailId=" + record.detailId)
+                                } else if (sortId > 14 && sortId < 18) {
+                                    window.open("../../../ico/shipPrint.html?detailId=" + record.detailId)
+                                }
+                            }}>查看检查单</Button>
                         }
                     },],
                 })

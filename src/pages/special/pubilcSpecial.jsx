@@ -219,7 +219,7 @@ export default class PubilcSpecial extends React.Component {
                             }}>编辑</button>
                             <button style={{ display: record.statusCode == 2 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF04B31} onClick={this.deleteItem.bind(this, record.taskId)}>删除</button>
                             <button style={{ display: record.statusCode == 1 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF0BD31} onClick={this.stopItem.bind(this, record.taskId)}>停用</button>
-                            <button style={{ display: record.statusCode == 1 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF04B31} onClick={this.toDetailItem.bind(this, record.taskId)}>专项检查</button>
+                            <button style={{ display: record.statusCode == 1 ? "inline-block" : "none" }} className={MaritimeAffairs.ButtonMargin + ' ' + MaritimeAffairs.ButtonF04B31} onClick={this.toDetailItem.bind(this, record)}>专项检查</button>
 
                             <a href={record.excelUrl} download={record.checklistTitle}>
                                 <img style={{ display: "inline-block", verticalAlign: "middle", padding: "4px", margin: "0px 10px 10px 0px", float: "right", }} src={downIcon} alt="" />

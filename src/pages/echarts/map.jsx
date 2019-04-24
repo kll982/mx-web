@@ -1770,7 +1770,8 @@ export default class Customeppqqrlist extends React.Component {
                                     : ""}
 
                                 {this.state.iconDatas.length == 0 ? <Map center={{
-                                    lng: self.state.centerlng, lat: self.state.centerlat
+                                    lng: self.state.centerlng, 
+                                    lat: self.state.centerlat,
                                 }} style={{
                                     height: '700px',
                                     width: this.state.widthwidow,

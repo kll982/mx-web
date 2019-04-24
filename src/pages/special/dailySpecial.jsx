@@ -130,7 +130,7 @@ export default class AddMangerment extends React.Component {
                                         }).then(y=>{
                                             if(y.code == 200){
                                                 message.success("已停用")
-                                                self.getData(self.state.page.pages);
+                                                self.getData(self.state.page.pageNum);
                                             }
                                         })
                                     },
@@ -150,7 +150,7 @@ export default class AddMangerment extends React.Component {
                                         }).then(y=>{
                                             if(y.code == 200){
                                                 message.success("已删除")
-                                                self.getData(self.state.page.pages);
+                                                self.getData(self.state.page.pageNum);
                                             }
                                         })
                                     },
@@ -215,7 +215,7 @@ export default class AddMangerment extends React.Component {
                 this.setState({
                     Cv: false
                 }, () => {
-                    self.getData(self.state.page.pages);
+                    self.getData(self.state.page.pageNum);
                 })
             }
         })

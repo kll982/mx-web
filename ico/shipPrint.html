@@ -14,26 +14,26 @@
 		<div class="allWrap">
 			<input class="printBtn noPrint" type="button" name="" id="" value="打印检查单" @click="printIt()" />
 			<div class="mainTitle1">
-				船舶现场监督报告
+				{{da.checkName}}
 				<div class="subtitle">
 					根据《中华人民共和国船舶安全监督规则》签发
 				</div>
 			</div>
 			<div class="baseInfo">
 				<div class="half fs22">
-					船&emsp;&emsp;名：<u>{{name}}</u>
+					船&emsp;&emsp;名：<u>{{da.compangInfo.name}}</u>
 				</div>
 				<div class="half fs22">
-					国籍/船籍港：<u>{{nationality}}</u>
+					国籍/船籍港：<u>{{da.compangInfo.nationality}}</u>
 				</div>
 				<div class="half fs22">
 					船舶种类：<u>{{kind}}</u>
 				</div>
 				<div class="half fs22">
-					IMO号/船舶识别号：<u>{{IMO}}</u>
+					IMO号/船舶识别号：<u>{{da.compangInfo.shipCode}}</u>
 				</div>
 				<div class="half fs22">
-					船舶管理人：<u>{{people}}</u>
+					船舶管理人：<u>{{da.compangInfo.operator}}</u>
 				</div>
 				<div class="half fs22">
 					船长签名：<u>{{peopleName}}</u>
@@ -56,7 +56,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(i,it) in item">
+					<tr v-for="(i,it) in list">
 						<td>{{it +1}}</td>
 						<td>{{i.item}}</td>
 						<td><input name="checkbox" type="checkbox" v-model="i.optionId==1" disabled></td>
@@ -73,11 +73,10 @@
 				</div>
 				<div class="w15">
 					<div class="title">处理决定</div>
-
 				</div>
-				<div v-for="i in item" class="fs22" style="width:100%;padding:10px 0px;overflow: hidden;word-break: break-all;">
+				<div v-for="i in arr" class="fs22" style="width:100%;padding:10px 0px;overflow: hidden;word-break: break-all;">
 					<div class="w84">
-						<u>{{i.item}}</u>
+						<u>{{i.troubleDescribe}}</u>
 					</div>
 					<div class="w15">
 						<u>{{i.handle}}</u>
@@ -100,17 +99,16 @@
 			<p class="fs24">
 				<input name="checkbox" type="checkbox" v-model="sp2" disabled> 启动船舶安全检查
 			</p>
-			<p class="fs24">
-				<span style="display: inline-block;width:33%;margin-right: 0.5%;float: left;">检查机构：<u>{{mechanism}}</u></span>
-				<span style="display: inline-block;width:33%;margin-right: 0.5%;float: left;">执法人员：<u>{{mechanism}}</u></span>
-				<span style="display: inline-block;width:33%;float: right;">检查日期：<u>{{mechanism}}</u></span>
-				</p>
-			
-
+			<p class="fs22">
+				<span style="display: inline-block;margin-right: 5%;float: left;">检查机构：<u>{{da.msaName}}</u>&emsp;执法人员：<u>{{da.name}} {{da.synergyPerson}}</u>&emsp;检查日期：<u>{{this.getDay(da.uploadTime)}}</u></span>
+			</p>
 
 		</div>
 	</body>
 	<script>
+		window.obj = {
+			detailId: "",
+		};
 		var urls = location.origin.replace(/www/g, "bm"),
 			self;
 		new Vue({
@@ -118,8 +116,16 @@
 			data: function() {
 				self = this
 				return {
+					da: {
+						compangInfo: {
+							name: "",
+							checkName: "",
+						},
+					},
+					list: [],
+					arr:[],
 					sp: true,
-					sp2:false,
+					sp2: false,
 					name: "name",
 					kind: "kind",
 					IMO: "IMO number",
@@ -147,13 +153,74 @@
 							handle: "Lorem i nam",
 						}
 					],
-					mechanism:"mechanism",
+					mechanism: "mechanism",
 				}
 			},
 			methods: {
 				printIt: function() {
 					window.print();
 				},
+				getName: function() {
+					// var name = getCookie("data");
+					var url = location.search; //获取url中"?"符后的字串
+					if (url.indexOf("?") != -1) {
+						var str = url.substr(1);
+						strs = str.split("&");
+						for (var i = 0; i < strs.length; i++) {
+							var name = unescape(strs[i].split("=")[0]);
+							var value = unescape(strs[i].split("=")[1]);
+							obj[name] = value;
+						}
+						return obj;
+					}
+				},
+				getData: function() {
+					$.ajax({
+						url: urls + '/checklist/listDetailByDetailId',
+						data: {
+							detailId: obj.detailId,
+						},
+						xhrFields: {
+							withCredentials: true
+						},
+						success: function(response) {
+							if (response.code == 200) {
+								var datas = response.data.response,
+									list = datas.list;
+								self.da = datas;
+								self.list = list;
+								var arr=[]
+								for(var i in list){
+if(list[i].troubleDescribe){
+	arr.push(list[i]);
+}
+								}
+								self.arr = arr
+								console.log(datas);
+							}
+						}
+					})
+				},
+				getDay: function(date) {
+					if (date == null || date == "") {
+						return "--";
+					}
+
+					var weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+						pubtime = new Date(date),
+						pubdate = (pubtime.getFullYear()) + "年" +
+						(pubtime.getMonth() + 1) + "月" +
+						(pubtime.getDate()) + "日 " +
+						(pubtime.getHours()) + ":" +
+						(pubtime.getMinutes() < 10 ? "0" + pubtime.getMinutes() : pubtime.getMinutes()) + ":" +
+						(pubtime.getSeconds() < 10 ? "0" + pubtime.getSeconds() : pubtime.getSeconds()) + "  " + weekday[pubtime.getDay()];
+					return pubdate;
+
+				},
+			},
+			beforeMount: function() {
+				this.getName();
+				this.getData();
 			}
 		})
 	</script>
