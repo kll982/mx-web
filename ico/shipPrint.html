@@ -39,7 +39,7 @@
 					船长签名：<u>&ensp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
 				</div>
 				<div class="half fs22">
-					<input name="checkbox" type="checkbox" v-model="sp" disabled>专项检查：
+					<input name="checkbox" type="checkbox" v-model="da.isSpOfShip" disabled> 专项检查：
 				</div>
 			</div>
 			<table border="" cellspacing="" cellpadding="">
@@ -97,7 +97,7 @@
 				<span class="p_0_40">99 文字说明</span>
 			</div>
 			<p class="fs24">
-				<input name="checkbox" type="checkbox" v-model="sp2" disabled> 启动船舶安全检查
+				<input name="checkbox" type="checkbox" v-model="da.isStartCheckOfShip" disabled> 启动船舶安全检查
 			</p>
 			<p class="fs22">
 				<span style="display: inline-block;margin-right: 5%;float: left;">检查机构：<u>{{da.msaName}}</u>&emsp;执法人员：<u>{{da.name}} {{da.synergyPerson}}</u>&emsp;检查日期：<u>{{this.getDay(da.uploadTime)}}</u></span>
